@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+
+<html>
+<!-- Styles -->
+<style>
+    #chartdiv {
+      width: 100%;
+      height: 1000px;
+    }
+</style>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>OPTraceViewer</title>
+  <script src="https://www.amcharts.com/lib/3/amcharts.js">
+  </script>
+  <script src="https://www.amcharts.com/lib/3/serial.js">
+  </script>
+  <script src="https://www.amcharts.com/lib/3/gantt.js">
+  </script>
+  <script src="https://www.amcharts.com/lib/3/themes/light.js">
+  </script>
+  <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js">
+  </script>
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all"/>
+
+  <form name="userInputForm" action="javascript:userInputFormCallback()">
+    <fieldset>
+    <legend>Graph Filters:</legend>
+    <table style="width:100%">
+      <col width="50"></col>
+      <col width="20"></col>
+      <col width="60"></col>
+      <tr>
+        <td style="text-align: center"; colspan="3"><input type="number" name="userDurationFilterSecInput" id="userDurationFilterSecInput" value="2" min="0" max="6000" step="1"> sec</td>
+        <td>Filter out run durations lower than this value</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td style="text-align: center"><input type="checkbox" name="userGroupPidSortSelected" id="userGroupPidSortSelected"></td>
+        <td>Group sort by process ID</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td bgcolor="#0099ff"></td>
+        <td style="text-align: center"><input type="checkbox" name="userRollupSelected" id="userRollupSelected"></td>
+        <td>Show rollup entries</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td bgcolor="#8dc49f"></td>
+        <td style="text-align: center"><input type="checkbox" name="userIndividualEntrySelected" id="userIndividualEntrySelected"></td>
+        <td>Show individual entries</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td bgcolor="#cd82ad"></td>
+        <td style="text-align: center"><input type="checkbox" name="userCheckpointEntrySelected" id="userCheckpointEntrySelected"></td>
+        <td>Show checkpoints entry</td>
+      </tr>
+       <tr>
+        <td></td>
+        <td bgcolor="#b9783f"></td>
+        <td style="text-align: center"><input type="checkbox" name="userReportEntrySelected" id="userReportEntrySelected"></td>
+        <td>Show report entry</td>
+      </tr>
+
+    </table>
+    <br>
+    <input name="Submit" type="submit" value="Update Graph">
+    </fieldset>
+  </form> 
+
+  <div id="chartdiv">
+  </div>
+
+  <script>
+  </script>
+
+</head>
+
+
+<body>
+<table id="myDynamicTable" cellpadding="2" cellspacing="2" border="1" onclick="tester()">
+  <tr>
+  <td>Task</td>
+  <td>Start</td>
+  <td>Duration</td>
+  </tr>
+</table>
+<script>
+  // Default User Selected variables
+  var m_secondFilter = 1;
+  var m_groupPidSort = true;
+  var m_showRollup = true;
+  var m_showIndividualEntry = false;
+  var m_showCheckpointEntry = false;
+  var m_showReportEntry = false;
+
+  function SetDefaultUserValues()
+  {
+    document.getElementById("userDurationFilterSecInput").value = m_secondFilter;
+    document.getElementById("userGroupPidSortSelected").checked = m_groupPidSort;
+    document.getElementById("userRollupSelected").checked = m_showRollup;
+    document.getElementById("userIndividualEntrySelected").checked = m_showIndividualEntry;
+    document.getElementById("userCheckpointEntrySelected").checked = m_showCheckpointEntry;
+    document.getElementById("userReportEntrySelected").checked = m_showReportEntry;
+  }
+
+  window.onload = function(){
+    SetDefaultUserValues();
+  }
+
+
+
+
+  // Header
+  var header = "Keyword|pid|Entry|SrcFile|Catagory|TimeStampMSec|Action|Task|Tags|Misc";
+                         
+  // Insert Raw Data Here
+  // Note: Do not change the following signature. 
+  var csvData =    [
+      "[OPTRACE]|3646521|10|run|cpp|1739191101218|START|OCL_LINK|",
+      "[OPTRACE]|3646521|11|setupBinaryForLink|cpp|1739191101218|START|Create Binary|",
+      "[OPTRACE]|3646521|12||cpp|1739191101218|END|Create Binary|",
+      "[OPTRACE]|3646521|13|setupBinaryForLink|cpp|1739191101218|START|Extract Kernels|",
+      "[OPTRACE]|3646521|14||cpp|1739191102782|END|Extract Kernels|",
+      "[OPTRACE]|3646521|15|launchStep_|cpp|1739191103014|START|Launch Step: system_link|",
+      "[OPTRACE]|3646521|16||cpp|1739191114555|END|Launch Step: system_link|",
+      "[OPTRACE]|3646521|17|launchStep_|cpp|1739191114557|START|Launch Step: cf2sw|",
+      "[OPTRACE]|3646521|18||cpp|1739191118022|END|Launch Step: cf2sw|",
+      "[OPTRACE]|3646521|19|launchStep_|cpp|1739191118026|START|Launch Step: rtd2_system_diagram|",
+      "[OPTRACE]|3646521|1|main|cpp|1739191097194|START|v++|ROLLUP_0",
+      "[OPTRACE]|3646521|20||cpp|1739191118307|END|Launch Step: rtd2_system_diagram|",
+      "[OPTRACE]|3646521|21|launchStep_|cpp|1739191118309|START|Launch Step: vpl|",
+      "[OPTRACE]|3646521|2|run|cpp|1739191097194|START|Validate Kernels|",
+      "[OPTRACE]|3646521|3||cpp|1739191097466|END|Validate Kernels|",
+      "[OPTRACE]|3646521|4|prepareProject|cpp|1739191097466|START|Create Solution|",
+      "[OPTRACE]|3646521|586||cpp|1739193435681|END|Launch Step: vpl|",
+      "[OPTRACE]|3646521|587|launchStep_|cpp|1739193435685|START|Launch Step: rtdgen|",
+      "[OPTRACE]|3646521|588|launchCf2sw_|cpp|1739193435693|START|Launch cf2sw|",
+      "[OPTRACE]|3646521|589||cpp|1739193440132|END|Launch cf2sw|",
+      "[OPTRACE]|3646521|590|writeSystemDiagram|cpp|1739193440132|START|writeSystemDiagram|",
+      "[OPTRACE]|3646521|591||cpp|1739193440140|END|writeSystemDiagram|",
+      "[OPTRACE]|3646521|592|writeAutomationSummary|cpp|1739193440140|START|writeAutomationSummary|",
+      "[OPTRACE]|3646521|593||cpp|1739193440147|END|writeAutomationSummary|",
+      "[OPTRACE]|3646521|594||cpp|1739193440149|END|Launch Step: rtdgen|",
+      "[OPTRACE]|3646521|595|launchStep_|cpp|1739193440170|START|Launch Step: xclbinutil|",
+      "[OPTRACE]|3646521|596||cpp|1739193440423|END|Launch Step: xclbinutil|",
+      "[OPTRACE]|3646521|597|launchStep_|cpp|1739193440425|START|Launch Step: xclbinutilinfo|",
+      "[OPTRACE]|3646521|598||cpp|1739193440704|END|Launch Step: xclbinutilinfo|",
+      "[OPTRACE]|3646521|599||cpp|1739193440715|END|OCL_LINK|",
+      "[OPTRACE]|3646521|5||cpp|1739191100518|END|Create Solution|",
+      "[OPTRACE]|3646521|606||cpp|1739193445349|END|v++|",
+      "[OPTRACE]|3646521|6|prepareProject|cpp|1739191100518|START|Add Device|",
+      "[OPTRACE]|3646521|7|addDevice|cpp|1739191100518|START|Find & Load Device|",
+      "[OPTRACE]|3646521|8||cpp|1739191100644|END|Find & Load Device|",
+      "[OPTRACE]|3646521|9||cpp|1739191101189|END|Add Device|",
+      "[OPTRACE]|3647632|22|main|cpp|1739191120422|START|vpl|",
+      "[OPTRACE]|3647632|23|runPlatformLinker|cpp|1739191120460|START|runPlatformLinker|",
+      "[OPTRACE]|3647632|24|setupBinaryForLink|cpp|1739191120460|START|Create Solution|",
+      "[OPTRACE]|3647632|25||cpp|1739191120483|END|Create Solution|",
+      "[OPTRACE]|3647632|26|setupBinaryForLink|cpp|1739191120483|START|Add platform|",
+      "[OPTRACE]|3647632|27||cpp|1739191121252|END|Add platform|",
+      "[OPTRACE]|3647632|28|setupBinaryForLink|cpp|1739191121252|START|Create Binary|",
+      "[OPTRACE]|3647632|29||cpp|1739191121253|END|Create Binary|",
+      "[OPTRACE]|3647632|30|setupBinaryForLink|cpp|1739191121253|START|Create Kernels|",
+      "[OPTRACE]|3647632|31||cpp|1739191121253|END|Create Kernels|",
+      "[OPTRACE]|3647632|32|runPlatformLinker|cpp|1739191121352|START|Process Kernels|",
+      "[OPTRACE]|3647632|33|runPlatformLinker|cpp|1739191121353|START|Set Board Repo Paths and Connections|",
+      "[OPTRACE]|3647632|34||cpp|1739191121353|END|Set Board Repo Paths and Connections|",
+      "[OPTRACE]|3647632|35|runPlatformLinker|cpp|1739191121353|START|Process Kernel Profiles|",
+      "[OPTRACE]|3647632|36||cpp|1739191121353|END|Process Kernel Profiles|",
+      "[OPTRACE]|3647632|37|runPlatformLinker|cpp|1739191121353|START|Process Trace Memory|",
+      "[OPTRACE]|3647632|38||cpp|1739191121354|END|Process Trace Memory|",
+      "[OPTRACE]|3647632|39|runPlatformLinker|cpp|1739191121354|START|Process AIE Trace|",
+      "[OPTRACE]|3647632|40||cpp|1739191121354|END|Process AIE Trace|",
+      "[OPTRACE]|3647632|41||cpp|1739191121354|END|Process Kernels|",
+      "[OPTRACE]|3647632|42|runPlatformLinker|cpp|1739191121354|START|Process Kernel Debug|",
+      "[OPTRACE]|3647632|43||cpp|1739191121354|END|Process Kernel Debug|",
+      "[OPTRACE]|3647632|44|runPlatformLinker|cpp|1739191121354|START|Set Kernel Debug|",
+      "[OPTRACE]|3647632|45||cpp|1739191121354|END|Set Kernel Debug|",
+      "[OPTRACE]|3647632|46|runPlatformLinker|cpp|1739191121354|START|Set Miscellaneous|",
+      "[OPTRACE]|3647632|47||cpp|1739191121355|END|Set Miscellaneous|",
+      "[OPTRACE]|3647632|48|run|cpp|1739191121356|START|Extract Platform|",
+      "[OPTRACE]|3647632|49||cpp|1739191132817|END|Extract Platform|",
+      "[OPTRACE]|3647632|582|runPlatformLinker|cpp|1739193434276|START|Generate Resource Availability Report|",
+      "[OPTRACE]|3647632|583||cpp|1739193434276|END|Generate Resource Availability Report|",
+      "[OPTRACE]|3647632|584||cpp|1739193434276|END|runPlatformLinker|",
+      "[OPTRACE]|3647632|585||cpp|1739193435650|END|vpl|",
+      "[OPTRACE]|3649404|104|ipirun.tcl|vpl|1739191989233|END|Synthesis|",
+      "[OPTRACE]|3649404|50|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/vpl.tcl|vivado_impl|1739191145603|START|Implementation|ROLLUP_1",
+      "[OPTRACE]|3649404|51|ipirun.tcl|vpl|1739191145644|START|ipirun|ROLLUP_0",
+      "[OPTRACE]|3649404|52|ipirun.tcl|vpl|1739191145644|END|ipirun|",
+      "[OPTRACE]|3649404|53|ipirun.tcl|vpl|1739191145677|START|Create project|",
+      "[OPTRACE]|3649404|54|ipirun.tcl|vpl|1739191180388|END|Create project|",
+      "[OPTRACE]|3649404|55|ipirun.tcl|vpl|1739191180394|START|Create IP caching environment|",
+      "[OPTRACE]|3649404|56|ipirun.tcl|vpl|1739191180681|END|Create IP caching environment|",
+      "[OPTRACE]|3649404|57|ipirun.tcl|vpl|1739191180681|START|Import/add dynamic BD|",
+      "[OPTRACE]|3649404|581|ipirun.tcl|vpl|1739193430159|END|Implementation|",
+      "[OPTRACE]|3649404|58|ipirun.tcl|vpl|1739191180685|END|Import/add dynamic BD|",
+      "[OPTRACE]|3649404|59|ipirun.tcl|vpl|1739191180686|START|Open BD and insert kernels|",
+      "[OPTRACE]|3649404|60|ipirun.tcl|vpl|1739191236829|START|Log Initial Platform BD|",
+      "[OPTRACE]|3649404|61|ipirun.tcl|vpl|1739191236856|END|Log Initial Platform BD|",
+      "[OPTRACE]|3649404|62|ipirun.tcl|vpl|1739191422991|END|Open BD and insert kernels|",
+      "[OPTRACE]|3649404|63|ipirun.tcl|vpl|1739191422999|START|Add debug/profiling support|",
+      "[OPTRACE]|3649404|64|ipirun.tcl|vpl|1739191437275|END|Add debug/profiling support|",
+      "[OPTRACE]|3649404|65|ipirun.tcl|vpl|1739191437275|START|IPI address assignments|",
+      "[OPTRACE]|3649404|66|ipirun.tcl|vpl|1739191437288|END|IPI address assignments|",
+      "[OPTRACE]|3649404|67|ipirun.tcl|vpl|1739191437294|START|Create address map and debug IP profile files|",
+      "[OPTRACE]|3649404|68|ipirun.tcl|vpl|1739191437311|END|Create address map and debug IP profile files|",
+      "[OPTRACE]|3649404|69|ipirun.tcl|vpl|1739191437311|START|Collect BD interface connectivity and update compute units|",
+      "[OPTRACE]|3649404|70|ipirun.tcl|vpl|1739191437318|END|Collect BD interface connectivity and update compute units|",
+      "[OPTRACE]|3649404|71|ipirun.tcl|vpl|1739191437318|START|Create Heirarchy|",
+      "[OPTRACE]|3649404|72|ipirun.tcl|vpl|1739191437383|END|Create Hierarchy|",
+      "[OPTRACE]|3649404|73|ipirun.tcl|vpl|1739191439625|START|Generate output products|",
+      "[OPTRACE]|3649404|74|ipirun.tcl|vpl|1739191774644|END|Generate output products|",
+      "[OPTRACE]|3649404|75|ipirun.tcl|vpl|1739191774645|START|Collect clock information and write automation summary report|",
+      "[OPTRACE]|3649404|76|ipirun.tcl|vpl|1739191774651|END|Collect clock information and write automation summary report|",
+      "[OPTRACE]|3649404|77|ipirun.tcl|vpl|1739191774672|START|Source report_commands_tcl|",
+      "[OPTRACE]|3649404|78|ipirun.tcl|vpl|1739191774904|END|Source report_commands_tcl|",
+      "[OPTRACE]|3649404|79|ipirun.tcl|vpl|1739191774905|START|Source synth_props_tcl|",
+      "[OPTRACE]|3649404|80|ipirun.tcl|vpl|1739191789353|END|Source synth_props_tcl|",
+      "[OPTRACE]|3649404|81|ipirun.tcl|vpl|1739191790699|START|Source impl_props_tcl|",
+      "[OPTRACE]|3649404|82|ipirun.tcl|vpl|1739191791405|END|Source impl_props_tcl|",
+      "[OPTRACE]|3649404|83|ipirun.tcl|vpl|1739191791413|START|Synthesis|ROLLUP_1,SYNTH",
+      "[OPTRACE]|3682733|84|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0.tcl|vivado_synth|1739191804595|START|vitis_design_harness_1_0_synth_1|ROLLUP_AUTO",
+      "[OPTRACE]|3682733|85|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0.tcl|vivado_synth|1739191804596|START|Creating in-memory project|",
+      "[OPTRACE]|3682733|86|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0.tcl|vivado_synth|1739191815024|END|Creating in-memory project|",
+      "[OPTRACE]|3682733|87|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0.tcl|vivado_synth|1739191815025|START|Adding files|",
+      "[OPTRACE]|3682733|88|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0.tcl|vivado_synth|1739191815728|END|Adding files|",
+      "[OPTRACE]|3682733|89|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0.tcl|vivado_synth|1739191815736|START|Configure IP Cache|",
+      "[OPTRACE]|3682733|90|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0.tcl|vivado_synth|1739191816669|END|Configure IP Cache|",
+      "[OPTRACE]|3682733|91|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0.tcl|vivado_synth|1739191816693|END|vitis_design_harness_1_0_synth_1|",
+      "[OPTRACE]|3683704|100|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191977510|END|write_checkpoint|",
+      "[OPTRACE]|3683704|101|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191977510|START|synth reports|REPORT",
+      "[OPTRACE]|3683704|102|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191977510|END|synth reports|",
+      "[OPTRACE]|3683704|103|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191977512|END|synth_1|",
+      "[OPTRACE]|3683704|92|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191835945|START|synth_1|ROLLUP_AUTO",
+      "[OPTRACE]|3683704|93|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191835946|START|Creating in-memory project|",
+      "[OPTRACE]|3683704|94|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191846418|END|Creating in-memory project|",
+      "[OPTRACE]|3683704|95|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191846418|START|Adding files|",
+      "[OPTRACE]|3683704|96|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191873520|END|Adding files|",
+      "[OPTRACE]|3683704|97|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191873776|START|synth_design|",
+      "[OPTRACE]|3683704|98|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191975420|END|synth_design|",
+      "[OPTRACE]|3683704|99|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/synth_1/vitis_design_wrapper.tcl|vivado_synth|1739191975421|START|write_checkpoint|CHECKPOINT",
+      "[OPTRACE]|3692629|108|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192006294|START|impl_1|ROLLUP_1",
+      "[OPTRACE]|3692629|109|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192006294|START|Phase: Init Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692629|110|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192006297|START|Design Initialization: pre hook|",
+      "[OPTRACE]|3692629|118|ipirun.tcl|vpl|1739192006339|START|ipirun|ROLLUP_0",
+      "[OPTRACE]|3692629|119|ipirun.tcl|vpl|1739192006340|END|ipirun|",
+      "[OPTRACE]|3692629|120|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192006344|END|Design Initialization: pre hook|",
+      "[OPTRACE]|3692629|121|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192006345|START|create in-memory project|",
+      "[OPTRACE]|3692629|146|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192017340|END|create in-memory project|",
+      "[OPTRACE]|3692629|147|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192017340|START|set parameters|",
+      "[OPTRACE]|3692629|156|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192018276|END|set parameters|",
+      "[OPTRACE]|3692629|157|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192018276|START|add files|",
+      "[OPTRACE]|3692629|184|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192046569|START|read constraints: implementation|",
+      "[OPTRACE]|3692629|185|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192046571|END|read constraints: implementation|",
+      "[OPTRACE]|3692629|186|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192046571|START|read constraints: implementation_pre|",
+      "[OPTRACE]|3692629|187|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192046571|END|read constraints: implementation_pre|",
+      "[OPTRACE]|3692629|188|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192046571|END|add files|",
+      "[OPTRACE]|3692629|189|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192046572|START|link_design|",
+      "[OPTRACE]|3692629|242|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215782|END|link_design|",
+      "[OPTRACE]|3692629|243|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215783|START|gray box cells|",
+      "[OPTRACE]|3692629|244|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215783|END|gray box cells|",
+      "[OPTRACE]|3692629|245|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215783|START|init_design_reports|REPORT",
+      "[OPTRACE]|3692629|246|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215783|END|init_design_reports|",
+      "[OPTRACE]|3692629|247|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215783|START|Design Initialization: post hook|",
+      "[OPTRACE]|3692629|248|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215832|END|Design Initialization: post hook|",
+      "[OPTRACE]|3692629|249|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215832|START|init_design_write_hwdef|",
+      "[OPTRACE]|3692629|250|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215833|END|init_design_write_hwdef|",
+      "[OPTRACE]|3692629|251|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215834|END|Phase: Init Design|",
+      "[OPTRACE]|3692629|252|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215834|START|Phase: Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692629|253|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192215836|START|Opt Design: pre hook|",
+      "[OPTRACE]|3692629|266|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192224719|END|Opt Design: pre hook|",
+      "[OPTRACE]|3692629|267|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192224719|START|read constraints: opt_design|",
+      "[OPTRACE]|3692629|268|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192224719|END|read constraints: opt_design|",
+      "[OPTRACE]|3692629|269|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192224719|START|opt_design|",
+      "[OPTRACE]|3692629|278|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586638|END|opt_design|",
+      "[OPTRACE]|3692629|279|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586638|START|read constraints: opt_design_post|",
+      "[OPTRACE]|3692629|280|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586638|END|read constraints: opt_design_post|",
+      "[OPTRACE]|3692629|281|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586638|START|opt_design reports|REPORT",
+      "[OPTRACE]|3692629|282|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586638|END|opt_design reports|",
+      "[OPTRACE]|3692629|283|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586638|START|Opt Design: post hook|",
+      "[OPTRACE]|3692629|284|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586641|END|Opt Design: post hook|",
+      "[OPTRACE]|3692629|285|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586643|END|Phase: Opt Design|",
+      "[OPTRACE]|3692629|286|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586643|START|Phase: Place Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692629|287|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586645|START|Place Design: pre hook|",
+      "[OPTRACE]|3692629|288|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586683|END|Place Design: pre hook|",
+      "[OPTRACE]|3692629|289|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586683|START|read constraints: place_design|",
+      "[OPTRACE]|3692629|290|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586684|END|read constraints: place_design|",
+      "[OPTRACE]|3692629|291|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586684|START|implement_debug_core|",
+      "[OPTRACE]|3692629|292|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586685|END|implement_debug_core|",
+      "[OPTRACE]|3692629|293|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192586685|START|place_design|",
+      "[OPTRACE]|3692629|356|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192849955|END|place_design|",
+      "[OPTRACE]|3692629|357|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192849956|START|read constraints: place_design_post|",
+      "[OPTRACE]|3692629|358|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192849956|END|read constraints: place_design_post|",
+      "[OPTRACE]|3692629|359|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192849956|START|place_design reports|REPORT",
+      "[OPTRACE]|3692629|360|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192849956|END|place_design reports|",
+      "[OPTRACE]|3692629|361|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192849956|START|Place Design: post hook|",
+      "[OPTRACE]|3692629|368|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192872491|END|Place Design: post hook|",
+      "[OPTRACE]|3692629|369|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192872493|END|Phase: Place Design|",
+      "[OPTRACE]|3692629|370|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192872493|START|Phase: Physical Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692629|371|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192872495|START|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692629|372|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192872495|END|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692629|373|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192872495|START|phys_opt_design|",
+      "[OPTRACE]|3692629|386|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904311|END|phys_opt_design|",
+      "[OPTRACE]|3692629|387|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904311|START|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692629|388|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904311|END|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692629|389|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904312|START|phys_opt_design report|REPORT",
+      "[OPTRACE]|3692629|390|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904312|END|phys_opt_design report|",
+      "[OPTRACE]|3692629|391|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904313|END|Phase: Physical Opt Design|",
+      "[OPTRACE]|3692629|392|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904314|START|Phase: Route Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692629|393|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904315|START|read constraints: route_design|",
+      "[OPTRACE]|3692629|394|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904316|END|read constraints: route_design|",
+      "[OPTRACE]|3692629|395|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739192904316|START|route_design|",
+      "[OPTRACE]|3692629|464|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193097546|END|route_design|",
+      "[OPTRACE]|3692629|465|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193097546|START|read constraints: route_design_post|",
+      "[OPTRACE]|3692629|466|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193097547|END|read constraints: route_design_post|",
+      "[OPTRACE]|3692629|467|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193097547|START|route_design reports|REPORT",
+      "[OPTRACE]|3692629|472|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193117212|END|route_design reports|",
+      "[OPTRACE]|3692629|473|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193117212|START|Route Design: post hook|",
+      "[OPTRACE]|3692629|474|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193149526|END|Route Design: post hook|",
+      "[OPTRACE]|3692629|475|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193149526|START|Route Design: write_checkpoint|CHECKPOINT",
+      "[OPTRACE]|3692629|476|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193175646|END|Route Design: write_checkpoint|",
+      "[OPTRACE]|3692629|477|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193175646|START|route_design misc|",
+      "[OPTRACE]|3692629|478|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193175648|END|route_design misc|",
+      "[OPTRACE]|3692629|479|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193175648|END|Phase: Route Design|",
+      "[OPTRACE]|3692629|480|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193175648|START|Phase: Write Device Image|ROLLUP_AUTO",
+      "[OPTRACE]|3692629|481|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193175648|START|write_device_image setup|",
+      "[OPTRACE]|3692629|482|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193175650|START|Write Device Image: pre hook|",
+      "[OPTRACE]|3692629|483|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193177565|END|Write Device Image: pre hook|",
+      "[OPTRACE]|3692629|484|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193177565|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692629|485|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193177565|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692629|486|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193177565|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692629|487|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193177565|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692629|488|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193179831|END|write_device_image setup|",
+      "[OPTRACE]|3692629|489|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193179832|START|write_device_image|",
+      "[OPTRACE]|3692629|538|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193365503|END|write_device_image|",
+      "[OPTRACE]|3692629|539|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193365503|START|write_device_image misc|",
+      "[OPTRACE]|3692629|540|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193365503|START|read constraints: write_bitstream_post|",
+      "[OPTRACE]|3692629|541|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193365503|END|read constraints: write_bitstream_post|",
+      "[OPTRACE]|3692629|542|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193365503|START|read constraints: write_device_image_post|",
+      "[OPTRACE]|3692629|543|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193365503|END|read constraints: write_device_image_post|",
+      "[OPTRACE]|3692629|544|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193384925|START|Write Device Image: post hook|",
+      "[OPTRACE]|3692629|563|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193415910|END|Write Device Image: post hook|",
+      "[OPTRACE]|3692629|564|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193415912|END|write_device_image misc|",
+      "[OPTRACE]|3692629|565|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193415913|END|Phase: Write Device Image|",
+      "[OPTRACE]|3692629|566|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_1/vitis_design_wrapper.tcl|vivado_impl|1739193415913|END|impl_1|",
+      "[OPTRACE]|3692630|113|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192006301|START|impl_Congestion_SpreadLogic_high|ROLLUP_1",
+      "[OPTRACE]|3692630|114|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192006301|START|Phase: Init Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692630|115|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192006303|START|Design Initialization: pre hook|",
+      "[OPTRACE]|3692630|122|ipirun.tcl|vpl|1739192006346|START|ipirun|ROLLUP_0",
+      "[OPTRACE]|3692630|123|ipirun.tcl|vpl|1739192006347|END|ipirun|",
+      "[OPTRACE]|3692630|127|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192006352|END|Design Initialization: pre hook|",
+      "[OPTRACE]|3692630|128|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192006353|START|create in-memory project|",
+      "[OPTRACE]|3692630|142|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192016521|END|create in-memory project|",
+      "[OPTRACE]|3692630|143|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192016522|START|set parameters|",
+      "[OPTRACE]|3692630|148|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192017652|END|set parameters|",
+      "[OPTRACE]|3692630|149|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192017653|START|add files|",
+      "[OPTRACE]|3692630|178|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192046449|START|read constraints: implementation|",
+      "[OPTRACE]|3692630|179|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192046452|END|read constraints: implementation|",
+      "[OPTRACE]|3692630|180|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192046452|START|read constraints: implementation_pre|",
+      "[OPTRACE]|3692630|181|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192046452|END|read constraints: implementation_pre|",
+      "[OPTRACE]|3692630|182|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192046452|END|add files|",
+      "[OPTRACE]|3692630|183|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192046452|START|link_design|",
+      "[OPTRACE]|3692630|202|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209125|END|link_design|",
+      "[OPTRACE]|3692630|203|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209125|START|gray box cells|",
+      "[OPTRACE]|3692630|204|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209125|END|gray box cells|",
+      "[OPTRACE]|3692630|205|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209126|START|init_design_reports|REPORT",
+      "[OPTRACE]|3692630|206|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209126|END|init_design_reports|",
+      "[OPTRACE]|3692630|207|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209126|START|Design Initialization: post hook|",
+      "[OPTRACE]|3692630|208|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209171|END|Design Initialization: post hook|",
+      "[OPTRACE]|3692630|209|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209171|START|init_design_write_hwdef|",
+      "[OPTRACE]|3692630|210|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209171|END|init_design_write_hwdef|",
+      "[OPTRACE]|3692630|211|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209173|END|Phase: Init Design|",
+      "[OPTRACE]|3692630|212|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209173|START|Phase: Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692630|213|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192209175|START|Opt Design: pre hook|",
+      "[OPTRACE]|3692630|254|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192217921|END|Opt Design: pre hook|",
+      "[OPTRACE]|3692630|255|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192217921|START|read constraints: opt_design|",
+      "[OPTRACE]|3692630|256|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192217921|END|read constraints: opt_design|",
+      "[OPTRACE]|3692630|257|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192217922|START|opt_design|",
+      "[OPTRACE]|3692630|270|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192577279|END|opt_design|",
+      "[OPTRACE]|3692630|271|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192577280|START|read constraints: opt_design_post|",
+      "[OPTRACE]|3692630|272|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192577280|END|read constraints: opt_design_post|",
+      "[OPTRACE]|3692630|273|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192577280|START|opt_design reports|REPORT",
+      "[OPTRACE]|3692630|294|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591121|END|opt_design reports|",
+      "[OPTRACE]|3692630|295|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591122|START|Opt Design: post hook|",
+      "[OPTRACE]|3692630|296|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591125|END|Opt Design: post hook|",
+      "[OPTRACE]|3692630|297|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591126|END|Phase: Opt Design|",
+      "[OPTRACE]|3692630|298|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591126|START|Phase: Place Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692630|299|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591128|START|Place Design: pre hook|",
+      "[OPTRACE]|3692630|300|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591165|END|Place Design: pre hook|",
+      "[OPTRACE]|3692630|301|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591165|START|read constraints: place_design|",
+      "[OPTRACE]|3692630|302|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591165|END|read constraints: place_design|",
+      "[OPTRACE]|3692630|303|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591165|START|implement_debug_core|",
+      "[OPTRACE]|3692630|304|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591167|END|implement_debug_core|",
+      "[OPTRACE]|3692630|305|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192591167|START|place_design|",
+      "[OPTRACE]|3692630|350|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192841710|END|place_design|",
+      "[OPTRACE]|3692630|351|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192841710|START|read constraints: place_design_post|",
+      "[OPTRACE]|3692630|352|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192841710|END|read constraints: place_design_post|",
+      "[OPTRACE]|3692630|353|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192841711|START|place_design reports|REPORT",
+      "[OPTRACE]|3692630|354|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192846311|END|place_design reports|",
+      "[OPTRACE]|3692630|355|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192846311|START|Place Design: post hook|",
+      "[OPTRACE]|3692630|374|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192878686|END|Place Design: post hook|",
+      "[OPTRACE]|3692630|375|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192878687|END|Phase: Place Design|",
+      "[OPTRACE]|3692630|376|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192878688|START|Phase: Physical Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692630|377|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192878689|START|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692630|378|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192878689|END|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692630|379|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192878689|START|phys_opt_design|",
+      "[OPTRACE]|3692630|396|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911691|END|phys_opt_design|",
+      "[OPTRACE]|3692630|397|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911692|START|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692630|398|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911692|END|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692630|399|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911692|START|phys_opt_design report|REPORT",
+      "[OPTRACE]|3692630|400|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911692|END|phys_opt_design report|",
+      "[OPTRACE]|3692630|401|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911694|END|Phase: Physical Opt Design|",
+      "[OPTRACE]|3692630|402|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911694|START|Phase: Route Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692630|403|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911696|START|read constraints: route_design|",
+      "[OPTRACE]|3692630|404|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911696|END|read constraints: route_design|",
+      "[OPTRACE]|3692630|405|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739192911696|START|route_design|",
+      "[OPTRACE]|3692630|460|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193093535|END|route_design|",
+      "[OPTRACE]|3692630|461|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193093536|START|read constraints: route_design_post|",
+      "[OPTRACE]|3692630|462|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193093536|END|read constraints: route_design_post|",
+      "[OPTRACE]|3692630|463|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193093536|START|route_design reports|REPORT",
+      "[OPTRACE]|3692630|490|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193201987|END|route_design reports|",
+      "[OPTRACE]|3692630|491|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193201987|START|Route Design: post hook|",
+      "[OPTRACE]|3692630|494|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193229934|END|Route Design: post hook|",
+      "[OPTRACE]|3692630|495|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193229934|START|Route Design: write_checkpoint|CHECKPOINT",
+      "[OPTRACE]|3692630|506|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193260451|END|Route Design: write_checkpoint|",
+      "[OPTRACE]|3692630|507|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193260452|START|route_design misc|",
+      "[OPTRACE]|3692630|508|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193260454|END|route_design misc|",
+      "[OPTRACE]|3692630|509|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193260454|END|Phase: Route Design|",
+      "[OPTRACE]|3692630|510|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193260454|START|Phase: Write Device Image|ROLLUP_AUTO",
+      "[OPTRACE]|3692630|511|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193260454|START|write_device_image setup|",
+      "[OPTRACE]|3692630|512|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193260456|START|Write Device Image: pre hook|",
+      "[OPTRACE]|3692630|513|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193262694|END|Write Device Image: pre hook|",
+      "[OPTRACE]|3692630|514|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193262694|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692630|515|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193262694|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692630|516|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193262694|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692630|517|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193262694|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692630|518|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193264766|END|write_device_image setup|",
+      "[OPTRACE]|3692630|519|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193264767|START|write_device_image|",
+      "[OPTRACE]|3692630|603|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193443364|START|write_device_image write_checkpoint|CHECKPOINT",
+      "[OPTRACE]|3692630|604|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193443365|END|write_device_image write_checkpoint|",
+      "[OPTRACE]|3692630|605|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Congestion_SpreadLogic_high/vitis_design_wrapper.tcl|vivado_impl|1739193443366|END|impl_Congestion_SpreadLogic_high|",
+      "[OPTRACE]|3692631|105|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192006245|START|impl_Performance_Explore|ROLLUP_1",
+      "[OPTRACE]|3692631|106|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192006245|START|Phase: Init Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692631|107|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192006248|START|Design Initialization: pre hook|",
+      "[OPTRACE]|3692631|111|ipirun.tcl|vpl|1739192006299|START|ipirun|ROLLUP_0",
+      "[OPTRACE]|3692631|112|ipirun.tcl|vpl|1739192006300|END|ipirun|",
+      "[OPTRACE]|3692631|116|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192006304|END|Design Initialization: pre hook|",
+      "[OPTRACE]|3692631|117|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192006306|START|create in-memory project|",
+      "[OPTRACE]|3692631|152|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192017668|END|create in-memory project|",
+      "[OPTRACE]|3692631|153|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192017668|START|set parameters|",
+      "[OPTRACE]|3692631|158|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192018573|END|set parameters|",
+      "[OPTRACE]|3692631|159|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192018573|START|add files|",
+      "[OPTRACE]|3692631|166|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192045930|START|read constraints: implementation|",
+      "[OPTRACE]|3692631|167|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192045932|END|read constraints: implementation|",
+      "[OPTRACE]|3692631|168|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192045932|START|read constraints: implementation_pre|",
+      "[OPTRACE]|3692631|169|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192045932|END|read constraints: implementation_pre|",
+      "[OPTRACE]|3692631|170|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192045932|END|add files|",
+      "[OPTRACE]|3692631|171|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192045932|START|link_design|",
+      "[OPTRACE]|3692631|190|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207013|END|link_design|",
+      "[OPTRACE]|3692631|191|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207014|START|gray box cells|",
+      "[OPTRACE]|3692631|192|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207014|END|gray box cells|",
+      "[OPTRACE]|3692631|193|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207014|START|init_design_reports|REPORT",
+      "[OPTRACE]|3692631|194|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207014|END|init_design_reports|",
+      "[OPTRACE]|3692631|195|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207014|START|Design Initialization: post hook|",
+      "[OPTRACE]|3692631|196|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207060|END|Design Initialization: post hook|",
+      "[OPTRACE]|3692631|197|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207060|START|init_design_write_hwdef|",
+      "[OPTRACE]|3692631|198|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207060|END|init_design_write_hwdef|",
+      "[OPTRACE]|3692631|199|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207062|END|Phase: Init Design|",
+      "[OPTRACE]|3692631|200|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207062|START|Phase: Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692631|201|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192207063|START|Opt Design: pre hook|",
+      "[OPTRACE]|3692631|238|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192215650|END|Opt Design: pre hook|",
+      "[OPTRACE]|3692631|239|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192215650|START|read constraints: opt_design|",
+      "[OPTRACE]|3692631|240|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192215650|END|read constraints: opt_design|",
+      "[OPTRACE]|3692631|241|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192215650|START|opt_design|",
+      "[OPTRACE]|3692631|318|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192651104|END|opt_design|",
+      "[OPTRACE]|3692631|319|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192651105|START|read constraints: opt_design_post|",
+      "[OPTRACE]|3692631|320|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192651105|END|read constraints: opt_design_post|",
+      "[OPTRACE]|3692631|321|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192651105|START|opt_design reports|REPORT",
+      "[OPTRACE]|3692631|326|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664240|END|opt_design reports|",
+      "[OPTRACE]|3692631|327|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664240|START|Opt Design: post hook|",
+      "[OPTRACE]|3692631|328|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664243|END|Opt Design: post hook|",
+      "[OPTRACE]|3692631|329|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664244|END|Phase: Opt Design|",
+      "[OPTRACE]|3692631|330|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664244|START|Phase: Place Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692631|331|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664246|START|Place Design: pre hook|",
+      "[OPTRACE]|3692631|332|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664282|END|Place Design: pre hook|",
+      "[OPTRACE]|3692631|333|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664282|START|read constraints: place_design|",
+      "[OPTRACE]|3692631|334|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664282|END|read constraints: place_design|",
+      "[OPTRACE]|3692631|335|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664282|START|implement_debug_core|",
+      "[OPTRACE]|3692631|336|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664283|END|implement_debug_core|",
+      "[OPTRACE]|3692631|337|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192664283|START|place_design|",
+      "[OPTRACE]|3692631|420|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192987357|END|place_design|",
+      "[OPTRACE]|3692631|421|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192987358|START|read constraints: place_design_post|",
+      "[OPTRACE]|3692631|422|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192987358|END|read constraints: place_design_post|",
+      "[OPTRACE]|3692631|423|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192987358|START|place_design reports|REPORT",
+      "[OPTRACE]|3692631|426|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192990693|END|place_design reports|",
+      "[OPTRACE]|3692631|427|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739192990693|START|Place Design: post hook|",
+      "[OPTRACE]|3692631|428|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193014805|END|Place Design: post hook|",
+      "[OPTRACE]|3692631|429|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193014807|END|Phase: Place Design|",
+      "[OPTRACE]|3692631|430|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193014807|START|Phase: Physical Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692631|431|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193014808|START|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692631|432|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193014808|END|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692631|433|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193014808|START|phys_opt_design|",
+      "[OPTRACE]|3692631|440|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042442|END|phys_opt_design|",
+      "[OPTRACE]|3692631|441|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042442|START|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692631|442|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042442|END|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692631|443|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042442|START|phys_opt_design report|REPORT",
+      "[OPTRACE]|3692631|444|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042442|END|phys_opt_design report|",
+      "[OPTRACE]|3692631|445|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042445|END|Phase: Physical Opt Design|",
+      "[OPTRACE]|3692631|446|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042445|START|Phase: Route Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692631|447|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042447|START|read constraints: route_design|",
+      "[OPTRACE]|3692631|448|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042447|END|read constraints: route_design|",
+      "[OPTRACE]|3692631|449|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193042447|START|route_design|",
+      "[OPTRACE]|3692631|498|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193248674|END|route_design|",
+      "[OPTRACE]|3692631|499|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193248675|START|read constraints: route_design_post|",
+      "[OPTRACE]|3692631|500|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193248675|END|read constraints: route_design_post|",
+      "[OPTRACE]|3692631|501|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193248675|START|route_design reports|REPORT",
+      "[OPTRACE]|3692631|534|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193359977|END|route_design reports|",
+      "[OPTRACE]|3692631|535|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193359977|START|Route Design: post hook|",
+      "[OPTRACE]|3692631|545|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193387284|END|Route Design: post hook|",
+      "[OPTRACE]|3692631|546|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193387284|START|Route Design: write_checkpoint|CHECKPOINT",
+      "[OPTRACE]|3692631|556|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193415584|END|Route Design: write_checkpoint|",
+      "[OPTRACE]|3692631|557|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193415584|START|route_design misc|",
+      "[OPTRACE]|3692631|558|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193415586|END|route_design misc|",
+      "[OPTRACE]|3692631|559|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193415586|END|Phase: Route Design|",
+      "[OPTRACE]|3692631|560|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193415586|START|Phase: Write Device Image|ROLLUP_AUTO",
+      "[OPTRACE]|3692631|561|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193415586|START|write_device_image setup|",
+      "[OPTRACE]|3692631|562|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193415588|START|Write Device Image: pre hook|",
+      "[OPTRACE]|3692631|567|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193417821|END|Write Device Image: pre hook|",
+      "[OPTRACE]|3692631|568|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193417821|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692631|569|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193417821|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692631|570|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193417821|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692631|571|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193417822|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692631|579|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193420466|END|write_device_image setup|",
+      "[OPTRACE]|3692631|580|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Explore/vitis_design_wrapper.tcl|vivado_impl|1739193420466|START|write_device_image|",
+      "[OPTRACE]|3692632|129|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192006354|START|impl_Performance_Retiming|ROLLUP_1",
+      "[OPTRACE]|3692632|130|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192006354|START|Phase: Init Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692632|131|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192006356|START|Design Initialization: pre hook|",
+      "[OPTRACE]|3692632|136|ipirun.tcl|vpl|1739192006408|START|ipirun|ROLLUP_0",
+      "[OPTRACE]|3692632|137|ipirun.tcl|vpl|1739192006408|END|ipirun|",
+      "[OPTRACE]|3692632|138|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192006412|END|Design Initialization: pre hook|",
+      "[OPTRACE]|3692632|139|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192006413|START|create in-memory project|",
+      "[OPTRACE]|3692632|140|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192016396|END|create in-memory project|",
+      "[OPTRACE]|3692632|141|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192016396|START|set parameters|",
+      "[OPTRACE]|3692632|150|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192017654|END|set parameters|",
+      "[OPTRACE]|3692632|151|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192017654|START|add files|",
+      "[OPTRACE]|3692632|160|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192045836|START|read constraints: implementation|",
+      "[OPTRACE]|3692632|161|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192045838|END|read constraints: implementation|",
+      "[OPTRACE]|3692632|162|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192045838|START|read constraints: implementation_pre|",
+      "[OPTRACE]|3692632|163|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192045838|END|read constraints: implementation_pre|",
+      "[OPTRACE]|3692632|164|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192045838|END|add files|",
+      "[OPTRACE]|3692632|165|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192045838|START|link_design|",
+      "[OPTRACE]|3692632|226|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215253|END|link_design|",
+      "[OPTRACE]|3692632|227|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215254|START|gray box cells|",
+      "[OPTRACE]|3692632|228|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215254|END|gray box cells|",
+      "[OPTRACE]|3692632|229|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215254|START|init_design_reports|REPORT",
+      "[OPTRACE]|3692632|230|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215254|END|init_design_reports|",
+      "[OPTRACE]|3692632|231|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215254|START|Design Initialization: post hook|",
+      "[OPTRACE]|3692632|232|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215302|END|Design Initialization: post hook|",
+      "[OPTRACE]|3692632|233|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215302|START|init_design_write_hwdef|",
+      "[OPTRACE]|3692632|234|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215302|END|init_design_write_hwdef|",
+      "[OPTRACE]|3692632|235|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215304|END|Phase: Init Design|",
+      "[OPTRACE]|3692632|236|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215304|START|Phase: Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692632|237|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192215305|START|Opt Design: pre hook|",
+      "[OPTRACE]|3692632|262|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192223997|END|Opt Design: pre hook|",
+      "[OPTRACE]|3692632|263|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192223997|START|read constraints: opt_design|",
+      "[OPTRACE]|3692632|264|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192223997|END|read constraints: opt_design|",
+      "[OPTRACE]|3692632|265|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192223997|START|opt_design|",
+      "[OPTRACE]|3692632|322|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192651234|END|opt_design|",
+      "[OPTRACE]|3692632|323|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192651234|START|read constraints: opt_design_post|",
+      "[OPTRACE]|3692632|324|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192651234|END|read constraints: opt_design_post|",
+      "[OPTRACE]|3692632|325|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192651234|START|opt_design reports|REPORT",
+      "[OPTRACE]|3692632|338|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664333|END|opt_design reports|",
+      "[OPTRACE]|3692632|339|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664333|START|Opt Design: post hook|",
+      "[OPTRACE]|3692632|340|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664335|END|Opt Design: post hook|",
+      "[OPTRACE]|3692632|341|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664336|END|Phase: Opt Design|",
+      "[OPTRACE]|3692632|342|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664336|START|Phase: Place Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692632|343|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664338|START|Place Design: pre hook|",
+      "[OPTRACE]|3692632|344|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664373|END|Place Design: pre hook|",
+      "[OPTRACE]|3692632|345|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664373|START|read constraints: place_design|",
+      "[OPTRACE]|3692632|346|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664373|END|read constraints: place_design|",
+      "[OPTRACE]|3692632|347|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664373|START|implement_debug_core|",
+      "[OPTRACE]|3692632|348|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664374|END|implement_debug_core|",
+      "[OPTRACE]|3692632|349|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192664374|START|place_design|",
+      "[OPTRACE]|3692632|416|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192987096|END|place_design|",
+      "[OPTRACE]|3692632|417|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192987096|START|read constraints: place_design_post|",
+      "[OPTRACE]|3692632|418|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192987096|END|read constraints: place_design_post|",
+      "[OPTRACE]|3692632|419|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192987097|START|place_design reports|REPORT",
+      "[OPTRACE]|3692632|424|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192990581|END|place_design reports|",
+      "[OPTRACE]|3692632|425|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739192990581|START|Place Design: post hook|",
+      "[OPTRACE]|3692632|434|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193015220|END|Place Design: post hook|",
+      "[OPTRACE]|3692632|435|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193015222|END|Phase: Place Design|",
+      "[OPTRACE]|3692632|436|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193015222|START|Phase: Physical Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692632|437|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193015223|START|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692632|438|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193015224|END|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692632|439|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193015224|START|phys_opt_design|",
+      "[OPTRACE]|3692632|450|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043016|END|phys_opt_design|",
+      "[OPTRACE]|3692632|451|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043016|START|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692632|452|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043016|END|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692632|453|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043016|START|phys_opt_design report|REPORT",
+      "[OPTRACE]|3692632|454|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043016|END|phys_opt_design report|",
+      "[OPTRACE]|3692632|455|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043018|END|Phase: Physical Opt Design|",
+      "[OPTRACE]|3692632|456|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043018|START|Phase: Route Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692632|457|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043020|START|read constraints: route_design|",
+      "[OPTRACE]|3692632|458|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043020|END|read constraints: route_design|",
+      "[OPTRACE]|3692632|459|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193043020|START|route_design|",
+      "[OPTRACE]|3692632|502|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193252392|END|route_design|",
+      "[OPTRACE]|3692632|503|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193252392|START|read constraints: route_design_post|",
+      "[OPTRACE]|3692632|504|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193252392|END|read constraints: route_design_post|",
+      "[OPTRACE]|3692632|505|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193252392|START|route_design reports|REPORT",
+      "[OPTRACE]|3692632|536|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193360038|END|route_design reports|",
+      "[OPTRACE]|3692632|537|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193360038|START|Route Design: post hook|",
+      "[OPTRACE]|3692632|547|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193387422|END|Route Design: post hook|",
+      "[OPTRACE]|3692632|548|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193387422|START|Route Design: write_checkpoint|CHECKPOINT",
+      "[OPTRACE]|3692632|549|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193415444|END|Route Design: write_checkpoint|",
+      "[OPTRACE]|3692632|550|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193415444|START|route_design misc|",
+      "[OPTRACE]|3692632|551|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193415446|END|route_design misc|",
+      "[OPTRACE]|3692632|552|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193415446|END|Phase: Route Design|",
+      "[OPTRACE]|3692632|553|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193415446|START|Phase: Write Device Image|ROLLUP_AUTO",
+      "[OPTRACE]|3692632|554|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193415446|START|write_device_image setup|",
+      "[OPTRACE]|3692632|555|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193415448|START|Write Device Image: pre hook|",
+      "[OPTRACE]|3692632|572|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193417947|END|Write Device Image: pre hook|",
+      "[OPTRACE]|3692632|573|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193417947|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692632|574|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193417947|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692632|575|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193417947|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692632|576|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193417947|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692632|577|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193420059|END|write_device_image setup|",
+      "[OPTRACE]|3692632|578|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_Retiming/vitis_design_wrapper.tcl|vivado_impl|1739193420059|START|write_device_image|",
+      "[OPTRACE]|3692633|124|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192006348|START|impl_Performance_WLBlockPlacementFanoutOpt|ROLLUP_1",
+      "[OPTRACE]|3692633|125|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192006348|START|Phase: Init Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692633|126|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192006350|START|Design Initialization: pre hook|",
+      "[OPTRACE]|3692633|132|ipirun.tcl|vpl|1739192006397|START|ipirun|ROLLUP_0",
+      "[OPTRACE]|3692633|133|ipirun.tcl|vpl|1739192006398|END|ipirun|",
+      "[OPTRACE]|3692633|134|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192006402|END|Design Initialization: pre hook|",
+      "[OPTRACE]|3692633|135|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192006403|START|create in-memory project|",
+      "[OPTRACE]|3692633|144|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192016780|END|create in-memory project|",
+      "[OPTRACE]|3692633|145|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192016781|START|set parameters|",
+      "[OPTRACE]|3692633|154|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192017670|END|set parameters|",
+      "[OPTRACE]|3692633|155|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192017670|START|add files|",
+      "[OPTRACE]|3692633|172|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192045945|START|read constraints: implementation|",
+      "[OPTRACE]|3692633|173|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192045947|END|read constraints: implementation|",
+      "[OPTRACE]|3692633|174|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192045947|START|read constraints: implementation_pre|",
+      "[OPTRACE]|3692633|175|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192045947|END|read constraints: implementation_pre|",
+      "[OPTRACE]|3692633|176|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192045947|END|add files|",
+      "[OPTRACE]|3692633|177|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192045948|START|link_design|",
+      "[OPTRACE]|3692633|214|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211540|END|link_design|",
+      "[OPTRACE]|3692633|215|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211541|START|gray box cells|",
+      "[OPTRACE]|3692633|216|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211541|END|gray box cells|",
+      "[OPTRACE]|3692633|217|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211541|START|init_design_reports|REPORT",
+      "[OPTRACE]|3692633|218|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211541|END|init_design_reports|",
+      "[OPTRACE]|3692633|219|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211541|START|Design Initialization: post hook|",
+      "[OPTRACE]|3692633|220|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211585|END|Design Initialization: post hook|",
+      "[OPTRACE]|3692633|221|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211585|START|init_design_write_hwdef|",
+      "[OPTRACE]|3692633|222|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211585|END|init_design_write_hwdef|",
+      "[OPTRACE]|3692633|223|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211587|END|Phase: Init Design|",
+      "[OPTRACE]|3692633|224|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211587|START|Phase: Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692633|225|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192211588|START|Opt Design: pre hook|",
+      "[OPTRACE]|3692633|258|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192220406|END|Opt Design: pre hook|",
+      "[OPTRACE]|3692633|259|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192220406|START|read constraints: opt_design|",
+      "[OPTRACE]|3692633|260|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192220406|END|read constraints: opt_design|",
+      "[OPTRACE]|3692633|261|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192220407|START|opt_design|",
+      "[OPTRACE]|3692633|274|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192580737|END|opt_design|",
+      "[OPTRACE]|3692633|275|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192580738|START|read constraints: opt_design_post|",
+      "[OPTRACE]|3692633|276|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192580738|END|read constraints: opt_design_post|",
+      "[OPTRACE]|3692633|277|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192580738|START|opt_design reports|REPORT",
+      "[OPTRACE]|3692633|306|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593673|END|opt_design reports|",
+      "[OPTRACE]|3692633|307|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593673|START|Opt Design: post hook|",
+      "[OPTRACE]|3692633|308|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593676|END|Opt Design: post hook|",
+      "[OPTRACE]|3692633|309|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593678|END|Phase: Opt Design|",
+      "[OPTRACE]|3692633|310|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593678|START|Phase: Place Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692633|311|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593680|START|Place Design: pre hook|",
+      "[OPTRACE]|3692633|312|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593724|END|Place Design: pre hook|",
+      "[OPTRACE]|3692633|313|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593725|START|read constraints: place_design|",
+      "[OPTRACE]|3692633|314|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593725|END|read constraints: place_design|",
+      "[OPTRACE]|3692633|315|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593725|START|implement_debug_core|",
+      "[OPTRACE]|3692633|316|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593726|END|implement_debug_core|",
+      "[OPTRACE]|3692633|317|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192593726|START|place_design|",
+      "[OPTRACE]|3692633|362|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192852077|END|place_design|",
+      "[OPTRACE]|3692633|363|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192852078|START|read constraints: place_design_post|",
+      "[OPTRACE]|3692633|364|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192852078|END|read constraints: place_design_post|",
+      "[OPTRACE]|3692633|365|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192852078|START|place_design reports|REPORT",
+      "[OPTRACE]|3692633|366|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192856060|END|place_design reports|",
+      "[OPTRACE]|3692633|367|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192856060|START|Place Design: post hook|",
+      "[OPTRACE]|3692633|380|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192886524|END|Place Design: post hook|",
+      "[OPTRACE]|3692633|381|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192886526|END|Phase: Place Design|",
+      "[OPTRACE]|3692633|382|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192886526|START|Phase: Physical Opt Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692633|383|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192886528|START|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692633|384|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192886528|END|read constraints: phys_opt_design|",
+      "[OPTRACE]|3692633|385|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192886528|START|phys_opt_design|",
+      "[OPTRACE]|3692633|406|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918287|END|phys_opt_design|",
+      "[OPTRACE]|3692633|407|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918287|START|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692633|408|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918287|END|read constraints: phys_opt_design_post|",
+      "[OPTRACE]|3692633|409|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918287|START|phys_opt_design report|REPORT",
+      "[OPTRACE]|3692633|410|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918288|END|phys_opt_design report|",
+      "[OPTRACE]|3692633|411|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918289|END|Phase: Physical Opt Design|",
+      "[OPTRACE]|3692633|412|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918289|START|Phase: Route Design|ROLLUP_AUTO",
+      "[OPTRACE]|3692633|413|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918291|START|read constraints: route_design|",
+      "[OPTRACE]|3692633|414|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918291|END|read constraints: route_design|",
+      "[OPTRACE]|3692633|415|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739192918291|START|route_design|",
+      "[OPTRACE]|3692633|468|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193107217|END|route_design|",
+      "[OPTRACE]|3692633|469|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193107217|START|read constraints: route_design_post|",
+      "[OPTRACE]|3692633|470|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193107218|END|read constraints: route_design_post|",
+      "[OPTRACE]|3692633|471|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193107218|START|route_design reports|REPORT",
+      "[OPTRACE]|3692633|492|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193215183|END|route_design reports|",
+      "[OPTRACE]|3692633|493|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193215183|START|Route Design: post hook|",
+      "[OPTRACE]|3692633|496|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193241507|END|Route Design: post hook|",
+      "[OPTRACE]|3692633|497|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193241507|START|Route Design: write_checkpoint|CHECKPOINT",
+      "[OPTRACE]|3692633|520|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193268616|END|Route Design: write_checkpoint|",
+      "[OPTRACE]|3692633|521|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193268617|START|route_design misc|",
+      "[OPTRACE]|3692633|522|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193268618|END|route_design misc|",
+      "[OPTRACE]|3692633|523|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193268618|END|Phase: Route Design|",
+      "[OPTRACE]|3692633|524|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193268618|START|Phase: Write Device Image|ROLLUP_AUTO",
+      "[OPTRACE]|3692633|525|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193268618|START|write_device_image setup|",
+      "[OPTRACE]|3692633|526|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193268620|START|Write Device Image: pre hook|",
+      "[OPTRACE]|3692633|527|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193270702|END|Write Device Image: pre hook|",
+      "[OPTRACE]|3692633|528|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193270703|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692633|529|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193270703|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692633|530|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193270703|START|read constraints: write_bitstream|",
+      "[OPTRACE]|3692633|531|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193270703|END|read constraints: write_bitstream|",
+      "[OPTRACE]|3692633|532|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193272667|END|write_device_image setup|",
+      "[OPTRACE]|3692633|533|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193272668|START|write_device_image|",
+      "[OPTRACE]|3692633|600|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193442762|START|write_device_image write_checkpoint|CHECKPOINT",
+      "[OPTRACE]|3692633|601|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193442763|END|write_device_image write_checkpoint|",
+      "[OPTRACE]|3692633|602|/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/impl_Performance_WLBlockPlacementFanoutOpt/vitis_design_wrapper.tcl|vivado_impl|1739193442764|END|impl_Performance_WLBlockPlacementFanoutOpt|"
+      ];
+
+  var legendData = [
+  { "title": "Report Generation",
+    "color": "#b9783f"
+  }, {
+    "title": "Write Checkpoint",
+    "color": "#cd82ad"
+  },
+  {
+    "title": "Incomplete Data",
+    "color": "#cc4748"
+  } ];
+
+  // -- Convert Raw data into something we can use ---------------------------
+  console.log("Convert log data (%s entries) to Javascript 'JSON' objects...", csvData.length);
+  var jsonData = csvArrayToJSON(header, csvData, "|");
+
+  // -- Clean up the JSON objects --------------------------------------------
+  for (var i = 0; i < jsonData.length; i++) {
+    jsonData[i].Action = jsonData[i].Action.toUpperCase();
+    jsonData[i].Tags = jsonData[i].Tags.toUpperCase();
+    jsonData[i].Tags = jsonData[i].Tags.trim();
+    jsonData[i].TimeStampMSec = parseInt(jsonData[i].TimeStampMSec, 10);
+    jsonData[i].pid = parseInt(jsonData[i].pid, 10);
+  }
+
+  // -- Sort JSON array ------------------------------------------------------
+  console.log("Sorting JSON objects (%s objects) according to timestamps...", jsonData.length);
+  jsonData.sort(compareByTimeStamp);
+
+  // Record the PID grouping order
+  var pidOrder = new Map();
+  for (var i = 0; i < jsonData.length; i++) {
+    if (pidOrder.has(jsonData[i].pid) == false) {
+      pidOrder.set(jsonData[i].pid, i);    // Simple ordering (lower is first)
+    }
+  }
+
+  // -- Create secondary data array for the chart data array -----------------
+  console.log("Preparing graph data...");
+
+  // Task limits
+  var m_startTS = 0;      // Earliest Timestamp
+  var m_endTS = 0;        // Latest Timestamp
+
+  if (jsonData.length > 0) {
+    m_startTS = jsonData[0].TimeStampMSec;
+    m_endTS = jsonData[jsonData.length - 1].TimeStampMSec;
+  }
+
+
+  var chartData = [ ];   // Empty JSON array
+
+
+  populateChartData();
+  tableCreate( chartData );
+
+  filterChartEntries();
+
+  // -- Search for "holes"
+  // -- Sort by common PID
+  // -- Create groupings by process
+
+  console.log("done");
+
+  var chart = AmCharts.makeChart("chartdiv", {
+    "type": "gantt",
+    "theme": "light",
+    "titles": [
+    { "text": "OPTrace", "size": 15}],
+    "marginRight": 70,
+    "period": "fff",                                     // X-Axis
+    "balloonDateFormat": "JJ:NN:SS",
+    "columnWidth": 0.5,                                 // Bar thickness
+    "valueAxis": {
+      "type": "numeric",
+      "title": "Time [HH:MM:SS]",
+      "duration": "ss",
+      "durationUnits": { DD: 'd. ', hh: ':', mm: ':', ss: '' },
+    },
+    "brightnessStep": 10,
+    "graph": {
+      "fillAlphas": 1,
+      "labelFunction": barLabelCallBack,
+      "labelText": " ",
+      "labelPosition": "right",
+      "balloonFunction": ballonLabelCallBack,
+      "balloonText": "<p align='left'> Task: [[task]]<br/>Start:[[start]]<br/>End:[[end]]<br/>Duration:[[duration]]</p>",
+      "bulletField": "bullet",
+      "bulletSize": 8
+    },
+    "rotate": true,
+    "categoryField": "category",
+    "segmentsField": "segments",
+    "colorField": "color",
+    "startDate": "2015-01-01 00:00:00",
+    "startField": "start",
+    "endField": "end",
+    "durationField": "duration",
+    "dataProvider": chartData,
+    "valueScrollbar": {
+      "autoGridCount": true
+    },
+    "chartScrollbar": {
+      "enable": true
+    },
+    "chartCursor": {
+      "cursorColor": "#55bb76",
+      "valueBalloonsEnabled": false,
+      "cursorAlpha": 0.1,
+      "valueLineAlpha": 0.5,
+      "valueLineBalloonEnabled": true,
+      "valueLineEnabled": true,
+      "zoomable": true,
+      "valueZoomable": true,
+      "fullWidth": true
+    },
+    "legend": {
+      "data": legendData,
+    },
+    "export": {
+      "enabled": true
+    }
+  });
+
+  // =========================================================================
+  // Call back methods
+  // =========================================================================
+function ballonLabelCallBack( _graphDataItem )
+{
+  var start = _graphDataItem.values.open;
+  var end = _graphDataItem.values.value;
+  var duration = end - start;
+
+  var result = "<p align='left'>Task: " + _graphDataItem.category + "<br/>Start: " + secondsToHHMMSS(start) + "<br/>End: " + secondsToHHMMSS( end ) + "<br/>Duration: " + secondsToHHMMSS( duration ) + "</p>";
+  return result;
+}
+
+
+function barLabelCallBack( _graphDataItem )
+{
+   var duration = _graphDataItem.values.value - _graphDataItem.values.open;
+
+   return secondsToHHMMSS( duration);
+}
+
+
+function userInputFormCallback()
+{
+  // Second filter
+  m_secondFilter = document.getElementById("userDurationFilterSecInput").value;
+  console.log("Setting second filter to: " + m_secondFilter + " seconds");
+
+  // Group PID Sort
+  m_groupPidSort = document.getElementById("userGroupPidSortSelected").checked;
+  console.log("Group PID filter is set to: " + m_groupPidSort);
+
+  // Rollup filter
+  m_showRollup = document.getElementById("userRollupSelected").checked;
+  console.log("Rollup filter is set to: " + m_showRollup);
+
+  // Individual filter
+  m_showIndividualEntry = document.getElementById("userIndividualEntrySelected").checked;
+  console.log("Individual filter is set to: " + m_showIndividualEntry);
+
+  // Checkpoint Report Entries filter
+  m_showCheckpointEntry = document.getElementById("userCheckpointEntrySelected").checked;
+  console.log("Checkpoint Entry filter is set to: " + m_showCheckpointEntry);
+
+  // Checkpoint Report Entries filter
+  m_showReportEntry = document.getElementById("userReportEntrySelected").checked;
+  console.log("Report Entry filter is set to: " + m_showReportEntry);
+
+  populateChartData();
+  filterChartEntries()
+  chart.dataProvider = chartData;
+  chart.validateData();
+}
+
+  // =========================================================================
+  // Utilities
+  // =========================================================================
+
+
+function populateChartData()
+{
+  chartData = [ ];
+  if (m_groupPidSort == false) {
+    jsonData.sort(compareByTimeStamp);
+  } else {
+    jsonData.sort(compareByGroupTimeStamp);
+  }
+
+  for (var i = 0; i < jsonData.length; i++) {
+    var timestamp = parseInt(jsonData[0].TimeStampMSec, 10);
+
+    if (m_startTS > timestamp) m_startTS = timestamp;
+    if (m_endTS < timestamp) m_endTS = timestamp;
+
+    for (var i = 0; i < jsonData.length; i++) {
+      switch (jsonData[i].Action) {
+      case "START":
+        var categoryEntry = { };
+        categoryEntry["category"] = jsonData[i].Task;
+        categoryEntry["pid"] = jsonData[i].pid;
+
+        var segmentEntry = { };
+        // Normalize entry and convert to seconds
+        segmentEntry["start"] = (jsonData[i].TimeStampMSec - m_startTS) / 1000;
+        segmentEntry["color"] = getTaskBarColor(jsonData[i].Tags)
+        segmentEntry["task"] = jsonData[i].Task;
+        segmentEntry["tags"] = jsonData[i].Tags;
+        segmentEntry["duration"] = -1;
+
+        categoryEntry["segments"] = [ ];
+        categoryEntry["segments"].push(segmentEntry);
+        chartData.push(categoryEntry);
+        break;
+
+      case "END":
+        var catagory = findCatagory(jsonData[i].pid, jsonData[i].Task, chartData);
+        if (catagory != null) {
+          var segmentsEntry = catagory.segments[0];
+          segmentsEntry["end"] = (jsonData[i].TimeStampMSec - m_startTS) / 1000;
+          segmentsEntry["duration"] = segmentsEntry.end - segmentsEntry.start;
+        } else {
+          console.log("Null entry found: pid:%s, Task: %s", jsonData[i].pid, jsonData[i].Task);
+        }
+
+        break;
+
+      default:
+        console.log("Default");
+        break;
+      }
+    }
+  }
+}
+
+function filterChartEntries()
+{
+  for(var i = chartData.length - 1; i >= 0; i--) {
+    var segment = chartData[i].segments[0];
+
+    // -- Remove entries less than 1 seconds
+    if ( segment["duration"] == -1) {
+      segment["bullet"] = "xError";
+      segment["color"] = "#cc4748";
+      segment["duration"] = ((m_endTS - m_startTS) / 1000) - segment["start"];
+    } else if (segment["duration"] <  m_secondFilter) {
+      chartData.splice(i, 1);
+      continue;
+    }
+  
+
+    // Filter by tags
+    var bHasRollup = false;
+    var bHasCheckpoint = false;
+    var bHasReport = false;
+
+    var tags = segment["tags"];
+    console.log("Tag: " + tags);
+    if (tags.search(/ROLLUP_/i) != -1) { bHasRollup = true; }
+    if (tags.search(/CHECKPOINT/i) != -1) { bHasCheckpoint = true; }
+    if (tags.search(/REPORT/i) != -1) { bHasReport = true; }
+
+    var bRemoveEntry = false;
+
+    // Remove rollups
+    if ((m_showRollup == false) && (bHasRollup == true)) {
+      bRemoveEntry = true;
+    }
+    
+    // Remove checkpoints    
+    if ((m_showCheckpointEntry == false) && (bHasCheckpoint == true)) {
+      bRemoveEntry = true;
+    }
+
+    // Remove reports
+    if ((m_showReportEntry == false) && (bHasReport == true)) {
+      bRemoveEntry = true;
+    }
+
+    // Remove individual entry
+    if (((m_showIndividualEntry == false) && 
+         ((bHasRollup == false) &&
+          (bHasCheckpoint == false) &&
+          (bHasReport == false)))) {
+      bRemoveEntry = true;
+    }
+
+    if (bRemoveEntry == true) {
+      chartData.splice(i, 1);
+      continue;
+    }
+  }
+
+  console.log("ChartData.length: " + chartData.length);
+}
+
+
+function getTaskBarColor( _tags )
+{
+  if (_tags == null)
+    return "#8dc49f";
+
+  if (_tags.search(/ROLLUP_AUTO/i) != -1){ return "#0099ff"; }
+  if (_tags.search(/ROLLUP_0/i) != -1)   { return "#006699"; }
+  if (_tags.search(/ROLLUP_1/i) != -1)   { return "#009933"; }
+  if (_tags.search(/ROLLUP_2/i) != -1)   { return "#66ccff"; }
+  if (_tags.search(/REPORT/i) != -1)     { return "#b9783f"; }
+  if (_tags.search(/CHECKPOINT/i) != -1) { return "#cd82ad"; }
+
+  return "#8dc49f"
+}
+
+
+function tableCreate( _chartData ){
+    var myTableDiv = document.getElementById("myDynamicTable");
+
+
+    for ( var i = 0; i < _chartData.length; i++) {
+      var tr = myTableDiv.insertRow();
+
+      var td_task = tr.insertCell();
+      td_task.appendChild(document.createTextNode( _chartData[i].category ));
+
+      var segmentEntry = _chartData[i].segments;
+      var td_start = tr.insertCell();
+      td_start.appendChild(document.createTextNode( secondsToHHMMSS(segmentEntry[0].start) ));
+
+      var td_duration = tr.insertCell();
+      td_duration.appendChild(document.createTextNode( secondsToHHMMSS(segmentEntry[0].duration) ));
+
+    }
+}
+
+function secondsToHHMMSS( _seconds )
+{
+  var hours = Math.floor(_seconds / 3600);
+  var minutes = Math.floor(_seconds % 3600 / 60);
+  var seconds = Math.floor(_seconds % 3600 % 60);
+
+  var result = hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds; 
+
+  return result;
+}
+
+
+  function findCatagory(_pid, _category, _catagoryArray) {
+    for (var i = (_catagoryArray.length - 1); i >= 0; i--) {
+      if (_pid == _catagoryArray[i].pid) {
+        if (_catagoryArray[i].category == _category) {
+          return  _catagoryArray[i];
+        }
+      }
+    }
+    return null;
+  }
+
+
+  // Compares the timestamps between to JSON objects
+  function compareByTimeStamp(_a, _b) {
+    if (_a.TimeStampMSec < _b.TimeStampMSec) return -1;
+    if (_a.TimeStampMSec > _b.TimeStampMSec) return 1;
+
+    if (_a.pid == _b.pid) {
+      if ((_a.Action == "START") && (_b.Action == "END")) return -1;
+      if ((_a.Action == "END") && (_b.Action == "START")) return 1;
+
+      if(_a.Entry < _b.Entry) return -1;
+      if(_a.Entry > _b.Entry) return 1;
+    }
+
+    return 0;
+  }
+
+
+  // Compares the timestamps between to JSON objects
+  function compareByGroupTimeStamp(_a, _b) {
+    if (pidOrder.get(_a.pid) < pidOrder.get(_b.pid)) return -1;
+
+    if (pidOrder.get(_a.pid) > pidOrder.get(_b.pid)) return 1;
+
+    return compareByTimeStamp(_a, _b);
+  }
+
+
+  // Return array of string values, or NULL if CSV string not well formed.
+  function CSVtoArray(_text, _sep) {
+    // Regex expressions
+    var re_valid_default = /^\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*(?:,\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*)*$/;
+    var re_value_default = /(?!\s*$)\s*(?:'([^'\\]*(?:\\[\S\s][^'\\]*)*)'|"([^"\\]*(?:\\[\S\s][^"\\]*)*)"|([^,'"\s\\]*(?:\s+[^,'"\s\\]+)*))\s*(?:,|$)/g;
+    var re_special_default = /,\s*$/;
+
+    // Algorithm:
+    //   1) Convert regex expression to a string.
+    //   2) Remove leading regex escape character (e.g., '\')
+    //   3) Remove training regex escape character(s) (e.g., '\' or "\g")
+    //   4) Replace the comma (',') character witht he new delimiter character
+    //   5) Build the regex command
+
+    // Check delimiter, if special insert escapes
+    if (_sep == "|") _sep = "\\|";
+
+    var re_valid = new RegExp(re_valid_default.toString().substr(1).slice(0, -1).replace(/,/g, _sep));
+    var re_value = new RegExp(re_value_default.toString().substr(1).slice(0, -2).replace(/,/g, _sep), 'g');
+    var re_special = new RegExp(re_special_default.toString().substr(1).slice(0, -1).replace(/,/g, _sep));
+
+    // Validate the input string to determine if it is well formed
+    if (!re_valid.test(_text)) return null;
+
+    var a = [ ];                     // Initialize array to receive values.
+    _text.replace(re_value,           // "Walk" the string using replace with callback.
+                  function(m0, m1, m2, m3) {
+                      // Remove backslash from \' in single quoted values.
+                      if      (m1 !== undefined) a.push(m1.replace(/\\'/g, "'"));
+                      // Remove backslash from \" in double quoted values.
+                      else if (m2 !== undefined) a.push(m2.replace(/\\"/g, '"'));
+                      else if (m3 !== undefined) a.push(m3);
+                      return ''; // Return empty string.
+                  });
+
+    // Handle special case of empty last value.
+    if (re_special.test(_text)) a.push('');
+
+    return a;
+  };
+
+
+  // Converts the given CSV array & header into a JSON array
+  function csvArrayToJSON(_header, _csvArray, _sep) {
+    var result = [ ];
+    var headers = CSVtoArray(_header, _sep);
+
+    for (var i = 0; i < _csvArray.length; i++) {
+
+      var obj = { };
+      var currentline = CSVtoArray(_csvArray[i], _sep);
+
+      for (var j = 0; j < headers.length; j++) {
+        obj[headers[j]] = currentline[j];
+      }
+
+      result.push(obj);
+
+    }
+
+    return result; //JavaScript object
+  }
+
+
+</script>
+</body>
+
+</html>
+

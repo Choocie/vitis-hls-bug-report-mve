@@ -1,0 +1,138 @@
+
+
+================================================================
+== Vitis HLS Report for 'entry_proc'
+================================================================
+* Date:           Mon Feb 10 13:36:05 2025
+
+* Version:        2024.2.1 (Build 5263293 on Dec 12 2024)
+* Project:        harness
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: versalaicore
+* Target device:  xcvc1902-vsva2197-2MP-e-S
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.03 ns|  0.750 ns|     0.82 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |        0|        0|      0 ns|      0 ns|    0|    0|       no|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+------+---------+--------+-----+
+|       Name      | BRAM_18K|  DSP |    FF   |   LUT  | URAM|
++-----------------+---------+------+---------+--------+-----+
+|DSP              |        -|     -|        -|       -|    -|
+|Expression       |        -|     -|        0|       2|    -|
+|FIFO             |        -|     -|        -|       -|    -|
+|Instance         |        -|     -|        -|       -|    -|
+|Memory           |        -|     -|        -|       -|    -|
+|Multiplexer      |        -|     -|        0|       3|    -|
+|Register         |        -|     -|        2|       -|    -|
++-----------------+---------+------+---------+--------+-----+
+|Total            |        0|     0|        2|       5|    0|
++-----------------+---------+------+---------+--------+-----+
+|Available        |     1934|  1968|  1799680|  899840|  463|
++-----------------+---------+------+---------+--------+-----+
+|Utilization (%)  |        0|     0|       ~0|      ~0|    0|
++-----------------+---------+------+---------+--------+-----+
+
++ Detail: 
+    * Instance: 
+    N/A
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +-----------------+----------+----+---+----+------------+------------+
+    |  Variable Name  | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +-----------------+----------+----+---+----+------------+------------+
+    |ap_block_state1  |        or|   0|  0|   2|           1|           1|
+    +-----------------+----------+----+---+----+------------+------------+
+    |Total            |          |   0|  0|   2|           1|           1|
+    +-----------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +------------------------+----+-----------+-----+-----------+
+    |          Name          | LUT| Input Size| Bits| Total Bits|
+    +------------------------+----+-----------+-----+-----------+
+    |ap_done                 |   1|          2|    1|          2|
+    |outFeatureList_c_blk_n  |   1|          2|    1|          2|
+    |outputNumList_c_blk_n   |   1|          2|    1|          2|
+    +------------------------+----+-----------+-----+-----------+
+    |Total                   |   3|          6|    3|          6|
+    +------------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +-------------+---+----+-----+-----------+
+    |     Name    | FF| LUT| Bits| Const Bits|
+    +-------------+---+----+-----+-----------+
+    |ap_CS_fsm    |  1|   0|    1|          0|
+    |ap_done_reg  |  1|   0|    1|          0|
+    +-------------+---+----+-----+-----------+
+    |Total        |  2|   0|    2|          0|
+    +-------------+---+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++---------------------------------+-----+-----+------------+------------------+--------------+
+|            RTL Ports            | Dir | Bits|  Protocol  |   Source Object  |    C Type    |
++---------------------------------+-----+-----+------------+------------------+--------------+
+|ap_clk                           |   in|    1|  ap_ctrl_hs|        entry_proc|  return value|
+|ap_rst                           |   in|    1|  ap_ctrl_hs|        entry_proc|  return value|
+|ap_start                         |   in|    1|  ap_ctrl_hs|        entry_proc|  return value|
+|ap_done                          |  out|    1|  ap_ctrl_hs|        entry_proc|  return value|
+|ap_continue                      |   in|    1|  ap_ctrl_hs|        entry_proc|  return value|
+|ap_idle                          |  out|    1|  ap_ctrl_hs|        entry_proc|  return value|
+|ap_ready                         |  out|    1|  ap_ctrl_hs|        entry_proc|  return value|
+|outputNumList                    |   in|   64|     ap_none|     outputNumList|        scalar|
+|outputNumList_c_din              |  out|   64|     ap_fifo|   outputNumList_c|       pointer|
+|outputNumList_c_full_n           |   in|    1|     ap_fifo|   outputNumList_c|       pointer|
+|outputNumList_c_write            |  out|    1|     ap_fifo|   outputNumList_c|       pointer|
+|outputNumList_c_num_data_valid   |   in|    3|     ap_fifo|   outputNumList_c|       pointer|
+|outputNumList_c_fifo_cap         |   in|    3|     ap_fifo|   outputNumList_c|       pointer|
+|outFeatureList                   |   in|   64|     ap_none|    outFeatureList|        scalar|
+|outFeatureList_c_din             |  out|   64|     ap_fifo|  outFeatureList_c|       pointer|
+|outFeatureList_c_full_n          |   in|    1|     ap_fifo|  outFeatureList_c|       pointer|
+|outFeatureList_c_write           |  out|    1|     ap_fifo|  outFeatureList_c|       pointer|
+|outFeatureList_c_num_data_valid  |   in|    3|     ap_fifo|  outFeatureList_c|       pointer|
+|outFeatureList_c_fifo_cap        |   in|    3|     ap_fifo|  outFeatureList_c|       pointer|
++---------------------------------+-----+-----+------------+------------------+--------------+
+

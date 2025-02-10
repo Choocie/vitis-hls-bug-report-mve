@@ -1,0 +1,8 @@
+platform=xilinx_vck190_base_202420_1
+part=xcvc1902-vsva2197-2MP-e-S
+relativeroot=/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build
+original_argv=-c --mode hls --platform xilinx_vck190_base_202420_1 --freqhz=330000000 --config ../config/hls.cfg 
+
+[hls]
+clock=330000000Hz
+

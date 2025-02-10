@@ -1,0 +1,61 @@
+INFO: [v++ 60-895]   Target platform: /tools/xilinx/Vitis/2024.2/base_platforms/xilinx_vck190_base_202420_1/xilinx_vck190_base_202420_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/tools/xilinx/Vitis/2024.2/base_platforms/xilinx_vck190_base_202420_1/hw/hw.xsa'
+  **** HLS Build v2024.2.1 5263293
+INFO: [HLS 200-2005] Using work_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness 
+INFO: [HLS 200-1505] Using default flow_target 'vivado'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+WARNING: [HLS 200-1998] cannot find relative file path '../../src/templates' in directory(s): /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config
+INFO: [HLS 200-1465] Applying ini 'syn.file=../../../src/weights.h' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(29)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/weights.h' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../../../src/global.h' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(30)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/global.h' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../../../src/caloclusternet.h' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(31)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.h' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../../../src/caloclusternet.cpp' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(32)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.cpp' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../src/harness.cpp' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(33)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/src/harness.cpp' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../src/harness.h' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(34)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/src/harness.h' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.cflags=-I../../../src/templates' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(15)
+INFO: [HLS 200-1465] Applying ini 'syn.csimflags=-I../../src/templates' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(22)
+INFO: [HLS 200-1465] Applying ini 'tb.file=../src/csim.cpp' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(35)
+INFO: [HLS 200-10] Adding test bench file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/src/csim.cpp' to the project
+INFO: [HLS 200-1465] Applying ini 'tb.cflags=-I../../../src/templates -I/home/nv3401/bin/highfive-2_8_0/include -I/home/nv3401/bin/hdf5-1_14_0/include' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(16)
+INFO: [HLS 200-1465] Applying ini 'syn.top=harness' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(6)
+INFO: [HLS 200-1465] Applying ini 'flow_target=vitis' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(5)
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_latency=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_rtl -register_reset_num=3
+INFO: [HLS 200-1465] Applying ini 'clock_uncertainty=0.2ns' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(14)
+INFO: [HLS 200-1465] Applying ini 'cosim.enable_dataflow_profiling=true' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(10)
+INFO: [HLS 200-1465] Applying ini 'cosim.enable_fifo_sizing=1' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(11)
+INFO: [HLS 200-1465] Applying ini 'cosim.enable_tasks_with_m_axi=0' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(12)
+INFO: [HLS 200-1465] Applying ini 'cosim.rtl=verilog' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(13)
+INFO: [HLS 200-1465] Applying ini 'cosim.setup=0' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(38)
+INFO: [HLS 200-1465] Applying ini 'cosim.stable_axilite_update=1' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(20)
+INFO: [HLS 200-1465] Applying ini 'cosim.tool=xsim' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(19)
+INFO: [HLS 200-1465] Applying ini 'cosim.trace_level=all' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(18)
+INFO: [HLS 200-1465] Applying ini 'cosim.wave_debug=1' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(21)
+INFO: [HLS 200-1465] Applying ini 'csim.code_analyzer=0' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(17)
+INFO: [HLS 200-1465] Applying ini 'package.output.file=harness.xo' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(37)
+INFO: [HLS 200-1465] Applying ini 'package.output.format=xo' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(9)
+INFO: [HLS 200-1465] Applying ini 'sim.ldflags=-L/home/nv3401/bin/hdf5-1_14_0/lib -lhdf5 -Wl,-rpath,/home/nv3401/bin/hdf5-1_14_0/lib' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(24)
+INFO: [HLS 200-1465] Applying ini 'syn.dataflow.fifo_depth=4' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(7)
+INFO: [XFORM 203-701] Set default FIFO size in dataflow to 4.
+INFO: [HLS 200-1465] Applying ini 'syn.rtl.register_reset_num=3' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(23)
+INFO: [HLS 200-1465] Applying ini 'syn.schedule.enable_dsp_full_reg=0' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(36)
+INFO: [HLS 200-1465] Applying ini 'vivado.optimization_level=3' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(25)
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level 3' configuration: config_export -vivado_phys_opt=all
+INFO: [HLS 200-1465] Applying ini 'vivado.phys_opt=all' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(26)
+INFO: [HLS 200-1465] Applying ini 'vivado.report_level=2' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(27)
+INFO: [HLS 200-1465] Applying ini 'vivado.syn_dcp=1' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(28)
+INFO: [HLS 200-1465] Applying ini 'part=xcvc1902-vsva2197-2MP-e-S' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/config.cmdline(2)
+INFO: [HLS 200-1611] Setting target device to 'xcvc1902-vsva2197-2MP-e-S'
+INFO: [HLS 200-1465] Applying ini 'clock=330000000Hz' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/config.cmdline(7)
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 3.03ns.
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 5.37 seconds. CPU system time: 1.23 seconds. Elapsed time: 9.69 seconds; current allocated memory: 662.727 MB.
+INFO: [HLS 200-10] Analyzing design file '../src/harness.cpp' ... 

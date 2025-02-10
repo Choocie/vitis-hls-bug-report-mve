@@ -1,0 +1,30 @@
+
+*** Running vivado
+    with args -log vitis_design_harness_1_0.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source vitis_design_harness_1_0.tcl
+
+
+****** Vivado v2024.2.1 (64-bit)
+  **** SW Build 5266912 on Sun Dec 15 09:03:31 MST 2024
+  **** IP Build 5264866 on Sun Dec 15 16:27:47 MST 2024
+  **** SharedData Build 5264680 on Wed Dec 11 12:48:36 MST 2024
+  **** Start of session at: Mon Feb 10 13:49:55 2025
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source vitis_design_harness_1_0.tcl -notrace
+INFO: Dispatch client connection id - 36343
+create_project: Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1737.508 ; gain = 139.875 ; free physical = 265642 ; free virtual = 445825
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/xo/ip_repo/xilinx_com_hls_harness_1_0'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/.local/hw_platform/ipcache'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/tools/xilinx/Vitis/2024.2/data/ip'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/xilinx/Vivado/2024.2/data/ip'.
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: vitis_design_harness_1_0
+INFO: [IP_Flow 19-6922] IPCACHE: Exporting cached entry 7776d1b9bc52b78f to dir: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/.ipcache/7/7/7776d1b9bc52b78f/vitis_design_harness_1_0_sim_netlist.vhdl to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0_sim_netlist.vhdl.
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/.ipcache/7/7/7776d1b9bc52b78f/vitis_design_harness_1_0.dcp to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0.dcp.
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/.ipcache/7/7/7776d1b9bc52b78f/vitis_design_harness_1_0_stub.v to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0_stub.v.
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/.ipcache/7/7/7776d1b9bc52b78f/vitis_design_harness_1_0_sim_netlist.v to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0_sim_netlist.v.
+INFO: [IP_Flow 19-6928] IPCACHE: copied cached file /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/.ipcache/7/7/7776d1b9bc52b78f/vitis_design_harness_1_0_stub.vhdl to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/prj/prj.runs/vitis_design_harness_1_0_synth_1/vitis_design_harness_1_0_stub.vhdl.
+INFO: [IP_Flow 19-4838] Using cached IP synthesis design for IP vitis_design_harness_1_0, cache-ID = 7776d1b9bc52b78f.
+INFO: [Common 17-206] Exiting Vivado at Mon Feb 10 13:50:16 2025...

@@ -1,0 +1,207 @@
+
+
+================================================================
+== Vitis HLS Report for 'filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_s'
+================================================================
+* Date:           Mon Feb 10 13:35:52 2025
+
+* Version:        2024.2.1 (Build 5263293 on Dec 12 2024)
+* Project:        harness
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: versalaicore
+* Target device:  xcvc1902-vsva2197-2MP-e-S
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.03 ns|  1.433 ns|     0.82 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+-----------+-----+-----+------------------------------------------------+
+    |  Latency (cycles) |   Latency (absolute)  |  Interval |                    Pipeline                    |
+    |   min   |   max   |    min    |    max    | min | max |                      Type                      |
+    +---------+---------+-----------+-----------+-----+-----+------------------------------------------------+
+    |       20|       20|  60.600 ns|  60.600 ns|   17|   17|  loop auto-rewind stp (delay=0 clock cycles(s))|
+    +---------+---------+-----------+-----------+-----+-----+------------------------------------------------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +-------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |                   |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        |     Loop Name     |   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +-------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |- VITIS_LOOP_60_1  |       18|       18|         4|          1|          1|    16|       yes|
+        +-------------------+---------+---------+----------+-----------+-----------+------+----------+
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 2
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 2
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
++ Individual pipeline summary: 
+  * Pipeline-0: initiation interval (II) = 1, depth = 4
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 4
+* Pipeline : 1
+  Pipeline-0 : II = 1, D = 4, States = { 1 2 3 4 }
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 1.38>
+ST_1 : Operation 7 [1/1] (0.00ns)   --->   "%ii = alloca i32 1" [../src/harness.h:60]   --->   Operation 7 'alloca' 'ii' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 8 [1/1] (0.00ns)   --->   "%num = alloca i32 1" [../src/harness.h:58]   --->   Operation 8 'alloca' 'num' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 9 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i128 %dense11Stream_1, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 9 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i128 %dense11Stream_0, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 10 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %multicastNumStream_1, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 11 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 12 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i1 %lastStream_1, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 12 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 13 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i1 %lastStream_0, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 13 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 14 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i128 %outputStream_1, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 14 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 15 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i128 %outputStream_0, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 15 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 16 [1/1] (0.36ns)   --->   "%store_ln60 = store i5 0, i5 %ii" [../src/harness.h:60]   --->   Operation 16 'store' 'store_ln60' <Predicate = true> <Delay = 0.36>
+ST_1 : Operation 17 [1/1] (0.00ns)   --->   "%br_ln60 = br void %for.body" [../src/harness.h:60]   --->   Operation 17 'br' 'br_ln60' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 18 [1/1] (0.00ns)   --->   "%ii_1 = load i5 %ii"   --->   Operation 18 'load' 'ii_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 19 [1/1] (0.66ns)   --->   "%ii_2 = add i5 %ii_1, i5 1" [../src/harness.h:60]   --->   Operation 19 'add' 'ii_2' <Predicate = true> <Delay = 0.66> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.66> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 20 [1/1] (0.49ns)   --->   "%icmp_ln60 = icmp_eq  i5 %ii_1, i5 16" [../src/harness.h:60]   --->   Operation 20 'icmp' 'icmp_ln60' <Predicate = true> <Delay = 0.49> <CoreInst = "ICmp_EQ">   --->   Core 156 'ICmp_EQ' <Latency = 0> <II = 1> <Delay = 0.49> <FuncUnit> <Opcode : 'seteq' 'setne'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 21 [1/1] (0.00ns)   --->   "%br_ln60 = br i1 %icmp_ln60, void %for.body.split, void %for.end21" [../src/harness.h:60]   --->   Operation 21 'br' 'br_ln60' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 22 [1/1] (0.00ns)   --->   "%specpipeline_ln61 = specpipeline void @_ssdm_op_SpecPipeline, i32 1, i32 0, i32 0, i32 0, void @empty_24" [../src/harness.h:61]   --->   Operation 22 'specpipeline' 'specpipeline_ln61' <Predicate = (!icmp_ln60)> <Delay = 0.00>
+ST_1 : Operation 23 [1/1] (0.00ns)   --->   "%speclooptripcount_ln58 = speclooptripcount void @_ssdm_op_SpecLoopTripCount, i64 16, i64 16, i64 16" [../src/harness.h:58]   --->   Operation 23 'speclooptripcount' 'speclooptripcount_ln58' <Predicate = (!icmp_ln60)> <Delay = 0.00>
+ST_1 : Operation 24 [1/1] (0.00ns)   --->   "%specloopname_ln60 = specloopname void @_ssdm_op_SpecLoopName, void @empty_12" [../src/harness.h:60]   --->   Operation 24 'specloopname' 'specloopname_ln60' <Predicate = (!icmp_ln60)> <Delay = 0.00>
+ST_1 : Operation 25 [1/1] (0.49ns)   --->   "%icmp_ln63 = icmp_eq  i5 %ii_1, i5 0" [../src/harness.h:63]   --->   Operation 25 'icmp' 'icmp_ln63' <Predicate = (!icmp_ln60)> <Delay = 0.49> <CoreInst = "ICmp_EQ">   --->   Core 156 'ICmp_EQ' <Latency = 0> <II = 1> <Delay = 0.49> <FuncUnit> <Opcode : 'seteq' 'setne'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 26 [1/1] (0.00ns)   --->   "%br_ln63 = br i1 %icmp_ln63, void %VITIS_LOOP_66_2, void %if.then" [../src/harness.h:63]   --->   Operation 26 'br' 'br_ln63' <Predicate = (!icmp_ln60)> <Delay = 0.00>
+ST_1 : Operation 27 [1/1] (0.49ns)   --->   "%cmp11 = icmp_eq  i5 %ii_1, i5 15"   --->   Operation 27 'icmp' 'cmp11' <Predicate = (!icmp_ln60)> <Delay = 0.49> <CoreInst = "ICmp_EQ">   --->   Core 156 'ICmp_EQ' <Latency = 0> <II = 1> <Delay = 0.49> <FuncUnit> <Opcode : 'seteq' 'setne'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 28 [1/1] (0.00ns)   --->   "%br_ln73 = br i1 %cmp11, void %if.else, void %if.then12" [../src/harness.h:73]   --->   Operation 28 'br' 'br_ln73' <Predicate = (!icmp_ln60)> <Delay = 0.00>
+ST_1 : Operation 29 [1/1] (0.00ns)   --->   "%br_ln73 = br i1 %cmp11, void %if.else.1, void %if.then12.1" [../src/harness.h:73]   --->   Operation 29 'br' 'br_ln73' <Predicate = (!icmp_ln60)> <Delay = 0.00>
+ST_1 : Operation 30 [1/1] (0.36ns)   --->   "%store_ln60 = store i5 %ii_2, i5 %ii" [../src/harness.h:60]   --->   Operation 30 'store' 'store_ln60' <Predicate = (!icmp_ln60)> <Delay = 0.36>
+ST_1 : Operation 31 [1/1] (0.00ns)   --->   "%br_ln60 = br void %for.body" [../src/harness.h:60]   --->   Operation 31 'br' 'br_ln60' <Predicate = (!icmp_ln60)> <Delay = 0.00>
+
+State 2 <SV = 1> <Delay = 1.07>
+ST_2 : Operation 32 [1/1] (0.00ns)   --->   "%muxLogicFIFOCE_to_num_2 = muxlogic"   --->   Operation 32 'muxlogic' 'muxLogicFIFOCE_to_num_2' <Predicate = (icmp_ln63)> <Delay = 0.00>
+ST_2 : Operation 33 [1/1] ( I:0.86ns O:0.55ns )   --->   "%num_2 = read i32 @_ssdm_op_Read.ap_fifo.volatile.i32P0A, i32 %multicastNumStream_1" [../src/harness.h:64]   --->   Operation 33 'read' 'num_2' <Predicate = (icmp_ln63)> <Delay = 0.86> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.86> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 32> <Depth = 32> <FIFO>
+ST_2 : Operation 34 [1/1] (0.00ns)   --->   "%store_ln58 = store i32 %num_2, i32 %num" [../src/harness.h:58]   --->   Operation 34 'store' 'store_ln58' <Predicate = (icmp_ln63)> <Delay = 0.00>
+ST_2 : Operation 35 [1/1] (0.00ns)   --->   "%br_ln64 = br void %VITIS_LOOP_66_2" [../src/harness.h:64]   --->   Operation 35 'br' 'br_ln64' <Predicate = (icmp_ln63)> <Delay = 0.00>
+ST_2 : Operation 36 [1/1] (0.28ns) (share mux size 2)   --->   "%muxLogicFIFOData_to_write_ln76 = muxlogic i1 0"   --->   Operation 36 'muxlogic' 'muxLogicFIFOData_to_write_ln76' <Predicate = (!cmp11)> <Delay = 0.28>
+ST_2 : Operation 37 [1/1] ( I:0.78ns O:0.78ns ) (share mux size 2)   --->   "%write_ln76 = write void @_ssdm_op_Write.ap_fifo.volatile.i1P0A, i1 %lastStream_0, i1 0" [../src/harness.h:76]   --->   Operation 37 'write' 'write_ln76' <Predicate = (!cmp11)> <Delay = 0.78> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.90> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 1> <Depth = 4> <FIFO>
+ST_2 : Operation 38 [1/1] (0.00ns)   --->   "%br_ln0 = br void %for.inc"   --->   Operation 38 'br' 'br_ln0' <Predicate = (!cmp11)> <Delay = 0.00>
+ST_2 : Operation 39 [1/1] (0.28ns) (share mux size 2)   --->   "%muxLogicFIFOData_to_write_ln74 = muxlogic i1 1"   --->   Operation 39 'muxlogic' 'muxLogicFIFOData_to_write_ln74' <Predicate = (cmp11)> <Delay = 0.28>
+ST_2 : Operation 40 [1/1] ( I:0.78ns O:0.78ns ) (share mux size 2)   --->   "%write_ln74 = write void @_ssdm_op_Write.ap_fifo.volatile.i1P0A, i1 %lastStream_0, i1 1" [../src/harness.h:74]   --->   Operation 40 'write' 'write_ln74' <Predicate = (cmp11)> <Delay = 0.78> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.90> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 1> <Depth = 4> <FIFO>
+ST_2 : Operation 41 [1/1] (0.00ns)   --->   "%br_ln74 = br void %for.inc" [../src/harness.h:74]   --->   Operation 41 'br' 'br_ln74' <Predicate = (cmp11)> <Delay = 0.00>
+ST_2 : Operation 42 [1/1] (0.28ns) (share mux size 2)   --->   "%muxLogicFIFOData_to_write_ln76 = muxlogic i1 0"   --->   Operation 42 'muxlogic' 'muxLogicFIFOData_to_write_ln76' <Predicate = (!cmp11)> <Delay = 0.28>
+ST_2 : Operation 43 [1/1] ( I:0.78ns O:0.78ns ) (share mux size 2)   --->   "%write_ln76 = write void @_ssdm_op_Write.ap_fifo.volatile.i1P0A, i1 %lastStream_1, i1 0" [../src/harness.h:76]   --->   Operation 43 'write' 'write_ln76' <Predicate = (!cmp11)> <Delay = 0.78> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.90> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 1> <Depth = 4> <FIFO>
+ST_2 : Operation 44 [1/1] (0.00ns)   --->   "%br_ln0 = br void %for.inc.1"   --->   Operation 44 'br' 'br_ln0' <Predicate = (!cmp11)> <Delay = 0.00>
+ST_2 : Operation 45 [1/1] (0.28ns) (share mux size 2)   --->   "%muxLogicFIFOData_to_write_ln74 = muxlogic i1 1"   --->   Operation 45 'muxlogic' 'muxLogicFIFOData_to_write_ln74' <Predicate = (cmp11)> <Delay = 0.28>
+ST_2 : Operation 46 [1/1] ( I:0.78ns O:0.78ns ) (share mux size 2)   --->   "%write_ln74 = write void @_ssdm_op_Write.ap_fifo.volatile.i1P0A, i1 %lastStream_1, i1 1" [../src/harness.h:74]   --->   Operation 46 'write' 'write_ln74' <Predicate = (cmp11)> <Delay = 0.78> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.90> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 1> <Depth = 4> <FIFO>
+ST_2 : Operation 47 [1/1] (0.00ns)   --->   "%br_ln74 = br void %for.inc.1" [../src/harness.h:74]   --->   Operation 47 'br' 'br_ln74' <Predicate = (cmp11)> <Delay = 0.00>
+
+State 3 <SV = 2> <Delay = 0.67>
+ST_3 : Operation 48 [1/1] (0.00ns)   --->   "%num_3 = load i32 %num" [../src/harness.h:70]   --->   Operation 48 'load' 'num_3' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 49 [1/1] (0.00ns)   --->   "%empty = trunc i5 %ii_1"   --->   Operation 49 'trunc' 'empty' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 50 [1/1] (0.00ns) (grouped into LUT with out node icmp_ln70)   --->   "%empty_66 = shl i5 %ii_1, i5 1"   --->   Operation 50 'shl' 'empty_66' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 51 [1/1] (0.00ns) (grouped into LUT with out node icmp_ln70)   --->   "%mul_cast = zext i5 %empty_66"   --->   Operation 51 'zext' 'mul_cast' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 52 [1/1] (0.67ns) (out node of the LUT)   --->   "%icmp_ln70 = icmp_slt  i32 %mul_cast, i32 %num_3" [../src/harness.h:70]   --->   Operation 52 'icmp' 'icmp_ln70' <Predicate = true> <Delay = 0.67> <CoreInst = "Cmp">   --->   Core 9 'Cmp' <Latency = 0> <II = 1> <Delay = 0.67> <FuncUnit> <Opcode : 'setle' 'setge' 'setlt' 'setgt'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 53 [1/1] (0.00ns)   --->   "%br_ln70 = br i1 %icmp_ln70, void %if.end10, void %if.then7" [../src/harness.h:70]   --->   Operation 53 'br' 'br_ln70' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 54 [1/1] (0.00ns)   --->   "%or_ln = bitconcatenate i5 @_ssdm_op_BitConcatenate.i5.i4.i1, i4 %empty, i1 1" [../src/harness.h:70]   --->   Operation 54 'bitconcatenate' 'or_ln' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 55 [1/1] (0.00ns)   --->   "%zext_ln70 = zext i5 %or_ln" [../src/harness.h:70]   --->   Operation 55 'zext' 'zext_ln70' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 56 [1/1] (0.67ns)   --->   "%icmp_ln70_1 = icmp_slt  i32 %zext_ln70, i32 %num_3" [../src/harness.h:70]   --->   Operation 56 'icmp' 'icmp_ln70_1' <Predicate = true> <Delay = 0.67> <CoreInst = "Cmp">   --->   Core 9 'Cmp' <Latency = 0> <II = 1> <Delay = 0.67> <FuncUnit> <Opcode : 'setle' 'setge' 'setlt' 'setgt'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 57 [1/1] (0.00ns)   --->   "%br_ln70 = br i1 %icmp_ln70_1, void %if.end10.1, void %if.then7.1" [../src/harness.h:70]   --->   Operation 57 'br' 'br_ln70' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 68 [1/1] (0.28ns)   --->   "%ret_ln79 = ret" [../src/harness.h:79]   --->   Operation 68 'ret' 'ret_ln79' <Predicate = (icmp_ln60)> <Delay = 0.28>
+
+State 4 <SV = 3> <Delay = 1.43>
+ST_4 : Operation 58 [1/1] (0.00ns)   --->   "%muxLogicFIFOCE_to_dense11Stream_0_read = muxlogic"   --->   Operation 58 'muxlogic' 'muxLogicFIFOCE_to_dense11Stream_0_read' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 59 [1/1] ( I:0.82ns O:0.60ns )   --->   "%dense11Stream_0_read = read i128 @_ssdm_op_Read.ap_fifo.volatile.i128P0A, i128 %dense11Stream_0" [../src/harness.h:69]   --->   Operation 59 'read' 'dense11Stream_0_read' <Predicate = true> <Delay = 0.82> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.95> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 128> <Depth = 4> <FIFO>
+ST_4 : Operation 60 [1/1] (0.00ns)   --->   "%muxLogicFIFOData_to_write_ln71 = muxlogic i128 %dense11Stream_0_read"   --->   Operation 60 'muxlogic' 'muxLogicFIFOData_to_write_ln71' <Predicate = (icmp_ln70)> <Delay = 0.00>
+ST_4 : Operation 61 [1/1] ( I:0.82ns O:0.82ns )   --->   "%write_ln71 = write void @_ssdm_op_Write.ap_fifo.volatile.i128P0A, i128 %outputStream_0, i128 %dense11Stream_0_read" [../src/harness.h:71]   --->   Operation 61 'write' 'write_ln71' <Predicate = (icmp_ln70)> <Delay = 0.82> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.95> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 128> <Depth = 4> <FIFO>
+ST_4 : Operation 62 [1/1] (0.00ns)   --->   "%br_ln71 = br void %if.end10" [../src/harness.h:71]   --->   Operation 62 'br' 'br_ln71' <Predicate = (icmp_ln70)> <Delay = 0.00>
+ST_4 : Operation 63 [1/1] (0.00ns)   --->   "%muxLogicFIFOCE_to_dense11Stream_1_read = muxlogic"   --->   Operation 63 'muxlogic' 'muxLogicFIFOCE_to_dense11Stream_1_read' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 64 [1/1] ( I:0.82ns O:0.60ns )   --->   "%dense11Stream_1_read = read i128 @_ssdm_op_Read.ap_fifo.volatile.i128P0A, i128 %dense11Stream_1" [../src/harness.h:69]   --->   Operation 64 'read' 'dense11Stream_1_read' <Predicate = true> <Delay = 0.82> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.95> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 128> <Depth = 4> <FIFO>
+ST_4 : Operation 65 [1/1] (0.00ns)   --->   "%muxLogicFIFOData_to_write_ln71 = muxlogic i128 %dense11Stream_1_read"   --->   Operation 65 'muxlogic' 'muxLogicFIFOData_to_write_ln71' <Predicate = (icmp_ln70_1)> <Delay = 0.00>
+ST_4 : Operation 66 [1/1] ( I:0.82ns O:0.82ns )   --->   "%write_ln71 = write void @_ssdm_op_Write.ap_fifo.volatile.i128P0A, i128 %outputStream_1, i128 %dense11Stream_1_read" [../src/harness.h:71]   --->   Operation 66 'write' 'write_ln71' <Predicate = (icmp_ln70_1)> <Delay = 0.82> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.95> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 128> <Depth = 4> <FIFO>
+ST_4 : Operation 67 [1/1] (0.00ns)   --->   "%br_ln71 = br void %if.end10.1" [../src/harness.h:71]   --->   Operation 67 'br' 'br_ln71' <Predicate = (icmp_ln70_1)> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 3.030ns, clock uncertainty: 0.818ns.
+
+ <State 1>: 1.383ns
+The critical path consists of the following:
+	'store' operation 0 bit ('store_ln60', ../src/harness.h:60) of constant 0 on local variable 'ii', ../src/harness.h:60 [17]  (0.360 ns)
+	'load' operation 5 bit ('ii') on local variable 'ii', ../src/harness.h:60 [20]  (0.000 ns)
+	'add' operation 5 bit ('ii', ../src/harness.h:60) [21]  (0.663 ns)
+	'store' operation 0 bit ('store_ln60', ../src/harness.h:60) of variable 'ii', ../src/harness.h:60 on local variable 'ii', ../src/harness.h:60 [81]  (0.360 ns)
+
+ <State 2>: 1.070ns
+The critical path consists of the following:
+	'muxlogic' operation 0 bit ('muxLogicFIFOData_to_write_ln76') [52]  (0.284 ns)
+	fifo write operation ('write_ln76', ../src/harness.h:76) on port 'lastStream_0' (../src/harness.h:76) [53]  (0.786 ns)
+
+ <State 3>: 0.671ns
+The critical path consists of the following:
+	'load' operation 32 bit ('num', ../src/harness.h:70) on local variable 'num', ../src/harness.h:58 [36]  (0.000 ns)
+	'icmp' operation 1 bit ('icmp_ln70_1', ../src/harness.h:70) [64]  (0.671 ns)
+
+ <State 4>: 1.433ns
+The critical path consists of the following:
+	'muxlogic' operation 128 bit ('muxLogicFIFOCE_to_dense11Stream_0_read') [41]  (0.000 ns)
+	fifo read operation ('dense11Stream_0_read', ../src/harness.h:69) on port 'dense11Stream_0' (../src/harness.h:69) [42]  (0.828 ns)
+	'muxlogic' operation 0 bit ('muxLogicFIFOData_to_write_ln71') [46]  (0.000 ns)
+	fifo write operation ('write_ln71', ../src/harness.h:71) on port 'outputStream_0' (../src/harness.h:71) [47]  (0.828 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

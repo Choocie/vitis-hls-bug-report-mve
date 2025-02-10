@@ -1,0 +1,188 @@
+
+
+================================================================
+== Vitis HLS Report for 'inference'
+================================================================
+* Date:           Mon Feb 10 13:36:16 2025
+
+* Version:        2024.2.1 (Build 5263293 on Dec 12 2024)
+* Project:        harness
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: versalaicore
+* Target device:  xcvc1902-vsva2197-2MP-e-S
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.03 ns|  2.892 ns|     0.82 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute)  |  Interval | Pipeline|
+    |   min   |   max   |    min    |    max   | min | max |   Type  |
+    +---------+---------+-----------+----------+-----+-----+---------+
+    |       31|        ?|  93.930 ns|         ?|   31|    ?|       no|
+    +---------+---------+-----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        +---------------+-------+---------+---------+-----------+-----------+-----+-----+----------+
+        |               |       |  Latency (cycles) |   Latency (absolute)  |  Interval | Pipeline |
+        |    Instance   | Module|   min   |   max   |    min    |    max    | min | max |   Type   |
+        +---------------+-------+---------+---------+-----------+-----------+-----+-----+----------+
+        |grp_dut_fu_62  |dut    |       28|       28|  84.840 ns|  84.840 ns|   17|   17|  dataflow|
+        +---------------+-------+---------+---------+-----------+-----------+-----+-----+----------+
+
+        * Loop: 
+        +-------------------+---------+---------+----------+-----------+-----------+-------+----------+
+        |                   |  Latency (cycles) | Iteration|  Initiation Interval  |  Trip |          |
+        |     Loop Name     |   min   |   max   |  Latency |  achieved |   target  | Count | Pipelined|
+        +-------------------+---------+---------+----------+-----------+-----------+-------+----------+
+        |- VITIS_LOOP_87_1  |       30|        ?|        30|          -|          -|  1 ~ ?|        no|
+        +-------------------+---------+---------+----------+-----------+-----------+-------+----------+
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+------+---------+--------+-----+
+|       Name      | BRAM_18K|  DSP |    FF   |   LUT  | URAM|
++-----------------+---------+------+---------+--------+-----+
+|DSP              |        -|     -|        -|       -|    -|
+|Expression       |        -|     -|        0|      47|    -|
+|FIFO             |        -|     -|        -|       -|    -|
+|Instance         |        0|    94|    10254|   25305|    -|
+|Memory           |        -|     -|        -|       -|    -|
+|Multiplexer      |        -|     -|        0|      34|    -|
+|Register         |        -|     -|       69|       -|    -|
++-----------------+---------+------+---------+--------+-----+
+|Total            |        0|    94|    10323|   25386|    0|
++-----------------+---------+------+---------+--------+-----+
+|Available        |     1934|  1968|  1799680|  899840|  463|
++-----------------+---------+------+---------+--------+-----+
+|Utilization (%)  |        0|     4|       ~0|       2|    0|
++-----------------+---------+------+---------+--------+-----+
+
++ Detail: 
+    * Instance: 
+    +---------------+-------+---------+----+-------+-------+-----+
+    |    Instance   | Module| BRAM_18K| DSP|   FF  |  LUT  | URAM|
+    +---------------+-------+---------+----+-------+-------+-----+
+    |grp_dut_fu_62  |dut    |        0|  94|  10254|  25305|    0|
+    +---------------+-------+---------+----+-------+-------+-----+
+    |Total          |       |        0|  94|  10254|  25305|    0|
+    +---------------+-------+---------+----+-------+-------+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +--------------------------------+----------+----+---+----+------------+------------+
+    |          Variable Name         | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +--------------------------------+----------+----+---+----+------------+------------+
+    |e_4_fu_92_p2                    |         +|   0|  0|  31|          31|           1|
+    |icmp_ln87_fu_98_p2              |      icmp|   0|  0|  12|          31|          31|
+    |ap_block_state1                 |        or|   0|  0|   2|           1|           1|
+    |ap_sync_grp_dut_fu_62_ap_ready  |        or|   0|  0|   2|           1|           1|
+    +--------------------------------+----------+----+---+----+------------+------------+
+    |Total                           |          |   0|  0|  47|          64|          34|
+    +--------------------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +-----------+----+-----------+-----+-----------+
+    |    Name   | LUT| Input Size| Bits| Total Bits|
+    +-----------+----+-----------+-----+-----------+
+    |ap_NS_fsm  |   1|          4|    1|          4|
+    |ap_done    |   1|          2|    1|          2|
+    |e_fu_52    |  32|          2|   31|         62|
+    +-----------+----+-----------+-----+-----------+
+    |Total      |  34|          8|   33|         68|
+    +-----------+----+-----------+-----+-----------+
+
+    * Register: 
+    +------------------------------------+----+----+-----+-----------+
+    |                Name                | FF | LUT| Bits| Const Bits|
+    +------------------------------------+----+----+-----+-----------+
+    |ap_CS_fsm                           |   3|   0|    3|          0|
+    |ap_done_reg                         |   1|   0|    1|          0|
+    |ap_sync_reg_grp_dut_fu_62_ap_done   |   1|   0|    1|          0|
+    |ap_sync_reg_grp_dut_fu_62_ap_ready  |   1|   0|    1|          0|
+    |e_fu_52                             |  31|   0|   31|          0|
+    |empty_reg_115                       |  31|   0|   31|          0|
+    |grp_dut_fu_62_ap_start_reg          |   1|   0|    1|          0|
+    +------------------------------------+----+----+-----+-----------+
+    |Total                               |  69|   0|   69|          0|
+    +------------------------------------+----+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-------------------------------+-----+-----+------------+----------------+--------------+
+|           RTL Ports           | Dir | Bits|  Protocol  |  Source Object |    C Type    |
++-------------------------------+-----+-----+------------+----------------+--------------+
+|ap_clk                         |   in|    1|  ap_ctrl_hs|       inference|  return value|
+|ap_rst                         |   in|    1|  ap_ctrl_hs|       inference|  return value|
+|ap_start                       |   in|    1|  ap_ctrl_hs|       inference|  return value|
+|ap_done                        |  out|    1|  ap_ctrl_hs|       inference|  return value|
+|ap_continue                    |   in|    1|  ap_ctrl_hs|       inference|  return value|
+|ap_idle                        |  out|    1|  ap_ctrl_hs|       inference|  return value|
+|ap_ready                       |  out|    1|  ap_ctrl_hs|       inference|  return value|
+|numEvents                      |   in|   32|     ap_none|       numEvents|       pointer|
+|inputStream_0_dout             |   in|  296|     ap_fifo|   inputStream_0|       pointer|
+|inputStream_0_empty_n          |   in|    1|     ap_fifo|   inputStream_0|       pointer|
+|inputStream_0_read             |  out|    1|     ap_fifo|   inputStream_0|       pointer|
+|inputStream_0_num_data_valid   |   in|    3|     ap_fifo|   inputStream_0|       pointer|
+|inputStream_0_fifo_cap         |   in|    3|     ap_fifo|   inputStream_0|       pointer|
+|inputStream_1_dout             |   in|  296|     ap_fifo|   inputStream_1|       pointer|
+|inputStream_1_empty_n          |   in|    1|     ap_fifo|   inputStream_1|       pointer|
+|inputStream_1_read             |  out|    1|     ap_fifo|   inputStream_1|       pointer|
+|inputStream_1_num_data_valid   |   in|    3|     ap_fifo|   inputStream_1|       pointer|
+|inputStream_1_fifo_cap         |   in|    3|     ap_fifo|   inputStream_1|       pointer|
+|outputStream_0_din             |  out|  128|     ap_fifo|  outputStream_0|       pointer|
+|outputStream_0_full_n          |   in|    1|     ap_fifo|  outputStream_0|       pointer|
+|outputStream_0_write           |  out|    1|     ap_fifo|  outputStream_0|       pointer|
+|outputStream_0_num_data_valid  |   in|   32|     ap_fifo|  outputStream_0|       pointer|
+|outputStream_0_fifo_cap        |   in|   32|     ap_fifo|  outputStream_0|       pointer|
+|outputStream_1_din             |  out|  128|     ap_fifo|  outputStream_1|       pointer|
+|outputStream_1_full_n          |   in|    1|     ap_fifo|  outputStream_1|       pointer|
+|outputStream_1_write           |  out|    1|     ap_fifo|  outputStream_1|       pointer|
+|outputStream_1_num_data_valid  |   in|   32|     ap_fifo|  outputStream_1|       pointer|
+|outputStream_1_fifo_cap        |   in|   32|     ap_fifo|  outputStream_1|       pointer|
+|lastStream_din                 |  out|    1|     ap_fifo|      lastStream|       pointer|
+|lastStream_full_n              |   in|    1|     ap_fifo|      lastStream|       pointer|
+|lastStream_almost_full_n       |   in|    1|     ap_fifo|      lastStream|       pointer|
+|lastStream_write               |  out|    1|     ap_fifo|      lastStream|       pointer|
+|lastStream_num_data_valid      |   in|   32|     ap_fifo|      lastStream|       pointer|
+|lastStream_fifo_cap            |   in|   32|     ap_fifo|      lastStream|       pointer|
+|lastStream_1_din               |  out|    1|     ap_fifo|    lastStream_1|       pointer|
+|lastStream_1_full_n            |   in|    1|     ap_fifo|    lastStream_1|       pointer|
+|lastStream_1_almost_full_n     |   in|    1|     ap_fifo|    lastStream_1|       pointer|
+|lastStream_1_write             |  out|    1|     ap_fifo|    lastStream_1|       pointer|
+|lastStream_1_num_data_valid    |   in|   32|     ap_fifo|    lastStream_1|       pointer|
+|lastStream_1_fifo_cap          |   in|   32|     ap_fifo|    lastStream_1|       pointer|
+|numStream_dout                 |   in|   32|     ap_fifo|       numStream|       pointer|
+|numStream_empty_n              |   in|    1|     ap_fifo|       numStream|       pointer|
+|numStream_read                 |  out|    1|     ap_fifo|       numStream|       pointer|
+|numStream_num_data_valid       |   in|   14|     ap_fifo|       numStream|       pointer|
+|numStream_fifo_cap             |   in|   14|     ap_fifo|       numStream|       pointer|
++-------------------------------+-----+-----+------------+----------------+--------------+
+

@@ -1,0 +1,3 @@
+
+¼
+v++_package_harness$0b02f44b-7292-4b56-b151-1f0151ad746d"þ/tools/xilinx/Vitis/2024.2/bin/unwrapped/lnx64.o/v++  --vivado.prop "run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}" --advanced.misc "report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}" --advanced.misc "report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}" --package -t hw --platform xilinx_vck190_base_202420_1 --config ../config/package.cfg harness.xsa -o harness.xclbin 

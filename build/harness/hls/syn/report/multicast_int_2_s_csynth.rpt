@@ -1,0 +1,147 @@
+
+
+================================================================
+== Vitis HLS Report for 'multicast_int_2_s'
+================================================================
+* Date:           Mon Feb 10 13:36:10 2025
+
+* Version:        2024.2.1 (Build 5263293 on Dec 12 2024)
+* Project:        harness
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: versalaicore
+* Target device:  xcvc1902-vsva2197-2MP-e-S
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.03 ns|  1.879 ns|     0.82 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |        0|        0|      0 ns|      0 ns|    1|    1|      yes|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+------+---------+--------+-----+
+|       Name      | BRAM_18K|  DSP |    FF   |   LUT  | URAM|
++-----------------+---------+------+---------+--------+-----+
+|DSP              |        -|     -|        -|       -|    -|
+|Expression       |        -|     -|        0|       2|    -|
+|FIFO             |        -|     -|        -|       -|    -|
+|Instance         |        -|     -|        -|       -|    -|
+|Memory           |        -|     -|        -|       -|    -|
+|Multiplexer      |        -|     -|        0|       5|    -|
+|Register         |        -|     -|        3|       -|    -|
++-----------------+---------+------+---------+--------+-----+
+|Total            |        0|     0|        3|       7|    0|
++-----------------+---------+------+---------+--------+-----+
+|Available        |     1934|  1968|  1799680|  899840|  463|
++-----------------+---------+------+---------+--------+-----+
+|Utilization (%)  |        0|     0|       ~0|      ~0|    0|
++-----------------+---------+------+---------+--------+-----+
+
++ Detail: 
+    * Instance: 
+    N/A
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +-----------------+----------+----+---+----+------------+------------+
+    |  Variable Name  | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +-----------------+----------+----+---+----+------------+------------+
+    |ap_block_state1  |        or|   0|  0|   2|           1|           1|
+    +-----------------+----------+----+---+----+------------+------------+
+    |Total            |          |   0|  0|   2|           1|           1|
+    +-----------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +----------------------------+----+-----------+-----+-----------+
+    |            Name            | LUT| Input Size| Bits| Total Bits|
+    +----------------------------+----+-----------+-----+-----------+
+    |ap_done                     |   1|          2|    1|          2|
+    |multicastNumStream_0_blk_n  |   1|          2|    1|          2|
+    |multicastNumStream_1_blk_n  |   1|          2|    1|          2|
+    |numStream_blk_n             |   1|          2|    1|          2|
+    |real_start                  |   1|          2|    1|          2|
+    +----------------------------+----+-----------+-----+-----------+
+    |Total                       |   5|         10|    5|         10|
+    +----------------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +----------------+---+----+-----+-----------+
+    |      Name      | FF| LUT| Bits| Const Bits|
+    +----------------+---+----+-----+-----------+
+    |ap_CS_fsm       |  1|   0|    1|          0|
+    |ap_done_reg     |  1|   0|    1|          0|
+    |start_once_reg  |  1|   0|    1|          0|
+    +----------------+---+----+-----+-----------+
+    |Total           |  3|   0|    3|          0|
+    +----------------+---+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-------------------------------------+-----+-----+------------+----------------------+--------------+
+|              RTL Ports              | Dir | Bits|  Protocol  |     Source Object    |    C Type    |
++-------------------------------------+-----+-----+------------+----------------------+--------------+
+|ap_clk                               |   in|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|ap_rst                               |   in|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|ap_start                             |   in|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|start_full_n                         |   in|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|ap_done                              |  out|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|ap_continue                          |   in|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|ap_idle                              |  out|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|ap_ready                             |  out|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|start_out                            |  out|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|start_write                          |  out|    1|  ap_ctrl_hs|     multicast<int, 2>|  return value|
+|numStream_dout                       |   in|   32|     ap_fifo|             numStream|       pointer|
+|numStream_empty_n                    |   in|    1|     ap_fifo|             numStream|       pointer|
+|numStream_read                       |  out|    1|     ap_fifo|             numStream|       pointer|
+|numStream_num_data_valid             |   in|   14|     ap_fifo|             numStream|       pointer|
+|numStream_fifo_cap                   |   in|   14|     ap_fifo|             numStream|       pointer|
+|multicastNumStream_0_din             |  out|   32|     ap_fifo|  multicastNumStream_0|       pointer|
+|multicastNumStream_0_full_n          |   in|    1|     ap_fifo|  multicastNumStream_0|       pointer|
+|multicastNumStream_0_write           |  out|    1|     ap_fifo|  multicastNumStream_0|       pointer|
+|multicastNumStream_0_num_data_valid  |   in|    6|     ap_fifo|  multicastNumStream_0|       pointer|
+|multicastNumStream_0_fifo_cap        |   in|    6|     ap_fifo|  multicastNumStream_0|       pointer|
+|multicastNumStream_1_din             |  out|   32|     ap_fifo|  multicastNumStream_1|       pointer|
+|multicastNumStream_1_full_n          |   in|    1|     ap_fifo|  multicastNumStream_1|       pointer|
+|multicastNumStream_1_write           |  out|    1|     ap_fifo|  multicastNumStream_1|       pointer|
+|multicastNumStream_1_num_data_valid  |   in|    6|     ap_fifo|  multicastNumStream_1|       pointer|
+|multicastNumStream_1_fifo_cap        |   in|    6|     ap_fifo|  multicastNumStream_1|       pointer|
++-------------------------------------+-----+-----+------------+----------------------+--------------+
+

@@ -1,0 +1,188 @@
+
+
+================================================================
+== Vitis HLS Report for 'dut'
+================================================================
+* Date:           Mon Feb 10 13:36:16 2025
+
+* Version:        2024.2.1 (Build 5263293 on Dec 12 2024)
+* Project:        harness
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: versalaicore
+* Target device:  xcvc1902-vsva2197-2MP-e-S
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.03 ns|  2.892 ns|     0.82 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+-----------+-----+-----+----------+
+    |  Latency (cycles) |   Latency (absolute)  |  Interval | Pipeline |
+    |   min   |   max   |    min    |    max    | min | max |   Type   |
+    +---------+---------+-----------+-----------+-----+-----+----------+
+    |       28|       28|  84.840 ns|  84.840 ns|   17|   17|  dataflow|
+    +---------+---------+-----------+-----------+-----+-----+----------+
+
+    + Detail: 
+        * Instance: 
+        +------------------------------------------------+-----------------------------------------------+---------+---------+-----------+-----------+-----+-----+------------------------------------------------+
+        |                                                |                                               |  Latency (cycles) |   Latency (absolute)  |  Interval |                    Pipeline                    |
+        |                    Instance                    |                     Module                    |   min   |   max   |    min    |    max    | min | max |                      Type                      |
+        +------------------------------------------------+-----------------------------------------------+---------+---------+-----------+-----------+-----+-----+------------------------------------------------+
+        |multicast_int_2_U0                              |multicast_int_2_s                              |        0|        0|       0 ns|       0 ns|    1|    1|                                             yes|
+        |padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_U0  |padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_s  |       18|       19|  54.540 ns|  57.570 ns|   16|   16|       loop rewind stp (delay=0 clock cycles(s))|
+        |dense_relu_saturate_U0                          |dense_relu_saturate                            |       24|       24|  72.720 ns|  72.720 ns|   17|   17|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |dense_relu_saturate_1_U0                        |dense_relu_saturate_1                          |       24|       24|  72.720 ns|  72.720 ns|   17|   17|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        |filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_U0   |filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_s   |       20|       20|  60.600 ns|  60.600 ns|   17|   17|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        +------------------------------------------------+-----------------------------------------------+---------+---------+-----------+-----------+-----+-----+------------------------------------------------+
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+------+---------+--------+-----+
+|       Name      | BRAM_18K|  DSP |    FF   |   LUT  | URAM|
++-----------------+---------+------+---------+--------+-----+
+|DSP              |        -|     -|        -|       -|    -|
+|Expression       |        -|     -|        0|       6|    -|
+|FIFO             |        0|     -|     1100|     892|    -|
+|Instance         |        -|    94|     9154|   24407|    -|
+|Memory           |        -|     -|        -|       -|    -|
+|Multiplexer      |        -|     -|        -|       -|    -|
+|Register         |        -|     -|        -|       -|    -|
++-----------------+---------+------+---------+--------+-----+
+|Total            |        0|    94|    10254|   25305|    0|
++-----------------+---------+------+---------+--------+-----+
+|Available        |     1934|  1968|  1799680|  899840|  463|
++-----------------+---------+------+---------+--------+-----+
+|Utilization (%)  |        0|     4|       ~0|       2|    0|
++-----------------+---------+------+---------+--------+-----+
+
++ Detail: 
+    * Instance: 
+    +------------------------------------------------+-----------------------------------------------+---------+----+------+-------+-----+
+    |                    Instance                    |                     Module                    | BRAM_18K| DSP|  FF  |  LUT  | URAM|
+    +------------------------------------------------+-----------------------------------------------+---------+----+------+-------+-----+
+    |dense_relu_saturate_U0                          |dense_relu_saturate                            |        0|  47|  4510|  11978|    0|
+    |dense_relu_saturate_1_U0                        |dense_relu_saturate_1                          |        0|  47|  4510|  11978|    0|
+    |filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_U0   |filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_s   |        0|   0|    67|    102|    0|
+    |multicast_int_2_U0                              |multicast_int_2_s                              |        0|   0|     3|      7|    0|
+    |padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_U0  |padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_s  |        0|   0|    64|    342|    0|
+    +------------------------------------------------+-----------------------------------------------+---------+----+------+-------+-----+
+    |Total                                           |                                               |        0|  94|  9154|  24407|    0|
+    +------------------------------------------------+-----------------------------------------------+---------+----+------+-------+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    +------------------------+---------+-----+----+-----+------+-----+---------+
+    |          Name          | BRAM_18K|  FF | LUT| URAM| Depth| Bits| Size:D*B|
+    +------------------------+---------+-----+----+-----+------+-----+---------+
+    |dense11Stream_0_U       |        0|    8|   0|    -|     4|  128|      512|
+    |dense11Stream_1_U       |        0|    8|   0|    -|     4|  128|      512|
+    |multicastNumStream_1_U  |        0|   13|   0|    -|    32|   32|     1024|
+    |multicastNumStream_U    |        0|   13|   0|    -|    32|   32|     1024|
+    |paddingStream_0_U       |        0|  529|   0|    -|     5|  296|     1480|
+    |paddingStream_1_U       |        0|  529|   0|    -|     5|  296|     1480|
+    +------------------------+---------+-----+----+-----+------+-----+---------+
+    |Total                   |        0| 1100|   0|    0|    82|  912|     6032|
+    +------------------------+---------+-----+----+-----+------+-----+---------+
+
+    * Expression: 
+    +-------------------------------------------------------------+----------+----+---+----+------------+------------+
+    |                        Variable Name                        | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +-------------------------------------------------------------+----------+----+---+----+------------+------------+
+    |ap_idle                                                      |       and|   0|  0|   2|           1|           1|
+    |multicast_int_2_U0_start_full_n                              |       and|   0|  0|   2|           1|           1|
+    |padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_U0_start_full_n  |       and|   0|  0|   2|           1|           1|
+    +-------------------------------------------------------------+----------+----+---+----+------------+------------+
+    |Total                                                        |          |   0|  0|   6|           3|           3|
+    +-------------------------------------------------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    N/A
+
+    * Register: 
+    N/A
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-------------------------------+-----+-----+------------+----------------+--------------+
+|           RTL Ports           | Dir | Bits|  Protocol  |  Source Object |    C Type    |
++-------------------------------+-----+-----+------------+----------------+--------------+
+|inputStream_0_dout             |   in|  296|     ap_fifo|   inputStream_0|       pointer|
+|inputStream_0_empty_n          |   in|    1|     ap_fifo|   inputStream_0|       pointer|
+|inputStream_0_read             |  out|    1|     ap_fifo|   inputStream_0|       pointer|
+|inputStream_1_dout             |   in|  296|     ap_fifo|   inputStream_1|       pointer|
+|inputStream_1_empty_n          |   in|    1|     ap_fifo|   inputStream_1|       pointer|
+|inputStream_1_read             |  out|    1|     ap_fifo|   inputStream_1|       pointer|
+|outputStream_0_din             |  out|  128|     ap_fifo|  outputStream_0|       pointer|
+|outputStream_0_full_n          |   in|    1|     ap_fifo|  outputStream_0|       pointer|
+|outputStream_0_write           |  out|    1|     ap_fifo|  outputStream_0|       pointer|
+|outputStream_1_din             |  out|  128|     ap_fifo|  outputStream_1|       pointer|
+|outputStream_1_full_n          |   in|    1|     ap_fifo|  outputStream_1|       pointer|
+|outputStream_1_write           |  out|    1|     ap_fifo|  outputStream_1|       pointer|
+|lastStream_0_din               |  out|    1|     ap_fifo|    lastStream_0|       pointer|
+|lastStream_0_full_n            |   in|    1|     ap_fifo|    lastStream_0|       pointer|
+|lastStream_0_write             |  out|    1|     ap_fifo|    lastStream_0|       pointer|
+|lastStream_1_din               |  out|    1|     ap_fifo|    lastStream_1|       pointer|
+|lastStream_1_full_n            |   in|    1|     ap_fifo|    lastStream_1|       pointer|
+|lastStream_1_write             |  out|    1|     ap_fifo|    lastStream_1|       pointer|
+|numStream_dout                 |   in|   32|     ap_fifo|       numStream|       pointer|
+|numStream_empty_n              |   in|    1|     ap_fifo|       numStream|       pointer|
+|numStream_read                 |  out|    1|     ap_fifo|       numStream|       pointer|
+|ap_clk                         |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|ap_rst                         |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|ap_start                       |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|outputStream_0_dout            |   in|  128|  ap_ctrl_hs|             dut|  return value|
+|outputStream_0_empty_n         |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|outputStream_0_read            |  out|    1|  ap_ctrl_hs|             dut|  return value|
+|outputStream_0_num_data_valid  |   in|   32|  ap_ctrl_hs|             dut|  return value|
+|outputStream_0_fifo_cap        |   in|   32|  ap_ctrl_hs|             dut|  return value|
+|outputStream_1_dout            |   in|  128|  ap_ctrl_hs|             dut|  return value|
+|outputStream_1_empty_n         |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|outputStream_1_read            |  out|    1|  ap_ctrl_hs|             dut|  return value|
+|outputStream_1_num_data_valid  |   in|   32|  ap_ctrl_hs|             dut|  return value|
+|outputStream_1_fifo_cap        |   in|   32|  ap_ctrl_hs|             dut|  return value|
+|lastStream_0_almost_full_n     |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_0_dout              |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_0_empty_n           |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_0_almost_empty_n    |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_0_read              |  out|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_0_num_data_valid    |   in|   32|  ap_ctrl_hs|             dut|  return value|
+|lastStream_0_fifo_cap          |   in|   32|  ap_ctrl_hs|             dut|  return value|
+|lastStream_1_almost_full_n     |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_1_dout              |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_1_empty_n           |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_1_almost_empty_n    |   in|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_1_read              |  out|    1|  ap_ctrl_hs|             dut|  return value|
+|lastStream_1_num_data_valid    |   in|   32|  ap_ctrl_hs|             dut|  return value|
+|lastStream_1_fifo_cap          |   in|   32|  ap_ctrl_hs|             dut|  return value|
+|ap_done                        |  out|    1|  ap_ctrl_hs|             dut|  return value|
+|ap_ready                       |  out|    1|  ap_ctrl_hs|             dut|  return value|
+|ap_idle                        |  out|    1|  ap_ctrl_hs|             dut|  return value|
+|ap_continue                    |   in|    1|  ap_ctrl_hs|             dut|  return value|
++-------------------------------+-----+-----+------------+----------------+--------------+
+

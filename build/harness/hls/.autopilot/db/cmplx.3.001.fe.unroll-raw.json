@@ -1,0 +1,213 @@
+{
+  "0": {
+    "basicblocks": 7,
+    "calls": "12 15 4",
+    "file": "harness.cpp",
+    "fileloc": 128,
+    "instructions": 44,
+    "name": "harness",
+    "total_instructions": 79527
+  },
+  "1": {
+    "basicblocks": 3,
+    "calls": "",
+    "file": "harness.h",
+    "fileloc": 21,
+    "instructions": 3,
+    "name": "static_pow2<int>",
+    "total_instructions": 3
+  },
+  "10": {
+    "basicblocks": 1,
+    "calls": "19",
+    "file": "array",
+    "fileloc": 185,
+    "instructions": 2,
+    "name": "operator[]",
+    "total_instructions": 4
+  },
+  "11": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "array",
+    "fileloc": 55,
+    "instructions": 2,
+    "name": "_S_ref",
+    "total_instructions": 2
+  },
+  "12": {
+    "basicblocks": 20,
+    "calls": "10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16 10 16",
+    "file": "harness.cpp",
+    "fileloc": 46,
+    "instructions": 1088,
+    "loads": {
+      "G": 1,
+      "L": 153
+    },
+    "name": "load",
+    "stores": {
+      "G": 1,
+      "L": 202
+    },
+    "total_instructions": 1680
+  },
+  "13": {
+    "basicblocks": 236,
+    "calls": "",
+    "file": "harness.h",
+    "fileloc": 84,
+    "instructions": 601,
+    "loads": {
+      "L": 74
+    },
+    "name": "padding<std::array<ap_ufixed<8, 3, AP_TRN, AP_WRAP, 0>, 37>, 2, 16>",
+    "stores": {
+      "L": 76
+    },
+    "total_instructions": 601
+  },
+  "14": {
+    "basicblocks": 3,
+    "calls": "",
+    "file": "harness.h",
+    "fileloc": 21,
+    "instructions": 3,
+    "name": "static_pow2<float>",
+    "total_instructions": 3
+  },
+  "15": {
+    "basicblocks": 7,
+    "calls": "18",
+    "file": "harness.cpp",
+    "fileloc": 78,
+    "instructions": 18,
+    "loads": {
+      "L": 2
+    },
+    "name": "inference",
+    "total_instructions": 77003
+  },
+  "16": {
+    "basicblocks": 1,
+    "calls": "11",
+    "file": "array",
+    "fileloc": 185,
+    "instructions": 2,
+    "name": "operator[]",
+    "total_instructions": 4
+  },
+  "17": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "array",
+    "fileloc": 55,
+    "instructions": 2,
+    "name": "_S_ref",
+    "total_instructions": 2
+  },
+  "18": {
+    "basicblocks": 10,
+    "calls": "6 13 7 7 9",
+    "file": "harness.cpp",
+    "fileloc": 9,
+    "instructions": 42,
+    "name": "dut",
+    "total_instructions": 76985
+  },
+  "19": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "array",
+    "fileloc": 55,
+    "instructions": 2,
+    "name": "_S_ref",
+    "total_instructions": 2
+  },
+  "2": {
+    "basicblocks": 1,
+    "calls": "5",
+    "file": "array",
+    "fileloc": 185,
+    "instructions": 2,
+    "name": "operator[]",
+    "total_instructions": 4
+  },
+  "3": {
+    "basicblocks": 1,
+    "calls": "17",
+    "file": "array",
+    "fileloc": 185,
+    "instructions": 2,
+    "name": "operator[]",
+    "total_instructions": 4
+  },
+  "4": {
+    "basicblocks": 23,
+    "calls": "3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2",
+    "file": "harness.cpp",
+    "fileloc": 93,
+    "instructions": 544,
+    "loads": {
+      "G": 1,
+      "L": 68
+    },
+    "name": "store",
+    "stores": {
+      "G": 1,
+      "L": 97
+    },
+    "total_instructions": 800
+  },
+  "5": {
+    "basicblocks": 1,
+    "calls": "",
+    "file": "array",
+    "fileloc": 55,
+    "instructions": 2,
+    "name": "_S_ref",
+    "total_instructions": 2
+  },
+  "6": {
+    "basicblocks": 4,
+    "calls": "",
+    "file": "harness.h",
+    "fileloc": 39,
+    "instructions": 8,
+    "name": "multicast<int, 2>",
+    "total_instructions": 8
+  },
+  "7": {
+    "basicblocks": 13363,
+    "calls": "8 16 8 3 3 3 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3 3 3 8 3",
+    "file": "harness.h",
+    "fileloc": 117,
+    "instructions": 35468,
+    "loads": {
+      "L": 3717
+    },
+    "name": "dense_relu_saturate<ap_ufixed<8, 3, AP_TRN, AP_WRAP, 0>, ap_ufixed<8, 3, AP_TRN, AP_WRAP, 0>, ap_fixed<9, 4, AP_TRN, AP_WRAP, 0>, ap_fixed<9, 4, AP_TRN, AP_WRAP, 0>, ap_fixed<20, 8, AP_TRN, AP_WRAP, 0>, 37, 16, 16>",
+    "stores": {
+      "L": 1877
+    },
+    "total_instructions": 38145
+  },
+  "8": {
+    "basicblocks": 1,
+    "calls": "14 1",
+    "file": "harness.h",
+    "fileloc": 33,
+    "instructions": 11,
+    "name": "ap_fixed_max<8, 3>",
+    "total_instructions": 17
+  },
+  "9": {
+    "basicblocks": 18,
+    "calls": "",
+    "file": "harness.h",
+    "fileloc": 53,
+    "instructions": 44,
+    "name": "filter<std::array<ap_ufixed<8, 3, AP_TRN, AP_WRAP, 0>, 16>, 2, 16>",
+    "total_instructions": 44
+  }
+}

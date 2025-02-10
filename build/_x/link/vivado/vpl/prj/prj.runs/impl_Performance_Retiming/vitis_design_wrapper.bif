@@ -1,0 +1,23 @@
+new_bif:
+{
+ id_code = 0x14ca8093
+ extended_id_code = 0x01
+ id = 0x2
+ image
+ {
+  name = pl_cfi
+  id = 0x18700000
+  partition
+  {
+   id = 0x03
+   type = cdo
+   file = vitis_design_wrapper.rcdo
+  }
+  partition
+  {
+   id = 0x05
+   type = cdo
+   file = vitis_design_wrapper.rnpi
+  }
+ }
+}

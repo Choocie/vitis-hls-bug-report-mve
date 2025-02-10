@@ -1,0 +1,151 @@
+
+
+================================================================
+== Vitis HLS Report for 'inference'
+================================================================
+* Date:           Mon Feb 10 13:35:53 2025
+
+* Version:        2024.2.1 (Build 5263293 on Dec 12 2024)
+* Project:        harness
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: versalaicore
+* Target device:  xcvc1902-vsva2197-2MP-e-S
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.03 ns|  2.892 ns|     0.82 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute)  |  Interval | Pipeline|
+    |   min   |   max   |    min    |    max   | min | max |   Type  |
+    +---------+---------+-----------+----------+-----+-----+---------+
+    |       31|        ?|  93.930 ns|         ?|   31|    ?|       no|
+    +---------+---------+-----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +-------------------+---------+---------+----------+-----------+-----------+-------+----------+
+        |                   |  Latency (cycles) | Iteration|  Initiation Interval  |  Trip |          |
+        |     Loop Name     |   min   |   max   |  Latency |  achieved |   target  | Count | Pipelined|
+        +-------------------+---------+---------+----------+-----------+-----------+-------+----------+
+        |- VITIS_LOOP_87_1  |       30|        ?|        30|          -|          -|  1 ~ ?|        no|
+        +-------------------+---------+---------+----------+-----------+-----------+-------+----------+
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 2
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 3
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 2 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 0.42>
+ST_1 : Operation 4 [1/1] (0.00ns)   --->   "%e = alloca i32 1" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 4 'alloca' 'e' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 5 [1/1] (0.00ns)   --->   "%specstablecontent_ln0 = specstablecontent void @_ssdm_op_SpecStableContent, i32 %numEvents, void "   --->   Operation 5 'specstablecontent' 'specstablecontent_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 6 [1/1] (0.00ns)   --->   "%numEvents_read = read i32 @_ssdm_op_Read.ap_auto.i32P0A, i32 %numEvents"   --->   Operation 6 'read' 'numEvents_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 7 [1/1] (0.00ns)   --->   "%empty = trunc i32 %numEvents_read"   --->   Operation 7 'trunc' 'empty' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 8 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i1 %lastStream_1, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 8 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 9 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i1 %lastStream, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 9 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i128 %outputStream_1, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 10 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i128 %outputStream_0, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 11 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 12 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %numStream, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 12 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 13 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i296 %inputStream_1, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 13 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 14 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i296 %inputStream_0, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 14 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 15 [1/1] (0.42ns)   --->   "%store_ln87 = store i31 0, i31 %e" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 15 'store' 'store_ln87' <Predicate = true> <Delay = 0.42>
+ST_1 : Operation 16 [1/1] (0.00ns)   --->   "%br_ln87 = br void %for.inc.i" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 16 'br' 'br_ln87' <Predicate = true> <Delay = 0.00>
+
+State 2 <SV = 1> <Delay = 1.27>
+ST_2 : Operation 17 [1/1] (0.00ns)   --->   "%e_3 = load i31 %e" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 17 'load' 'e_3' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 18 [1/1] (0.85ns)   --->   "%e_4 = add i31 %e_3, i31 1" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 18 'add' 'e_4' <Predicate = true> <Delay = 0.85> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.85> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 19 [1/1] (0.71ns)   --->   "%icmp_ln87 = icmp_eq  i31 %e_3, i31 %empty" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 19 'icmp' 'icmp_ln87' <Predicate = true> <Delay = 0.71> <CoreInst = "ICmp_EQ">   --->   Core 156 'ICmp_EQ' <Latency = 0> <II = 1> <Delay = 0.71> <FuncUnit> <Opcode : 'seteq' 'setne'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 20 [1/1] (0.00ns)   --->   "%speclooptripcount_ln0 = speclooptripcount void @_ssdm_op_SpecLoopTripCount, i64 1, i64 18446744073709551615, i64 0"   --->   Operation 20 'speclooptripcount' 'speclooptripcount_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 21 [1/1] (0.00ns)   --->   "%br_ln87 = br i1 %icmp_ln87, void %for.inc.split.i, void %inference.exit" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 21 'br' 'br_ln87' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 22 [2/2] (0.00ns)   --->   "%call_ln89 = call void @dut, i296 %inputStream_0, i296 %inputStream_1, i128 %outputStream_0, i128 %outputStream_1, i1 %lastStream, i1 %lastStream_1, i32 %numStream" [../src/harness.cpp:89->../src/harness.cpp:150]   --->   Operation 22 'call' 'call_ln89' <Predicate = (!icmp_ln87)> <Delay = 0.00> <CoreType = "Generic">   --->   Generic Core
+ST_2 : Operation 23 [1/1] (0.42ns)   --->   "%store_ln87 = store i31 %e_4, i31 %e" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 23 'store' 'store_ln87' <Predicate = (!icmp_ln87)> <Delay = 0.42>
+ST_2 : Operation 24 [1/1] (0.00ns)   --->   "%ret_ln150 = ret" [../src/harness.cpp:150]   --->   Operation 24 'ret' 'ret_ln150' <Predicate = (icmp_ln87)> <Delay = 0.00>
+
+State 3 <SV = 2> <Delay = 0.00>
+ST_3 : Operation 25 [1/1] (0.00ns)   --->   "%specloopname_ln87 = specloopname void @_ssdm_op_SpecLoopName, void @empty_11" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 25 'specloopname' 'specloopname_ln87' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 26 [1/2] (0.00ns)   --->   "%call_ln89 = call void @dut, i296 %inputStream_0, i296 %inputStream_1, i128 %outputStream_0, i128 %outputStream_1, i1 %lastStream, i1 %lastStream_1, i32 %numStream" [../src/harness.cpp:89->../src/harness.cpp:150]   --->   Operation 26 'call' 'call_ln89' <Predicate = true> <Delay = 0.00> <CoreType = "Generic">   --->   Generic Core
+ST_3 : Operation 27 [1/1] (0.00ns)   --->   "%br_ln87 = br void %for.inc.i" [../src/harness.cpp:87->../src/harness.cpp:150]   --->   Operation 27 'br' 'br_ln87' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 3.030ns, clock uncertainty: 0.818ns.
+
+ <State 1>: 0.421ns
+The critical path consists of the following:
+	'alloca' operation 31 bit ('e', ../src/harness.cpp:87->../src/harness.cpp:150) [9]  (0.000 ns)
+	'store' operation 0 bit ('store_ln87', ../src/harness.cpp:87->../src/harness.cpp:150) of constant 0 on local variable 'e', ../src/harness.cpp:87->../src/harness.cpp:150 [20]  (0.421 ns)
+
+ <State 2>: 1.272ns
+The critical path consists of the following:
+	'load' operation 31 bit ('e', ../src/harness.cpp:87->../src/harness.cpp:150) on local variable 'e', ../src/harness.cpp:87->../src/harness.cpp:150 [23]  (0.000 ns)
+	'add' operation 31 bit ('e', ../src/harness.cpp:87->../src/harness.cpp:150) [24]  (0.851 ns)
+	'store' operation 0 bit ('store_ln87', ../src/harness.cpp:87->../src/harness.cpp:150) of variable 'e', ../src/harness.cpp:87->../src/harness.cpp:150 on local variable 'e', ../src/harness.cpp:87->../src/harness.cpp:150 [31]  (0.421 ns)
+
+ <State 3>: 0.000ns
+The critical path consists of the following:
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

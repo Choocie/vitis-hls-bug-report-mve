@@ -1,0 +1,220 @@
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/reports/link
+	Log files: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/logs/link
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness.xsa.link_summary, at Mon Feb 10 13:38:20 2025
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/reports/link/v++_link_harness_guidance.html', at Mon Feb 10 13:38:20 2025
+INFO: [v++ 60-895]   Target platform: /tools/xilinx/Vitis/2024.2/base_platforms/xilinx_vck190_base_202420_1/xilinx_vck190_base_202420_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/tools/xilinx/Vitis/2024.2/base_platforms/xilinx_vck190_base_202420_1/hw/hw.xsa'
+INFO: [v++ 82-4274] Default memory will be used for trace offload
+INFO: [v++ 82-6520] Memory used for AIE trace offload is DDR
+INFO: [v++ 60-629] Linking for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_vck190_base_202420_1
+INFO: [v++ 60-1332] Run 'run_link' status: Not started
+INFO: [v++ 60-1443] [13:38:23] Run run_link: Step system_link: Started
+INFO: [v++ 60-1453] Command Line: system_link --xo /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness.xo -memory-for-trace DDR --dpa_aie_mem_offload --memory-for-aie-trace DDR --config /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/syslinkConfig.ini --xpfm /tools/xilinx/Vitis/2024.2/base_platforms/xilinx_vck190_base_202420_1/xilinx_vck190_base_202420_1.xpfm --target hw --output_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int --temp_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link
+INFO: [v++ 60-1454] Run Directory: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/run_link
+INFO: [SYSTEM_LINK 82-70] Extracting xo v3 file /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness.xo
+INFO: [SYSTEM_LINK 82-53] Creating IP database /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-38] [13:38:26] build_xd_ip_db started: /tools/xilinx/Vitis/2024.2/bin/build_xd_ip_db -ip_search 0  -sds-pf /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/hw.hpfm -clkid 2 -ip /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/iprepo/xilinx_com_hls_harness_1_0,harness -o /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml
+INFO: [SYSTEM_LINK 82-37] [13:38:27] build_xd_ip_db finished successfully
+Time (s): cpu = 00:00:00.22 ; elapsed = 00:00:00.69 . Memory (MB): peak = 689.020 ; gain = 0.000 ; free physical = 272484 ; free virtual = 449315
+INFO: [SYSTEM_LINK 82-51] Create system connectivity graph
+INFO: [SYSTEM_LINK 82-102] Applying explicit connections to the system connectivity graph: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [SYSTEM_LINK 82-38] [13:38:27] cfgen started: /tools/xilinx/Vitis/2024.2/bin/cfgen  -nk harness:1:harness_1 -sp harness_1.inputNumList:DDR -sp harness_1.inFeatureList:DDR -sp harness_1.outputNumList:DDR -sp harness_1.outFeatureList:DDR -clock.freqHz 128000000:harness_1.ap_clk -dpa_mem_offload true -dpa_aie_mem_offload true -memory-for-aie-trace DDR -dmclkid 2 -r /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml
+INFO: [CFGEN 83-0] Kernel Specs: 
+INFO: [CFGEN 83-0]   kernel: harness, num: 1  {harness_1}
+INFO: [CFGEN 83-0] Port Specs: 
+INFO: [CFGEN 83-0]   kernel: harness_1, k_port: inputNumList, sptag: DDR
+INFO: [CFGEN 83-0]   kernel: harness_1, k_port: inFeatureList, sptag: DDR
+INFO: [CFGEN 83-0]   kernel: harness_1, k_port: outputNumList, sptag: DDR
+INFO: [CFGEN 83-0]   kernel: harness_1, k_port: outFeatureList, sptag: DDR
+INFO: [SYSTEM_LINK 82-37] [13:38:31] cfgen finished successfully
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 689.020 ; gain = 0.000 ; free physical = 272486 ; free virtual = 449324
+INFO: [SYSTEM_LINK 82-52] Create top-level block diagram
+INFO: [SYSTEM_LINK 82-38] [13:38:31] cf2bd started: /tools/xilinx/Vitis/2024.2/bin/cf2bd  --linux --trace_buffer 1024 --input_file /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml --ip_db /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml --cf_name dr --working_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/_sysl/.xsd --temp_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link --output_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int
+INFO: [CF2BD 82-31] Launching cf2xd: cf2xd -linux -trace-buffer 1024 -i /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/cfgraph/cfgen_cfgraph.xml -r /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/_sysl/.cdb/xd_ip_db.xml -o dr.xml
+INFO: [CF2BD 82-28] cf2xd finished successfully
+INFO: [CF2BD 82-31] Launching cf_xsd: cf_xsd -disable-address-gen -dn dr -dp /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/sys_link/_sysl/.xsd
+INFO: [CF2BD 82-28] cf_xsd finished successfully
+INFO: [SYSTEM_LINK 82-37] [13:38:34] cf2bd finished successfully
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 689.020 ; gain = 0.000 ; free physical = 272571 ; free virtual = 449415
+INFO: [v++ 60-1441] [13:38:34] Run run_link: Step system_link: Completed
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:12 . Memory (MB): peak = 704.418 ; gain = 0.000 ; free physical = 272746 ; free virtual = 449563
+INFO: [v++ 60-1443] [13:38:34] Run run_link: Step cf2sw: Started
+INFO: [v++ 60-1453] Command Line: cf2sw -sdsl /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/sdsl.dat -rtd /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/cf2sw.rtd -nofilter /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/cf2sw_full.rtd -xclbin /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/xclbin_orig.xml -o /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/xclbin_orig.1.xml
+INFO: [v++ 60-1454] Run Directory: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/run_link
+INFO: [v++ 60-1441] [13:38:38] Run run_link: Step cf2sw: Completed
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 704.418 ; gain = 0.000 ; free physical = 272677 ; free virtual = 449503
+INFO: [v++ 60-1443] [13:38:38] Run run_link: Step rtd2_system_diagram: Started
+INFO: [v++ 60-1453] Command Line: rtd2SystemDiagram
+INFO: [v++ 60-1454] Run Directory: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/run_link
+INFO: [v++ 60-1441] [13:38:38] Run run_link: Step rtd2_system_diagram: Completed
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.28 . Memory (MB): peak = 704.418 ; gain = 0.000 ; free physical = 272655 ; free virtual = 449481
+INFO: [v++ 60-1443] [13:38:38] Run run_link: Step vpl: Started
+INFO: [v++ 60-1453] Command Line: vpl -t hw -f xilinx_vck190_base_202420_1 --remote_ip_cache /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/.ipcache --trace_memory DDR --output_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int --log_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/logs/link --report_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/reports/link --config /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/vplConfig.ini -k /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link --no-info --iprepo /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/xo/ip_repo/xilinx_com_hls_harness_1_0 --messageDb /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/run_link/vpl.pb /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/dr.bd.tcl
+INFO: [v++ 60-1454] Run Directory: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/run_link
+
+****** vpl v2024.2.1 (64-bit)
+  **** SW Build 5263293 on 2024-12-15-08:40:55
+  **** Start of session at: Mon Feb 10 13:38:40 2025
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+INFO: [VPL 60-839] Read in kernel information from file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/kernel_info.dat'.
+INFO: [VPL 60-423]   Target device: xilinx_vck190_base_202420_1
+INFO: [VPL 60-1032] Extracting hardware platform to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/vivado/vpl/.local/hw_platform
+[13:39:05] Run vpl: Step create_project: Started
+Creating Vivado project.
+[13:39:40] Run vpl: Step create_project: Completed
+[13:39:40] Run vpl: Step create_bd: Started
+[13:40:58] Run vpl: Step create_bd: RUNNING...
+[13:42:14] Run vpl: Step create_bd: RUNNING...
+[13:43:30] Run vpl: Step create_bd: RUNNING...
+[13:43:42] Run vpl: Step create_bd: Completed
+[13:43:42] Run vpl: Step update_bd: Started
+[13:43:59] Run vpl: Step update_bd: Completed
+[13:43:59] Run vpl: Step generate_target: Started
+[13:45:16] Run vpl: Step generate_target: RUNNING...
+[13:46:33] Run vpl: Step generate_target: RUNNING...
+[13:47:50] Run vpl: Step generate_target: RUNNING...
+[13:49:08] Run vpl: Step generate_target: RUNNING...
+[13:49:34] Run vpl: Step generate_target: Completed
+[13:49:34] Run vpl: Step config_hw_runs: Started
+[13:49:51] Run vpl: Step config_hw_runs: Completed
+[13:49:51] Run vpl: Step synth: Started
+[13:50:24] Block-level synthesis in progress, 1 of 1 jobs complete, 0 jobs running.
+[13:50:55] Top-level synthesis in progress.
+[13:51:26] Top-level synthesis in progress.
+[13:51:58] Top-level synthesis in progress.
+[13:52:29] Top-level synthesis in progress.
+[13:53:09] Run vpl: Step synth: Completed
+[13:53:09] Run vpl: Step impl: Started
+[13:53:41] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:54:11] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:54:41] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:55:11] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:55:42] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:56:12] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:56:42] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:57:12] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:57:43] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:58:13] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:58:43] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:59:13] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[13:59:44] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:00:14] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:00:44] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:01:15] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:01:45] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:02:15] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:02:45] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:03:16] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:03:46] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:04:16] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:04:46] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:05:17] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:05:47] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:06:17] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:06:48] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:07:18] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:07:48] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:08:18] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:08:49] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:09:19] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:09:49] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:10:19] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:10:50] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:11:20] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:11:50] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:12:21] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:12:51] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:13:21] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:13:51] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:14:22] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:14:52] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:15:23] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:15:53] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:16:23] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:16:54] Multiple strategy based implementation runs in progress, 0 of 5 runs complete, 5 run(s) in progress ...
+[14:17:10] Multiple strategy based implementation runs in progress, 1 of 5 runs complete, 4 run(s) in progress ...
+[14:17:10] Run vpl: FINISHED. Run Status: impl Complete! (timing qualified implementation run found using multi-strategies)
+INFO: [v++ 60-1441] [14:17:15] Run run_link: Step vpl: Completed
+Time (s): cpu = 00:00:07 ; elapsed = 00:38:37 . Memory (MB): peak = 704.418 ; gain = 0.000 ; free physical = 227360 ; free virtual = 408917
+INFO: [v++ 60-1443] [14:17:15] Run run_link: Step rtdgen: Started
+INFO: [v++ 60-1453] Command Line: rtdgen
+INFO: [v++ 60-1454] Run Directory: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/run_link
+INFO: [v++ 60-1453] Command Line: cf2sw -force-enable-memory DDR -a /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/address_map.xml -sdsl /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/sdsl.dat -xclbin /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/xclbin_orig.xml -rtd /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness.rtd -o /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness.xml
+INFO: [v++ 60-1652] Cf2sw returned exit code: 0
+INFO: [v++ 60-1441] [14:17:20] Run run_link: Step rtdgen: Completed
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 704.418 ; gain = 0.000 ; free physical = 227269 ; free virtual = 408834
+INFO: [v++ 60-1443] [14:17:20] Run run_link: Step xclbinutil: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --add-section DEBUG_IP_LAYOUT:JSON:/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/debug_ip_layout.rtd --add-section BITSTREAM:RAW:/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/system.pdi --force --target hw --key-value SYS:dfx_enable:false --add-section :JSON:/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness_xml.rtd --add-section BUILD_METADATA:JSON:/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness.xml --add-section SYSTEM_METADATA:RAW:/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx.com_vck190_versal_extensible_platform_base_1_0 --output /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/run_link
+XRT Build Version: 2.18.0 (Vitis)
+       Build Date: 2024-10-02 22:27:58
+          Hash ID: 266b98dc2c041ca450d85afc3fdd0b50a54dcf62
+Creating a default 'in-memory' xclbin image.
+
+Section: 'DEBUG_IP_LAYOUT'(9) was successfully added.
+Size   : 4184 bytes
+Format : JSON
+File   : '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/debug_ip_layout.rtd'
+
+Section: 'BITSTREAM'(0) was successfully added.
+Size   : 5835936 bytes
+Format : RAW
+File   : '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/system.pdi'
+
+Section: 'MEM_TOPOLOGY'(6) was successfully added.
+Format : JSON
+File   : 'mem_topology'
+
+Section: 'IP_LAYOUT'(8) was successfully added.
+Format : JSON
+File   : 'ip_layout'
+
+Section: 'CONNECTIVITY'(7) was successfully added.
+Format : JSON
+File   : 'connectivity'
+WARNING: Skipping CLOCK_FREQ_TOPOLOGY section for count size is zero.
+WARNING: Section 'CLOCK_FREQ_TOPOLOGY' content is empty.  No data in the given JSON file.
+
+Section: 'CLOCK_FREQ_TOPOLOGY'(11) was empty.  No action taken.
+Format : JSON
+File   : '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness_xml.rtd'
+
+Section: 'BUILD_METADATA'(14) was successfully added.
+Size   : 3021 bytes
+Format : JSON
+File   : '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness_build.rtd'
+
+Section: 'EMBEDDED_METADATA'(2) was successfully added.
+Size   : 3371 bytes
+Format : RAW
+File   : '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness.xml'
+
+Section: 'SYSTEM_METADATA'(22) was successfully added.
+Size   : 18027 bytes
+Format : RAW
+File   : '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/systemDiagramModelSlrBaseAddress.json'
+Successfully wrote (5878236 bytes) to the output file: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness.xclbin
+Leaving xclbinutil.
+INFO: [v++ 60-1441] [14:17:20] Run run_link: Step xclbinutil: Completed
+Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.25 . Memory (MB): peak = 704.418 ; gain = 0.000 ; free physical = 227193 ; free virtual = 408759
+INFO: [v++ 60-1443] [14:17:20] Run run_link: Step xclbinutilinfo: Started
+INFO: [v++ 60-1453] Command Line: xclbinutil --quiet --force --info /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness.xclbin.info --input /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/int/harness.xclbin
+INFO: [v++ 60-1454] Run Directory: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/link/run_link
+INFO: [v++ 60-1441] [14:17:20] Run run_link: Step xclbinutilinfo: Completed
+Time (s): cpu = 00:00:00.08 ; elapsed = 00:00:00.28 . Memory (MB): peak = 704.418 ; gain = 0.000 ; free physical = 227738 ; free virtual = 409305
+INFO: [v++ 82-3844] Successfully added runtime data to ./harness.xsa
+INFO: [v++ 60-586] Created /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness.ltx
+WARNING: [v++ 60-1628] No sd_card image will be generated for Versal platforms. Parameter compiler.addOutputTypes will not be honored.
+INFO: [v++ 60-586] Created harness.xsa
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/reports/link/v++_link_harness_guidance.html
+	Vivado Log: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/logs/link/vivado.log
+	Steps Log File: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the Vitis Unified IDE to visualize and navigate the reports. Run the following command. 
+    vitis -a/ --analyze /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness.xsa.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 39m 8s

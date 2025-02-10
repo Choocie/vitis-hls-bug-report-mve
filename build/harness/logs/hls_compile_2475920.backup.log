@@ -1,0 +1,698 @@
+INFO: [v++ 60-895]   Target platform: /tools/xilinx/Vitis/2024.2/base_platforms/xilinx_vck190_base_202420_1/xilinx_vck190_base_202420_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/tools/xilinx/Vitis/2024.2/base_platforms/xilinx_vck190_base_202420_1/hw/hw.xsa'
+  **** HLS Build v2024.2.1 5263293
+INFO: [HLS 200-2005] Using work_dir /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness 
+INFO: [HLS 200-1505] Using default flow_target 'vivado'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+WARNING: [HLS 200-1998] cannot find relative file path '../../src/templates' in directory(s): /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config
+INFO: [HLS 200-1465] Applying ini 'syn.file=../../../src/weights.h' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(29)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/weights.h' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../../../src/global.h' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(30)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/global.h' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../../../src/caloclusternet.h' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(31)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.h' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../../../src/caloclusternet.cpp' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(32)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.cpp' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../src/harness.cpp' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(33)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/src/harness.cpp' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.file=../src/harness.h' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(34)
+INFO: [HLS 200-10] Adding design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/src/harness.h' to the project
+INFO: [HLS 200-1465] Applying ini 'syn.cflags=-I../../../src/templates' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(15)
+INFO: [HLS 200-1465] Applying ini 'syn.csimflags=-I../../src/templates' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(22)
+INFO: [HLS 200-1465] Applying ini 'tb.file=../src/csim.cpp' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(35)
+INFO: [HLS 200-10] Adding test bench file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/src/csim.cpp' to the project
+INFO: [HLS 200-1465] Applying ini 'tb.cflags=-I../../../src/templates -I/home/nv3401/bin/highfive-2_8_0/include -I/home/nv3401/bin/hdf5-1_14_0/include' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(16)
+INFO: [HLS 200-1465] Applying ini 'syn.top=harness' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(6)
+INFO: [HLS 200-1465] Applying ini 'flow_target=vitis' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(5)
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_latency=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_rtl -register_reset_num=3
+INFO: [HLS 200-1465] Applying ini 'clock_uncertainty=0.2ns' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(14)
+INFO: [HLS 200-1465] Applying ini 'cosim.enable_dataflow_profiling=true' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(10)
+INFO: [HLS 200-1465] Applying ini 'cosim.enable_fifo_sizing=1' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(11)
+INFO: [HLS 200-1465] Applying ini 'cosim.enable_tasks_with_m_axi=0' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(12)
+INFO: [HLS 200-1465] Applying ini 'cosim.rtl=verilog' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(13)
+INFO: [HLS 200-1465] Applying ini 'cosim.setup=0' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(38)
+INFO: [HLS 200-1465] Applying ini 'cosim.stable_axilite_update=1' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(20)
+INFO: [HLS 200-1465] Applying ini 'cosim.tool=xsim' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(19)
+INFO: [HLS 200-1465] Applying ini 'cosim.trace_level=all' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(18)
+INFO: [HLS 200-1465] Applying ini 'cosim.wave_debug=1' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(21)
+INFO: [HLS 200-1465] Applying ini 'csim.code_analyzer=0' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(17)
+INFO: [HLS 200-1465] Applying ini 'package.output.file=harness.xo' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(37)
+INFO: [HLS 200-1465] Applying ini 'package.output.format=xo' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(9)
+INFO: [HLS 200-1465] Applying ini 'sim.ldflags=-L/home/nv3401/bin/hdf5-1_14_0/lib -lhdf5 -Wl,-rpath,/home/nv3401/bin/hdf5-1_14_0/lib' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(24)
+INFO: [HLS 200-1465] Applying ini 'syn.dataflow.fifo_depth=4' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(7)
+INFO: [XFORM 203-701] Set default FIFO size in dataflow to 4.
+INFO: [HLS 200-1465] Applying ini 'syn.rtl.register_reset_num=3' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(23)
+INFO: [HLS 200-1465] Applying ini 'syn.schedule.enable_dsp_full_reg=0' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(36)
+INFO: [HLS 200-1465] Applying ini 'vivado.optimization_level=3' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(25)
+INFO: [HLS 200-435] Setting 'config_export -vivado_optimization_level 3' configuration: config_export -vivado_phys_opt=all
+INFO: [HLS 200-1465] Applying ini 'vivado.phys_opt=all' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(26)
+INFO: [HLS 200-1465] Applying ini 'vivado.report_level=2' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(27)
+INFO: [HLS 200-1465] Applying ini 'vivado.syn_dcp=1' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/hls.cfg(28)
+INFO: [HLS 200-1465] Applying ini 'part=xcvc1902-vsva2197-2MP-e-S' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/config.cmdline(2)
+INFO: [HLS 200-1611] Setting target device to 'xcvc1902-vsva2197-2MP-e-S'
+INFO: [HLS 200-1465] Applying ini 'clock=330000000Hz' from /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/config.cmdline(7)
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 3.03ns.
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 3.33 seconds. CPU system time: 0.97 seconds. Elapsed time: 5.83 seconds; current allocated memory: 661.641 MB.
+INFO: [HLS 200-10] Analyzing design file '../src/harness.cpp' ... 
+WARNING: [HLS 214-114] Since the only kind of statements allowed in a canonical dataflow region are variable declarations and function calls, the compiler may not be able to correctly handle the region (../src/harness.cpp:13:9)
+Resolution: For help on HLS 214-114 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=214-114.html
+WARNING: [HLS 200-471] Dataflow form checks found 1 issue(s) in file ../src/harness.cpp
+Resolution: For help on HLS 200-471 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-471.html
+INFO: [HLS 200-10] Analyzing design file '/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.cpp' ... 
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body (/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.cpp:110:6)
+Resolution: For help on HLS 214-113 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=214-113.html
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body (/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.cpp:222:6)
+Resolution: For help on HLS 214-113 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=214-113.html
+WARNING: [HLS 214-114] Since the only kind of statements allowed in a canonical dataflow region are variable declarations and function calls, the compiler may not be able to correctly handle the region (/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.cpp:11:9)
+Resolution: For help on HLS 214-114 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=214-114.html
+WARNING: [HLS 214-169] There are a total of 21 such instances of non-canonical statements in the dataflow region (/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.cpp:11:9)
+Resolution: For help on HLS 214-169 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=214-169.html
+WARNING: [HLS 200-471] Dataflow form checks found 4 issue(s) in file /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/caloclusternet.cpp
+Resolution: For help on HLS 200-471 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-471.html
+WARNING: [HLS 207-5292] unused parameter 'expLUT' (/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/src/templates/gravnetconv.h:460:50)
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 32.08 seconds. CPU system time: 3.86 seconds. Elapsed time: 36.42 seconds; current allocated memory: 672.977 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vitis' flow target.
+INFO: [HLS 200-1995] There were 2,846 instructions in the design after the 'Compile/Link' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 79,527 instructions in the design after the 'Unroll/Inline (step 1)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 28,845 instructions in the design after the 'Unroll/Inline (step 2)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 26,690 instructions in the design after the 'Unroll/Inline (step 3)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 13,209 instructions in the design after the 'Unroll/Inline (step 4)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 9,500 instructions in the design after the 'Array/Struct (step 1)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 9,475 instructions in the design after the 'Array/Struct (step 2)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 9,498 instructions in the design after the 'Array/Struct (step 3)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 11,920 instructions in the design after the 'Array/Struct (step 4)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 11,924 instructions in the design after the 'Array/Struct (step 5)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 11,924 instructions in the design after the 'Performance (step 1)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 11,922 instructions in the design after the 'Performance (step 2)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 12,213 instructions in the design after the 'Performance (step 3)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 11,435 instructions in the design after the 'Performance (step 4)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 10,753 instructions in the design after the 'HW Transforms (step 1)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 200-1995] There were 10,867 instructions in the design after the 'HW Transforms (step 2)' phase of compilation. See the Design Size Report for more details: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/syn/report/csynth_design_size.rpt
+INFO: [HLS 214-291] Loop 'anonymous' is marked as complete unroll implied by the pipeline pragma
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_112_3' is marked as complete unroll implied by the pipeline pragma (../src/harness.cpp:112:27)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_116_4' is marked as complete unroll implied by the pipeline pragma (../src/harness.cpp:116:35)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_66_2' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:66:26)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_133_2' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:133:27)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_134_3' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:134:31)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_140_4' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:140:27)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_144_5' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:144:27)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_145_6' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:145:31)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_153_7' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:153:27)
+INFO: [HLS 214-291] Loop 'anonymous' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:24:5)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_95_2' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:95:26)
+INFO: [HLS 214-291] Loop 'anonymous' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:102:28)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_44_1' is marked as complete unroll implied by the pipeline pragma (../src/harness.h:44:22)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_66_3' is marked as complete unroll implied by the pipeline pragma (../src/harness.cpp:66:26)
+INFO: [HLS 214-291] Loop 'VITIS_LOOP_69_4' is marked as complete unroll implied by the pipeline pragma (../src/harness.cpp:69:34)
+INFO: [HLS 214-186] Unrolling loop 'anonymous' () in function 'store' completely with a factor of 1 (../src/harness.cpp:97:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_112_3' (../src/harness.cpp:112:27) in function 'store' completely with a factor of 2 (../src/harness.cpp:97:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_116_4' (../src/harness.cpp:116:35) in function 'store' completely with a factor of 16 (../src/harness.cpp:97:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_22_1' (../src/harness.cpp:22:19) in function 'dut' completely with a factor of 2 (../src/harness.cpp:12:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_66_2' (../src/harness.h:66:26) in function 'filter<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16ul>, 2, 16>' completely with a factor of 2 (../src/harness.h:56:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_133_2' (../src/harness.h:133:27) in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>' completely with a factor of 37 (../src/harness.h:120:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_134_3' (../src/harness.h:134:31) in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>' completely with a factor of 16 (../src/harness.h:120:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_140_4' (../src/harness.h:140:27) in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>' completely with a factor of 16 (../src/harness.h:120:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_144_5' (../src/harness.h:144:27) in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>' completely with a factor of 37 (../src/harness.h:120:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_145_6' (../src/harness.h:145:31) in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>' completely with a factor of 16 (../src/harness.h:120:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_153_7' (../src/harness.h:153:27) in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>' completely with a factor of 16 (../src/harness.h:120:0)
+INFO: [HLS 214-186] Unrolling loop 'anonymous' (../src/harness.h:24:5) in function 'static_pow2<int>' completely with a factor of 5 (../src/harness.h:22:0)
+INFO: [HLS 214-186] Unrolling loop 'anonymous' (../src/harness.h:24:5) in function 'static_pow2<float>' completely with a factor of 2 (../src/harness.h:22:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_95_2' (../src/harness.h:95:26) in function 'padding<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>, 2, 16>' completely with a factor of 2 (../src/harness.h:86:0)
+INFO: [HLS 214-186] Unrolling loop 'anonymous' (../src/harness.h:102:28) in function 'padding<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>, 2, 16>' completely with a factor of 36 (../src/harness.h:86:0)
+INFO: [HLS 214-186] Unrolling loop 'anonymous' () in function 'padding<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>, 2, 16>' completely with a factor of 1 (../src/harness.h:86:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_44_1' (../src/harness.h:44:22) in function 'multicast<int, 2>' completely with a factor of 2 (../src/harness.h:39:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_66_3' (../src/harness.cpp:66:26) in function 'load' completely with a factor of 2 (../src/harness.cpp:50:0)
+INFO: [HLS 214-186] Unrolling loop 'VITIS_LOOP_69_4' (../src/harness.cpp:69:34) in function 'load' completely with a factor of 37 (../src/harness.cpp:50:0)
+INFO: [HLS 214-178] Inlining function 'std::__array_traits<short, 128ul>::_S_ref(short const (&) [128], unsigned long)' into 'std::array<short, 128ul>::operator[](unsigned long)' (/tools/xilinx/Vitis/2024.2/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/array:186:0)
+INFO: [HLS 214-178] Inlining function 'std::__array_traits<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>::_S_ref(ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0> const (&) [37], unsigned long)' into 'std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>::operator[](unsigned long)' (/tools/xilinx/Vitis/2024.2/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/array:186:0)
+INFO: [HLS 214-178] Inlining function 'std::array<short, 128ul>::operator[](unsigned long)' into 'load(int&, int*, std::array<short, 128ul>*, hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>, 0>*, hls::stream<int, 0>&)' (../src/harness.cpp:50:0)
+INFO: [HLS 214-178] Inlining function 'std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>::operator[](unsigned long)' into 'load(int&, int*, std::array<short, 128ul>*, hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>, 0>*, hls::stream<int, 0>&)' (../src/harness.cpp:50:0)
+INFO: [HLS 214-178] Inlining function 'float static_pow2<float>(float)' into 'float ap_fixed_max<8, 3>()' (../src/harness.h:33:0)
+INFO: [HLS 214-178] Inlining function 'int static_pow2<int>(int)' into 'float ap_fixed_max<8, 3>()' (../src/harness.h:33:0)
+INFO: [HLS 214-178] Inlining function 'std::__array_traits<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16ul>::_S_ref(ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0> const (&) [16], unsigned long)' into 'std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16ul>::operator[](unsigned long)' (/tools/xilinx/Vitis/2024.2/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/array:186:0)
+INFO: [HLS 214-178] Inlining function 'float ap_fixed_max<8, 3>()' into 'void dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>(hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37>, 0>&, hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16>, 0>&, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>*)' (../src/harness.h:120:0)
+INFO: [HLS 214-178] Inlining function 'std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>::operator[](unsigned long)' into 'void dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>(hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37>, 0>&, hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16>, 0>&, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>*)' (../src/harness.h:120:0)
+INFO: [HLS 214-178] Inlining function 'std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16ul>::operator[](unsigned long)' into 'void dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>(hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37>, 0>&, hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16>, 0>&, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>*, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>*)' (../src/harness.h:120:0)
+INFO: [HLS 214-178] Inlining function 'std::__array_traits<short, 32ul>::_S_ref(short const (&) [32], unsigned long)' into 'std::array<short, 32ul>::operator[](unsigned long)' (/tools/xilinx/Vitis/2024.2/tps/lnx64/gcc-8.3.0/lib/gcc/x86_64-pc-linux-gnu/8.3.0/../../../../include/c++/8.3.0/array:186:0)
+INFO: [HLS 214-178] Inlining function 'std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16ul>::operator[](unsigned long)' into 'store(int&, int*, std::array<short, 32ul>*, hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16ul>, 0>*, hls::stream<bool, 0>*)' (../src/harness.cpp:97:0)
+INFO: [HLS 214-178] Inlining function 'std::array<short, 32ul>::operator[](unsigned long)' into 'store(int&, int*, std::array<short, 32ul>*, hls::stream<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16ul>, 0>*, hls::stream<bool, 0>*)' (../src/harness.cpp:97:0)
+INFO: [HLS 214-248] Applying array_partition to '_ZL13dense11Biases': Complete partitioning on dimension 1. (../src/harness.cpp:6:0)
+INFO: [HLS 214-248] Applying array_partition to 'multicastNumStream': Complete partitioning on dimension 1. (../src/harness.cpp:15:24)
+INFO: [HLS 214-248] Applying array_partition to 'paddingStream': Complete partitioning on dimension 1. (../src/harness.cpp:18:41)
+INFO: [HLS 214-248] Applying array_partition to 'dense11Stream': Complete partitioning on dimension 1. (../src/harness.cpp:21:40)
+INFO: [HLS 214-248] Applying array_partition to 'inputStream': Complete partitioning on dimension 1. (../src/harness.cpp:144:40)
+INFO: [HLS 214-248] Applying array_partition to 'outputStream': Complete partitioning on dimension 1. (../src/harness.cpp:146:43)
+INFO: [HLS 214-248] Applying array_partition to 'lastStream': Complete partitioning on dimension 1. (../src/harness.cpp:147:23)
+INFO: [HLS 214-241] Aggregating fifo (hls::stream) variable 'inputStream_0' with compact=bit mode in 296-bits (../src/harness.cpp:144:40)
+INFO: [HLS 214-241] Aggregating fifo (hls::stream) variable 'inputStream_1' with compact=bit mode in 296-bits (../src/harness.cpp:144:40)
+INFO: [HLS 214-241] Aggregating fifo (hls::stream) variable 'outputStream_0' with compact=bit mode in 128-bits (../src/harness.cpp:146:43)
+INFO: [HLS 214-241] Aggregating fifo (hls::stream) variable 'outputStream_1' with compact=bit mode in 128-bits (../src/harness.cpp:146:43)
+INFO: [HLS 214-241] Aggregating fifo (hls::stream) variable 'paddingStream_1' with compact=bit mode in 296-bits (../src/harness.cpp:18:41)
+INFO: [HLS 214-241] Aggregating fifo (hls::stream) variable 'paddingStream_0' with compact=bit mode in 296-bits (../src/harness.cpp:18:41)
+INFO: [HLS 214-241] Aggregating fifo (hls::stream) variable 'dense11Stream_1' with compact=bit mode in 128-bits (../src/harness.cpp:21:40)
+INFO: [HLS 214-241] Aggregating fifo (hls::stream) variable 'dense11Stream_0' with compact=bit mode in 128-bits (../src/harness.cpp:21:40)
+INFO: [HLS 214-241] Aggregating maxi variable 'outFeatureList' with compact=none mode in 512-bits
+INFO: [HLS 214-449] Automatically partitioning array 'burst' dimension 1 completely based on constant index. (../src/harness.cpp:111:23)
+INFO: [HLS 214-449] Automatically partitioning array 'input' dimension 1 completely based on constant index. (../src/harness.h:130:22)
+INFO: [HLS 214-449] Automatically partitioning array 'result' dimension 1 completely based on constant index. (../src/harness.h:151:31)
+INFO: [HLS 214-270] Inferring pragma 'array_partition type=complete dim=1' for array 'burst' due to pipeline pragma (../src/harness.cpp:108:9)
+INFO: [HLS 214-270] Inferring pragma 'array_partition type=complete dim=1' for array 'input' due to pipeline pragma (../src/harness.h:128:9)
+INFO: [HLS 214-270] Inferring pragma 'array_partition type=complete dim=1' for array 'result' due to pipeline pragma (../src/harness.h:128:9)
+INFO: [HLS 214-248] Applying array_partition to 'input': Complete partitioning on dimension 1. (../src/harness.h:130:22)
+INFO: [HLS 214-248] Applying array_partition to 'result': Complete partitioning on dimension 1. (../src/harness.h:151:31)
+INFO: [HLS 214-248] Applying array_partition to 'burst': Complete partitioning on dimension 1. (../src/harness.cpp:111:23)
+INFO: [HLS 214-115] Multiple burst reads of variable length and bit width 1024 has been inferred on bundle 'gmem0'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (../src/harness.cpp:65:30)
+INFO: [HLS 214-115] Multiple burst writes of variable length and bit width 512 in loop 'VITIS_LOOP_107_2'(../src/harness.cpp:107:23) has been inferred on bundle 'gmem1'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (../src/harness.cpp:107:23)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 7.33 seconds. CPU system time: 1.03 seconds. Elapsed time: 8.69 seconds; current allocated memory: 676.672 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 676.672 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.14 seconds. CPU system time: 0 seconds. Elapsed time: 0.15 seconds; current allocated memory: 680.719 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.3 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.3 seconds; current allocated memory: 683.320 MB.
+WARNING: [HLS 200-805] An internal stream 'inputStream_0' with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+WARNING: [HLS 200-805] An internal stream 'inputStream_1' with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+WARNING: [HLS 200-805] An internal stream 'outputStream_0' with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+WARNING: [HLS 200-805] An internal stream 'outputStream_1' with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+WARNING: [HLS 200-805] An internal stream 'lastStream' (../src/harness.cpp:147) with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+WARNING: [HLS 200-805] An internal stream 'lastStream.1' (../src/harness.cpp:147) with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+WARNING: [HLS 200-805] An internal stream 'paddingStream_0' with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+WARNING: [HLS 200-805] An internal stream 'paddingStream_1' with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+WARNING: [HLS 200-805] An internal stream 'dense11Stream_0' with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+WARNING: [HLS 200-805] An internal stream 'dense11Stream_1' with default size can result in deadlock. Please consider resizing the stream using the directive 'set_directive_stream' or the 'HLS stream' pragma.
+INFO: [XFORM 203-712] Applying dataflow to function 'dut' (../src/harness.cpp:13:1), detected/extracted 5 process function(s): 
+	 'multicast<int, 2>'
+	 'padding<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 37ul>, 2, 16>'
+	 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>.1'
+	 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>'
+	 'filter<std::array<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, 16ul>, 2, 16>'.
+INFO: [XFORM 203-712] Applying dataflow to function 'harness' (../src/harness.cpp:128:1), detected/extracted 4 process function(s): 
+	 'entry_proc'
+	 'load'
+	 'inference'
+	 'store'.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../src/harness.h:128:9) to (../src/harness.h:127:20) in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>.1'... converting 49 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (../src/harness.h:128:9) to (../src/harness.h:127:20) in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>'... converting 49 basic blocks.
+INFO: [XFORM 203-11] Balancing expressions in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>.1' (../src/harness.h:127:41)...250 expression(s) balanced.
+INFO: [XFORM 203-11] Balancing expressions in function 'dense_relu_saturate<ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_ufixed<8, 3, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<9, 4, (ap_q_mode)5, (ap_o_mode)3, 0>, ap_fixed<20, 8, (ap_q_mode)5, (ap_o_mode)3, 0>, 37, 16, 16>' (../src/harness.h:127:41)...250 expression(s) balanced.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 0.63 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.68 seconds; current allocated memory: 712.109 MB.
+WARNING: [HLS 200-1992] Performance of loop 'VITIS_LOOP_88_1'(../src/harness.h:88:22) in function 'padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>' can be improved with loop rewind inference if the loop is called from a region that can be executed in overlapped fashion such as a dataflow region or the top function.
+INFO: [XFORM 203-531] Rewinding loop 'VITIS_LOOP_88_1' (../src/harness.h:88) in function 'padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>'.
+WARNING: [HLS 200-1614] Cosimulation may deadlock if process padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16> has a streamed top-level array input and has predecessor processes. If a deadlock occurs, please consider converting the streamed array into an hls::stream
+WARNING: [HLS 200-1449] Process store has both a predecessor and reads an input from its caller (see the GUI dataflow viewer). This may lead to lower throughput. Consider copying this input via a predecessor process.
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 0.41 seconds. CPU system time: 0.02 seconds. Elapsed time: 0.44 seconds; current allocated memory: 847.230 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'harness' ...
+WARNING: [SYN 201-103] Legalizing function name 'multicast<int, 2>' to 'multicast_int_2_s'.
+WARNING: [SYN 201-103] Legalizing function name 'padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>' to 'padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_s'.
+WARNING: [SYN 201-103] Legalizing function name 'dense_relu_saturate.1' to 'dense_relu_saturate_1'.
+WARNING: [SYN 201-103] Legalizing function name 'filter<array<ap_ufixed<8, 3, 5, 3, 0>, 16ul>, 2, 16>' to 'filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_s'.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'entry_proc' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.05 seconds. CPU system time: 0.06 seconds. Elapsed time: 0.13 seconds; current allocated memory: 847.230 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.01 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.02 seconds; current allocated memory: 848.230 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_Pipeline_VITIS_LOOP_54_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'VITIS_LOOP_54_1'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 79, loop 'VITIS_LOOP_54_1'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.53 seconds. CPU system time: 0 seconds. Elapsed time: 0.56 seconds; current allocated memory: 848.500 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.99 seconds. CPU system time: 0.01 seconds. Elapsed time: 1.01 seconds; current allocated memory: 848.977 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_Pipeline_VITIS_LOOP_61_2' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'VITIS_LOOP_61_2'.
+WARNING: [HLS 200-880] The II Violation in module 'load_Pipeline_VITIS_LOOP_61_2' (loop 'VITIS_LOOP_61_2'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus read operation ('gmem0_addr_read_2', ../src/harness.cpp:65->../src/harness.cpp:149) on port 'gmem0' (../src/harness.cpp:65->../src/harness.cpp:149) and bus read operation ('gmem0_addr_read', ../src/harness.cpp:65->../src/harness.cpp:149) on port 'gmem0' (../src/harness.cpp:65->../src/harness.cpp:149).
+Resolution: For help on HLS 200-880 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-880.html
+WARNING: [HLS 200-880] The II Violation in module 'load_Pipeline_VITIS_LOOP_61_2' (loop 'VITIS_LOOP_61_2'): Unable to enforce a carried dependence constraint (II = 2, distance = 1, offset = 1) between bus read operation ('gmem0_addr_read_2', ../src/harness.cpp:65->../src/harness.cpp:149) on port 'gmem0' (../src/harness.cpp:65->../src/harness.cpp:149) and bus read operation ('gmem0_addr_read', ../src/harness.cpp:65->../src/harness.cpp:149) on port 'gmem0' (../src/harness.cpp:65->../src/harness.cpp:149).
+Resolution: For help on HLS 200-880 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-880.html
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 3, Depth = 81, loop 'VITIS_LOOP_61_2'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.3 seconds. CPU system time: 0.01 seconds. Elapsed time: 1.34 seconds; current allocated memory: 850.336 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 1.11 seconds. CPU system time: 0.01 seconds. Elapsed time: 1.13 seconds; current allocated memory: 850.449 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.94 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.97 seconds; current allocated memory: 851.133 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.32 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.34 seconds; current allocated memory: 851.316 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'multicast_int_2_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'multicast<int, 2>'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, function 'multicast<int, 2>'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.02 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.04 seconds; current allocated memory: 851.352 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.01 seconds. CPU system time: 0 seconds. Elapsed time: 0.03 seconds; current allocated memory: 851.516 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'VITIS_LOOP_88_1'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'VITIS_LOOP_88_1'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.18 seconds. CPU system time: 0 seconds. Elapsed time: 0.2 seconds; current allocated memory: 851.805 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.11 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.13 seconds; current allocated memory: 852.168 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dense_relu_saturate' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'VITIS_LOOP_127_1'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 8, loop 'VITIS_LOOP_127_1'
+WARNING: [HLS 200-871] Estimated clock period (2.892 ns) exceeds the target (target clock period: 3.030 ns, clock uncertainty: 0.818 ns, effective delay budget: 2.212 ns).
+Resolution: For help on HLS 200-871 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-871.html
+WARNING: [HLS 200-1016] The critical path in module 'dense_relu_saturate' consists of the following:
+	'muxlogic' operation 13 bit ('muxLogicI0_to_mul_ln136_39') [153]  (0.000 ns)
+	'mul' operation 13 bit of DSP[1788] ('mul_ln136_39', ../src/harness.h:136) [155]  (0.924 ns)
+	'add' operation 14 bit of DSP[1788] ('empty_175', ../src/harness.h:136) [1788]  (0.984 ns)
+	'add' operation 15 bit of DSP[1791] ('empty_176', ../src/harness.h:136) [1791]  (0.984 ns)
+
+Resolution: For help on HLS 200-1016 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-1016.html
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.05 seconds. CPU system time: 0.01 seconds. Elapsed time: 1.08 seconds; current allocated memory: 869.359 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.43 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.53 seconds; current allocated memory: 869.359 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dense_relu_saturate_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'VITIS_LOOP_127_1'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 8, loop 'VITIS_LOOP_127_1'
+WARNING: [HLS 200-871] Estimated clock period (2.892 ns) exceeds the target (target clock period: 3.030 ns, clock uncertainty: 0.818 ns, effective delay budget: 2.212 ns).
+Resolution: For help on HLS 200-871 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-871.html
+WARNING: [HLS 200-1016] The critical path in module 'dense_relu_saturate_1' consists of the following:
+	'muxlogic' operation 13 bit ('muxLogicI0_to_mul_ln136_7') [153]  (0.000 ns)
+	'mul' operation 13 bit of DSP[1788] ('mul_ln136_7', ../src/harness.h:136) [155]  (0.924 ns)
+	'add' operation 14 bit of DSP[1788] ('empty_122', ../src/harness.h:136) [1788]  (0.984 ns)
+	'add' operation 15 bit of DSP[1791] ('empty_123', ../src/harness.h:136) [1791]  (0.984 ns)
+
+Resolution: For help on HLS 200-1016 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.2%20English&url=ug1448-hls-guidance&resourceid=200-1016.html
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.91 seconds. CPU system time: 0.03 seconds. Elapsed time: 1.04 seconds; current allocated memory: 883.297 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.34 seconds. CPU system time: 0.02 seconds. Elapsed time: 0.43 seconds; current allocated memory: 883.297 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'VITIS_LOOP_60_1'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'VITIS_LOOP_60_1'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.14 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.25 seconds; current allocated memory: 883.297 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.02 seconds. CPU system time: 0 seconds. Elapsed time: 0.03 seconds; current allocated memory: 883.297 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dut' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+WARNING: [HLS 200-1020] Increasing the depth of FIFO start_for_filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_U0 (from multicast_int_2_U0 to filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_U0) to 4 to improve performance and/or avoid deadlocks.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.03 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.04 seconds; current allocated memory: 883.297 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.02 seconds. CPU system time: 0 seconds. Elapsed time: 0.04 seconds; current allocated memory: 883.297 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'inference' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.05 seconds. CPU system time: 0 seconds. Elapsed time: 0.06 seconds; current allocated memory: 883.297 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.02 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.03 seconds; current allocated memory: 883.297 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'store_Pipeline_VITIS_LOOP_101_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'VITIS_LOOP_101_1'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 78, loop 'VITIS_LOOP_101_1'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.39 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.41 seconds; current allocated memory: 883.297 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 1.67 seconds. CPU system time: 0.01 seconds. Elapsed time: 1.7 seconds; current allocated memory: 883.297 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'store_Pipeline_VITIS_LOOP_107_2' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'VITIS_LOOP_107_2'.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 4, loop 'VITIS_LOOP_107_2'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.79 seconds. CPU system time: 0.01 seconds. Elapsed time: 1.83 seconds; current allocated memory: 883.297 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.04 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.05 seconds; current allocated memory: 883.297 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'store' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.37 seconds. CPU system time: 0 seconds. Elapsed time: 0.39 seconds; current allocated memory: 883.336 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 1.55 seconds. CPU system time: 0.01 seconds. Elapsed time: 1.57 seconds; current allocated memory: 883.820 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'harness' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.55 seconds. CPU system time: 0.01 seconds. Elapsed time: 1.58 seconds; current allocated memory: 883.980 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.03 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.06 seconds; current allocated memory: 884.453 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'entry_proc' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'entry_proc'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.05 seconds. CPU system time: 0 seconds. Elapsed time: 0.07 seconds; current allocated memory: 884.715 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_Pipeline_VITIS_LOOP_54_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'load_Pipeline_VITIS_LOOP_54_1' pipeline 'VITIS_LOOP_54_1' pipeline type 'loop pipeline'
+INFO: [RTGEN 206-100] Generating core module 'lshr_1024ns_10ns_1024_2_1': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_Pipeline_VITIS_LOOP_54_1'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.07 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.11 seconds; current allocated memory: 886.000 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_Pipeline_VITIS_LOOP_61_2' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'load_Pipeline_VITIS_LOOP_61_2' pipeline 'VITIS_LOOP_61_2' pipeline type 'loop pipeline'
+INFO: [RTGEN 206-100] Generating core module 'lshr_2192ns_10ns_2192_2_1': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_Pipeline_VITIS_LOOP_61_2'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.1 seconds. CPU system time: 0.02 seconds. Elapsed time: 1.14 seconds; current allocated memory: 890.047 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load'.
+INFO: [RTMG 210-278] Implementing memory 'harness_load_nums_1_RAM_AUTO_1R1W' using auto RAMs.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.18 seconds. CPU system time: 0.02 seconds. Elapsed time: 1.24 seconds; current allocated memory: 894.262 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'multicast_int_2_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'multicast_int_2_s'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.65 seconds. CPU system time: 0 seconds. Elapsed time: 0.67 seconds; current allocated memory: 895.242 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_s'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.04 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.07 seconds; current allocated memory: 895.953 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dense_relu_saturate' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dense_relu_saturate' pipeline 'VITIS_LOOP_127_1' pipeline type 'loop pipeline'
+INFO: [RTGEN 206-100] Generating core module 'dsp_dotpra3add_8ns_7ns_8ns_7ns_8ns_7ns_17s_18_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_11ns_13_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_11s_13_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_12ns_13_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_12s_13_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_13ns_13_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_13ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_13s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_14ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_15s_16_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_11s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_12s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_13ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_13s_14_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_13s_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_14s_15_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_16s_17_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5s_13ns_14_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_13s_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_14ns_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_14s_15_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_15ns_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_15s_16_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_12ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_12s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_13ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_14s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_14s_15_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_15s_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_7ns_15s_16_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_7s_14s_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_7s_15ns_16_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_7s_15s_16_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_5ns_12_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_5s_13_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_6ns_13_1_1': 4 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_6s_14_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_7ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_7s_15_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_8ns_15_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'sparsemux_7_2_7_1_1': 16 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dense_relu_saturate'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.51 seconds. CPU system time: 0.04 seconds. Elapsed time: 0.89 seconds; current allocated memory: 910.438 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dense_relu_saturate_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dense_relu_saturate_1' pipeline 'VITIS_LOOP_127_1' pipeline type 'loop pipeline'
+INFO: [RTGEN 206-100] Generating core module 'dsp_dotpra3add_8ns_7ns_8ns_7ns_8ns_7ns_17s_18_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_11ns_13_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_11s_13_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_12ns_13_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_12s_13_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_13ns_13_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_13ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_13s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_14ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_4ns_15s_16_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_11s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_12s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_13ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_13s_14_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_13s_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_14s_15_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5ns_16s_17_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_5s_13ns_14_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_13s_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_14ns_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_14s_15_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_15ns_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6ns_15s_16_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_12ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_12s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_13ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_14s_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_14s_15_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_6s_15s_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_7ns_15s_16_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_7s_14s_15_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_7s_15ns_16_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_8ns_7s_15s_16_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_5ns_12_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_5s_13_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_6ns_13_1_1': 4 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_6s_14_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_7ns_14_1_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_7s_15_1_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_8ns_8ns_15_1_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'sparsemux_7_2_7_1_1': 16 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dense_relu_saturate_1'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.16 seconds. CPU system time: 0.29 seconds. Elapsed time: 1.64 seconds; current allocated memory: 949.980 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_s' pipeline 'VITIS_LOOP_60_1' pipeline type 'loop pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_s'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.82 seconds. CPU system time: 0.29 seconds. Elapsed time: 1.21 seconds; current allocated memory: 985.242 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dut' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Setting dangling out port 'dut/outputStream_0_read' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'dut/outputStream_1_read' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'dut/lastStream_0_read' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'dut/lastStream_1_read' to 0.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dut'.
+INFO: [RTMG 210-285] Implementing FIFO 'multicastNumStream_U(harness_fifo_w32_d32_S)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'multicastNumStream_1_U(harness_fifo_w32_d32_S)' using Shift Registers.
+WARNING: [HLS 200-2085] FIFO 'paddingStream_0' depth is automatically increased to 5 to improve the timing of the pipeline control structure. Set config_rtl -add_register_in_block_condition to false if this automatic increase is not desired.
+INFO: [RTMG 210-285] Implementing FIFO 'paddingStream_0_U(harness_fifo_w296_d4_A_with_almost)' using Vivado Default RAMs.
+WARNING: [HLS 200-2085] FIFO 'paddingStream_1' depth is automatically increased to 5 to improve the timing of the pipeline control structure. Set config_rtl -add_register_in_block_condition to false if this automatic increase is not desired.
+INFO: [RTMG 210-285] Implementing FIFO 'paddingStream_1_U(harness_fifo_w296_d4_A_with_almost)' using Vivado Default RAMs.
+INFO: [RTMG 210-285] Implementing FIFO 'dense11Stream_0_U(harness_fifo_w128_d4_S)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'dense11Stream_1_U(harness_fifo_w128_d4_S)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'start_for_padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_U0_U(harness_start_for_padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_U0)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'start_for_filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_U0_U(harness_start_for_filter_array_ap_ufixed_8_3_5_3_0_16ul_2_16_U0)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'start_for_dense_relu_saturate_U0_U(harness_start_for_dense_relu_saturate_U0)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'start_for_dense_relu_saturate_1_U0_U(harness_start_for_dense_relu_saturate_1_U0)' using Shift Registers.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.09 seconds. CPU system time: 0.03 seconds. Elapsed time: 0.16 seconds; current allocated memory: 986.820 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'inference' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'inference'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.07 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.1 seconds; current allocated memory: 988.988 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'store_Pipeline_VITIS_LOOP_101_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'store_Pipeline_VITIS_LOOP_101_1' pipeline 'VITIS_LOOP_101_1' pipeline type 'loop pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'store_Pipeline_VITIS_LOOP_101_1'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.1 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.13 seconds; current allocated memory: 990.105 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'store_Pipeline_VITIS_LOOP_107_2' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'store_Pipeline_VITIS_LOOP_107_2' pipeline 'VITIS_LOOP_107_2' pipeline type 'loop pipeline'
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWVALID' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWADDR' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWID' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWLEN' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWSIZE' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWBURST' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWLOCK' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWCACHE' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWPROT' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWQOS' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWREGION' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_AWUSER' to 0.
+WARNING: [RTGEN 206-101] Setting dangling out port 'store_Pipeline_VITIS_LOOP_107_2/m_axi_gmem1_0_BREADY' to 0.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'store_Pipeline_VITIS_LOOP_107_2'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.74 seconds. CPU system time: 0.02 seconds. Elapsed time: 1.82 seconds; current allocated memory: 992.305 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'store' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'store'.
+INFO: [RTMG 210-278] Implementing memory 'harness_store_nums_RAM_AUTO_1R1W' using auto RAMs.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.14 seconds. CPU system time: 0.03 seconds. Elapsed time: 0.19 seconds; current allocated memory: 995.289 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'harness' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.
+INFO: [RTGEN 206-500] Setting interface mode on port 'harness/gmem0' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'harness/gmem1' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'harness/numEvents' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'harness/inputNumList' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'harness/inFeatureList' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'harness/outputNumList' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'harness/outFeatureList' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'harness' to 's_axilite & ap_ctrl_chain'.
+INFO: [RTGEN 206-100] Bundling port 'numEvents', 'inputNumList', 'inFeatureList', 'outputNumList', 'outFeatureList' and 'return' to AXI-Lite port control.
+WARNING: [RTGEN 206-101] RTL name 'fifo_w128_d4_S' is changed to 'fifo_w128_d4_S_x' due to conflict.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'harness'.
+INFO: [RTMG 210-285] Implementing FIFO 'outputNumList_c_U(harness_fifo_w64_d4_S)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'outFeatureList_c_U(harness_fifo_w64_d4_S)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'inputStream_0_U(harness_fifo_w296_d4_A)' using Vivado Default RAMs.
+INFO: [RTMG 210-285] Implementing FIFO 'inputStream_1_U(harness_fifo_w296_d4_A)' using Vivado Default RAMs.
+INFO: [RTMG 210-285] Implementing FIFO 'numStream_U(harness_fifo_w32_d8192_A)' using Vivado Default RAMs.
+INFO: [RTMG 210-285] Implementing FIFO 'outputStream_0_U(harness_fifo_w128_d4_S_x)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'outputStream_1_U(harness_fifo_w128_d4_S_x)' using Shift Registers.
+WARNING: [HLS 200-2085] FIFO 'lastStream' depth is automatically increased to 6 to improve the timing of the pipeline control structure. Set config_rtl -add_register_in_block_condition to false if this automatic increase is not desired.
+INFO: [RTMG 210-285] Implementing FIFO 'lastStream_U(harness_fifo_w1_d4_S_with_almost)' using Shift Registers.
+WARNING: [HLS 200-2085] FIFO 'lastStream_1' depth is automatically increased to 6 to improve the timing of the pipeline control structure. Set config_rtl -add_register_in_block_condition to false if this automatic increase is not desired.
+INFO: [RTMG 210-285] Implementing FIFO 'lastStream_1_U(harness_fifo_w1_d4_S_with_almost)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'start_for_inference_U0_U(harness_start_for_inference_U0)' using Shift Registers.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.79 seconds. CPU system time: 0.03 seconds. Elapsed time: 1.91 seconds; current allocated memory: 999.449 MB.
+INFO: [HLS 200-111] Finished Generating all RTL models: CPU user time: 1.01 seconds. CPU system time: 0.16 seconds. Elapsed time: 1.68 seconds; current allocated memory: 1002.336 MB.
+INFO: [HLS 200-1603] Design has inferred MAXI bursts and missed bursts, see Vitis HLS GUI synthesis summary report for detailed information.
+INFO: [HLS 200-111] Finished Updating report files: CPU user time: 1.13 seconds. CPU system time: 0.13 seconds. Elapsed time: 1.29 seconds; current allocated memory: 1.009 GB.
+INFO: [VHDL 208-304] Generating VHDL RTL for harness.
+INFO: [VLOG 209-307] Generating Verilog RTL for harness.
+INFO: [HLS 200-790] **** Loop Constraint Status: All loop constraints were satisfied.
+INFO: [HLS 200-789] **** Estimated Fmax: 345.78 MHz
+INFO: [IMPL 213-8] Exporting RTL as a Vivado IP.
+
+****** Vivado v2024.2.1 (64-bit)
+  **** SW Build 5266912 on Sun Dec 15 09:03:31 MST 2024
+  **** IP Build 5264866 on Sun Dec 15 16:27:47 MST 2024
+  **** SharedData Build 5264680 on Wed Dec 11 12:48:36 MST 2024
+  **** Start of session at: Sun Feb  9 08:51:12 2025
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source run_ippack.tcl -notrace
+INFO: calling package_hls_ip ip_types=vitis sysgen json_file=/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/hls_data.json outdir=/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip srcdir=/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls sort_interfaces_ports=false
+INFO: Copied 1 ipmisc file(s) to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip/misc
+INFO: Copied 83 verilog file(s) to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip/hdl/verilog
+INFO: Copied 78 vhdl file(s) to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip/hdl/vhdl
+INFO: Copied 10 swdriver file(s) to /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip/drivers
+INFO: Import ports from HDL: /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip/hdl/vhdl/harness.vhd (harness)
+INFO: Add axi4lite interface s_axi_control
+INFO: Add clock interface ap_clk
+INFO: Add reset interface ap_rst_n
+INFO: Add interrupt interface interrupt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/xilinx/Vivado/2024.2/data/ip'.
+INFO: Add axi4full interface m_axi_gmem0
+INFO: Add axi4full interface m_axi_gmem1
+INFO: Calling post_process_vitis to specialize IP
+INFO: Calling post_process_sysgen to specialize IP
+Generating sysgen info xml from json file
+INFO: Created IP /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip/component.xml
+Generating XO file: harness.xo in directory /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/../../../config
+Running: package_xo -xo_path /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/../../../config/harness.xo -kernel_xml /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/kernel.xml -kernel_name harness -ip_directory /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip -kernel_files {/home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/../../../../../src/weights.h /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/../../../../../src/global.h /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/../../../../../src/caloclusternet.h /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/../../../../../src/caloclusternet.cpp /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/../../../src/harness.cpp /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/../../../src/harness.h} -hls_directory /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/misc/hls_files -kernel_json /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/hls_data.json
+INFO: Created IP archive /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip/xilinx_com_hls_harness_1_0.zip
+INFO: [Common 17-206] Exiting Vivado at Sun Feb  9 08:51:28 2025...
+INFO: [HLS 200-802] Generated output file /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/config/harness.xo
+INFO: [HLS 200-112] Total CPU user time: 88.35 seconds. Total CPU system time: 9.34 seconds. Total elapsed time: 115.07 seconds; peak allocated memory: 1.014 GB.
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 59s

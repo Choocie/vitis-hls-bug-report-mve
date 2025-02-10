@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.2.1 (64-bit)
+# SW Build 5266912 on Sun Dec 15 09:03:31 MST 2024
+# IP Build 5264866 on Sun Dec 15 16:27:47 MST 2024
+# SharedData Build 5264680 on Wed Dec 11 12:48:36 MST 2024
+# Start of session at: Mon Feb 10 13:36:35 2025
+# Process ID         : 3640989
+# Current directory  : /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip
+# Command line       : vivado -notrace -mode batch -source run_ippack.tcl
+# Log file           : /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip/vivado.log
+# Journal file       : /home/nv3401/Dokumente/git/belle2/ecl/caloclusternethls/targets/vck190_mve_bad/build/harness/hls/impl/ip/vivado.jou
+# Running On         : work5.itiv.kit.edu
+# Platform           : RockyLinux
+# Operating System   : Rocky Linux 9.5 (Blue Onyx)
+# Processor Detail   : AMD EPYC 7702P 64-Core Processor
+# CPU Frequency      : 3298.009 MHz
+# CPU Physical cores : 64
+# CPU Logical cores  : 128
+# Host memory        : 540666 MB
+# Swap memory        : 34359 MB
+# Total Virtual      : 575026 MB
+# Available Virtual  : 470666 MB
+#-----------------------------------------------------------
+source run_ippack.tcl -notrace

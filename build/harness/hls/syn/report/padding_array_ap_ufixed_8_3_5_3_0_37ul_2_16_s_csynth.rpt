@@ -1,0 +1,204 @@
+
+
+================================================================
+== Vitis HLS Report for 'padding_array_ap_ufixed_8_3_5_3_0_37ul_2_16_s'
+================================================================
+* Date:           Mon Feb 10 13:36:10 2025
+
+* Version:        2024.2.1 (Build 5263293 on Dec 12 2024)
+* Project:        harness
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: versalaicore
+* Target device:  xcvc1902-vsva2197-2MP-e-S
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.03 ns|  1.309 ns|     0.82 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+-----------+-----+-----+-------------------------------------------+
+    |  Latency (cycles) |   Latency (absolute)  |  Interval |                  Pipeline                 |
+    |   min   |   max   |    min    |    max    | min | max |                    Type                   |
+    +---------+---------+-----------+-----------+-----+-----+-------------------------------------------+
+    |       18|       19|  54.540 ns|  57.570 ns|   16|   16|  loop rewind stp (delay=0 clock cycles(s))|
+    +---------+---------+-----------+-----------+-----+-----+-------------------------------------------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +-------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |                   |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        |     Loop Name     |   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +-------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |- VITIS_LOOP_88_1  |       18|       18|         4|          1|          1|    16|       yes|
+        +-------------------+---------+---------+----------+-----------+-----------+------+----------+
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+------+---------+--------+-----+
+|       Name      | BRAM_18K|  DSP |    FF   |   LUT  | URAM|
++-----------------+---------+------+---------+--------+-----+
+|DSP              |        -|     -|        -|       -|    -|
+|Expression       |        -|     -|        0|      54|    -|
+|FIFO             |        -|     -|        -|       -|    -|
+|Instance         |        -|     -|        -|       -|    -|
+|Memory           |        -|     -|        -|       -|    -|
+|Multiplexer      |        -|     -|        0|     286|    -|
+|Register         |        -|     -|       64|       2|    -|
++-----------------+---------+------+---------+--------+-----+
+|Total            |        0|     0|       64|     342|    0|
++-----------------+---------+------+---------+--------+-----+
+|Available        |     1934|  1968|  1799680|  899840|  463|
++-----------------+---------+------+---------+--------+-----+
+|Utilization (%)  |        0|     0|       ~0|      ~0|    0|
++-----------------+---------+------+---------+--------+-----+
+
++ Detail: 
+    * Instance: 
+    N/A
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +---------------------------------------+----------+----+---+----+------------+------------+
+    |             Variable Name             | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +---------------------------------------+----------+----+---+----+------------+------------+
+    |ii_fu_122_p2                           |         +|   0|  0|   6|           4|           1|
+    |ap_block_state3_pp0_stage0_iter1_grp1  |       and|   0|  0|   2|           1|           1|
+    |ap_condition_205                       |       and|   0|  0|   2|           1|           1|
+    |icmp_ln88_fu_134_p2                    |      icmp|   0|  0|   2|           4|           2|
+    |icmp_ln91_fu_128_p2                    |      icmp|   0|  0|   2|           4|           1|
+    |icmp_ln98_1_fu_180_p2                  |      icmp|   0|  0|  16|          32|          32|
+    |icmp_ln98_fu_162_p2                    |      icmp|   0|  0|  16|          32|          32|
+    |ap_block_pp0_stage0_01001_grp1         |        or|   0|  0|   2|           1|           1|
+    |ap_block_state1                        |        or|   0|  0|   2|           1|           1|
+    |ap_block_state5_pp0_stage0_iter3_grp1  |        or|   0|  0|   2|           1|           1|
+    |ap_enable_pp0                          |       xor|   0|  0|   2|           1|           2|
+    +---------------------------------------+----------+----+---+----+------------+------------+
+    |Total                                  |          |   0|  0|  54|          82|          75|
+    +---------------------------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +------------------------------+-----+-----------+-----+-----------+
+    |             Name             | LUT | Input Size| Bits| Total Bits|
+    +------------------------------+-----+-----------+-----+-----------+
+    |ap_NS_fsm                     |    1|          3|    1|          3|
+    |ap_done                       |    1|          2|    1|          2|
+    |ap_enable_reg_pp0_iter1       |    1|          2|    1|          2|
+    |ap_enable_reg_pp0_iter3       |    1|          2|    1|          2|
+    |ap_phi_mux_ii1_phi_fu_111_p6  |    8|          3|    4|         12|
+    |ap_predicate_pre_block_op40   |    1|          2|    1|          2|
+    |ap_predicate_pre_block_op45   |    1|          2|    1|          2|
+    |ap_predicate_pre_block_op48   |    1|          2|    1|          2|
+    |ap_predicate_pre_block_op53   |    1|          2|    1|          2|
+    |ii1_reg_107                   |    8|          2|    4|          8|
+    |inputStream_0_blk_n           |    1|          2|    1|          2|
+    |inputStream_1_blk_n           |    1|          2|    1|          2|
+    |multicastNumStream_0_blk_n    |    1|          2|    1|          2|
+    |paddingStream_0_blk_n         |    1|          3|    1|          3|
+    |paddingStream_0_din_local     |  128|          3|  296|        888|
+    |paddingStream_1_blk_n         |    1|          3|    1|          3|
+    |paddingStream_1_din_local     |  128|          3|  296|        888|
+    |real_start                    |    1|          2|    1|          2|
+    +------------------------------+-----+-----------+-----+-----------+
+    |Total                         |  286|         42|  614|       1827|
+    +------------------------------+-----+-----------+-----+-----------+
+
+    * Register: 
+    +----------------------------------+----+----+-----+-----------+
+    |               Name               | FF | LUT| Bits| Const Bits|
+    +----------------------------------+----+----+-----+-----------+
+    |ap_CS_fsm                         |   2|   0|    2|          0|
+    |ap_block_IOBlock_op40_n           |   1|   0|    1|          0|
+    |ap_block_IOBlock_op45_n           |   1|   0|    1|          0|
+    |ap_block_IOBlock_op48_n           |   1|   0|    1|          0|
+    |ap_block_IOBlock_op53_n           |   1|   0|    1|          0|
+    |ap_block_IOBlock_state5_reg_grp1  |   1|   0|    1|          0|
+    |ap_done_reg                       |   1|   0|    1|          0|
+    |ap_enable_reg_pp0_iter1           |   1|   0|    1|          0|
+    |ap_enable_reg_pp0_iter2           |   1|   0|    1|          0|
+    |ap_enable_reg_pp0_iter3           |   1|   0|    1|          0|
+    |icmp_ln88_reg_223                 |   1|   0|    1|          0|
+    |icmp_ln91_reg_219                 |   1|   0|    1|          0|
+    |icmp_ln98_1_reg_231               |   1|   0|    1|          0|
+    |icmp_ln98_reg_227                 |   1|   0|    1|          0|
+    |ii1_reg_107                       |   4|   0|    4|          0|
+    |ii1_reg_107_pp0_iter1_reg         |   4|   0|    4|          0|
+    |ii_reg_214                        |   4|   0|    4|          0|
+    |num2_fu_52                        |  32|   0|   32|          0|
+    |start_once_reg                    |   1|   0|    1|          0|
+    |icmp_ln88_reg_223                 |   4|   2|    1|          0|
+    +----------------------------------+----+----+-----+-----------+
+    |Total                             |  64|   2|   61|          0|
+    +----------------------------------+----+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-------------------------------------+-----+-----+------------+-------------------------------------------------------+--------------+
+|              RTL Ports              | Dir | Bits|  Protocol  |                     Source Object                     |    C Type    |
++-------------------------------------+-----+-----+------------+-------------------------------------------------------+--------------+
+|ap_clk                               |   in|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|ap_rst                               |   in|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|ap_start                             |   in|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|start_full_n                         |   in|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|ap_done                              |  out|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|ap_continue                          |   in|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|ap_idle                              |  out|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|ap_ready                             |  out|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|start_out                            |  out|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|start_write                          |  out|    1|  ap_ctrl_hs|  padding<array<ap_ufixed<8, 3, 5, 3, 0>, 37ul>, 2, 16>|  return value|
+|multicastNumStream_0_dout            |   in|   32|     ap_fifo|                                   multicastNumStream_0|       pointer|
+|multicastNumStream_0_empty_n         |   in|    1|     ap_fifo|                                   multicastNumStream_0|       pointer|
+|multicastNumStream_0_read            |  out|    1|     ap_fifo|                                   multicastNumStream_0|       pointer|
+|multicastNumStream_0_num_data_valid  |   in|    6|     ap_fifo|                                   multicastNumStream_0|       pointer|
+|multicastNumStream_0_fifo_cap        |   in|    6|     ap_fifo|                                   multicastNumStream_0|       pointer|
+|paddingStream_0_din                  |  out|  296|     ap_fifo|                                        paddingStream_0|       pointer|
+|paddingStream_0_full_n               |   in|    1|     ap_fifo|                                        paddingStream_0|       pointer|
+|paddingStream_0_write                |  out|    1|     ap_fifo|                                        paddingStream_0|       pointer|
+|paddingStream_0_num_data_valid       |   in|    3|     ap_fifo|                                        paddingStream_0|       pointer|
+|paddingStream_0_fifo_cap             |   in|    3|     ap_fifo|                                        paddingStream_0|       pointer|
+|paddingStream_0_almost_full_n        |   in|    1|     ap_fifo|                                        paddingStream_0|       pointer|
+|inputStream_0_dout                   |   in|  296|     ap_fifo|                                          inputStream_0|       pointer|
+|inputStream_0_empty_n                |   in|    1|     ap_fifo|                                          inputStream_0|       pointer|
+|inputStream_0_read                   |  out|    1|     ap_fifo|                                          inputStream_0|       pointer|
+|inputStream_0_num_data_valid         |   in|    3|     ap_fifo|                                          inputStream_0|       pointer|
+|inputStream_0_fifo_cap               |   in|    3|     ap_fifo|                                          inputStream_0|       pointer|
+|paddingStream_1_din                  |  out|  296|     ap_fifo|                                        paddingStream_1|       pointer|
+|paddingStream_1_full_n               |   in|    1|     ap_fifo|                                        paddingStream_1|       pointer|
+|paddingStream_1_write                |  out|    1|     ap_fifo|                                        paddingStream_1|       pointer|
+|paddingStream_1_num_data_valid       |   in|    3|     ap_fifo|                                        paddingStream_1|       pointer|
+|paddingStream_1_fifo_cap             |   in|    3|     ap_fifo|                                        paddingStream_1|       pointer|
+|paddingStream_1_almost_full_n        |   in|    1|     ap_fifo|                                        paddingStream_1|       pointer|
+|inputStream_1_dout                   |   in|  296|     ap_fifo|                                          inputStream_1|       pointer|
+|inputStream_1_empty_n                |   in|    1|     ap_fifo|                                          inputStream_1|       pointer|
+|inputStream_1_read                   |  out|    1|     ap_fifo|                                          inputStream_1|       pointer|
+|inputStream_1_num_data_valid         |   in|    3|     ap_fifo|                                          inputStream_1|       pointer|
+|inputStream_1_fifo_cap               |   in|    3|     ap_fifo|                                          inputStream_1|       pointer|
++-------------------------------------+-----+-----+------------+-------------------------------------------------------+--------------+
+

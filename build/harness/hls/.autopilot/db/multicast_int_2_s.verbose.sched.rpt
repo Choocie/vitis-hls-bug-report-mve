@@ -1,0 +1,122 @@
+
+
+================================================================
+== Vitis HLS Report for 'multicast_int_2_s'
+================================================================
+* Date:           Mon Feb 10 13:35:46 2025
+
+* Version:        2024.2.1 (Build 5263293 on Dec 12 2024)
+* Project:        harness
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: versalaicore
+* Target device:  xcvc1902-vsva2197-2MP-e-S
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.03 ns|  1.879 ns|     0.82 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |        0|        0|      0 ns|      0 ns|    1|    1|      yes|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 2
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 2
+HasVarLatency: 0
+IsPipeline: 1
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
++ Individual pipeline summary: 
+  * Pipeline-0: initiation interval (II) = 1, depth = 1
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 1
+* Pipeline : 1
+  Pipeline-0 : II = 1, D = 1, States = { 1 }
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 1.87>
+ST_1 : Operation 2 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %multicastNumStream_1, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 2 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 3 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %multicastNumStream_0, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 3 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 4 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %numStream, void @empty_3, i32 0, i32 0, void @empty_24, i32 0, i32 0, void @empty_24, void @empty_24, void @empty_24, i32 0, i32 0, i32 0, i32 0, void @empty_24, void @empty_24, i32 4294967295, i32 0, i32 0"   --->   Operation 4 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 5 [1/1] (0.00ns)   --->   "%specpipeline_ln41 = specpipeline void @_ssdm_op_SpecPipeline, i32 1, i32 0, i32 0, i32 0, void @empty_24" [../src/harness.h:41]   --->   Operation 5 'specpipeline' 'specpipeline_ln41' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 6 [1/1] (0.00ns)   --->   "%muxLogicFIFOCE_to_data = muxlogic"   --->   Operation 6 'muxlogic' 'muxLogicFIFOCE_to_data' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 7 [1/1] ( I:1.12ns O:1.01ns )   --->   "%data = read i32 @_ssdm_op_Read.ap_fifo.volatile.i32P0A, i32 %numStream" [../src/harness.h:43]   --->   Operation 7 'read' 'data' <Predicate = true> <Delay = 1.12> <CoreInst = "FIFO">   --->   Core 81 'FIFO' <Latency = 0> <II = 1> <Delay = 1.26> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 32> <Depth = 8192> <FIFO>
+ST_1 : Operation 8 [1/1] (0.00ns)   --->   "%muxLogicFIFOData_to_write_ln46 = muxlogic i32 %data"   --->   Operation 8 'muxlogic' 'muxLogicFIFOData_to_write_ln46' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 9 [1/1] ( I:0.86ns O:0.86ns )   --->   "%write_ln46 = write void @_ssdm_op_Write.ap_fifo.volatile.i32P0A, i32 %multicastNumStream_0, i32 %data" [../src/harness.h:46]   --->   Operation 9 'write' 'write_ln46' <Predicate = true> <Delay = 0.86> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.86> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 32> <Depth = 32> <FIFO>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "%muxLogicFIFOData_to_write_ln46 = muxlogic i32 %data"   --->   Operation 10 'muxlogic' 'muxLogicFIFOData_to_write_ln46' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [1/1] ( I:0.86ns O:0.86ns )   --->   "%write_ln46 = write void @_ssdm_op_Write.ap_fifo.volatile.i32P0A, i32 %multicastNumStream_1, i32 %data" [../src/harness.h:46]   --->   Operation 11 'write' 'write_ln46' <Predicate = true> <Delay = 0.86> <CoreInst = "FIFO_SRL">   --->   Core 84 'FIFO_SRL' <Latency = 0> <II = 1> <Delay = 0.86> <Storage> <Opcode : 'read' 'write' 'nbread' 'nbwrite'> <Ports = 0> <Width = 32> <Depth = 32> <FIFO>
+ST_1 : Operation 12 [1/1] (0.00ns)   --->   "%ret_ln48 = ret" [../src/harness.h:48]   --->   Operation 12 'ret' 'ret_ln48' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 3.030ns, clock uncertainty: 0.818ns.
+
+ <State 1>: 1.879ns
+The critical path consists of the following:
+	'muxlogic' operation 32 bit ('muxLogicFIFOCE_to_data') [8]  (0.000 ns)
+	fifo read operation ('data', ../src/harness.h:43) on port 'numStream' (../src/harness.h:43) [9]  (1.126 ns)
+	'muxlogic' operation 0 bit ('muxLogicFIFOData_to_write_ln46') [10]  (0.000 ns)
+	fifo write operation ('write_ln46', ../src/harness.h:46) on port 'multicastNumStream_0' (../src/harness.h:46) [11]  (0.860 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A
